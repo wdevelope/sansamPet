@@ -5,7 +5,7 @@ module.exports = {
   registerUser: async (nickname, password) => {
     const existingUser = await Users.findOne({ where: { nickname } });
     if (existingUser) {
-      throw { status: 400, message: '중복된 닉네임입니다.' };
+      throw { message: '중복된 닉네임입니다.' };
     }
     return Users.create({
       nickname,
@@ -16,7 +16,7 @@ module.exports = {
   findUserByNickname: async nickname => {
     const user = await Users.findOne({ where: { nickname } });
     if (!user) {
-      throw { status: 400, message: '존재하지 않는 닉네임입니다.' };
+      throw { message: '존재하지 않는 닉네임입니다.' };
     }
     return user;
   },

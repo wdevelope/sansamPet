@@ -9,7 +9,6 @@ module.exports = {
       // 유효성 검사
       if (!nickname || !password || !confirm) {
         throw {
-          status: 400,
           message: '미입력된 항목이 있습니다. 모두 입력해주세요.',
         };
       }
@@ -17,7 +16,6 @@ module.exports = {
       const nicknamePattern = /^[A-Za-z0-9]{3,}$/;
       if (!nicknamePattern.test(nickname)) {
         throw {
-          status: 400,
           message:
             '닉네임은 최소 3자 이상, 알파벳 대소문자, 숫자로 구성해 주세요.',
         };
@@ -25,14 +23,12 @@ module.exports = {
 
       if (password.length < 4) {
         throw {
-          status: 400,
           message: '비밀번호는 최소 4자 이상입니다.',
         };
       }
 
       if (password !== confirm) {
         throw {
-          status: 400,
           message: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
         };
       }
@@ -59,7 +55,6 @@ module.exports = {
 
       if (!isValidPassword) {
         throw {
-          status: 400,
           message: '비밀번호가 틀렸습니다.',
         };
       }

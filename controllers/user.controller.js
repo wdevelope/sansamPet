@@ -31,7 +31,7 @@ module.exports = {
   logout: async (req, res) => {
     try {
       await UserService.logoutUser(req, res);
-      return res.status(200).json({ message: '로그아웃 되었습니다.' });
+      return res.status(202).json({ message: '로그아웃 되었습니다.' });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
