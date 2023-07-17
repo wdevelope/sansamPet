@@ -9,7 +9,7 @@ module.exports = {
       // 유효성 검사
       if (!nickname || !password || !confirm) {
         throw {
-          message: '미입력된 항목이 있습니다. 모두 입력해주세요.',
+          message: '미입력된 항목이 있습니다. 모두 입력하여 주세요.',
         };
       }
 
@@ -62,7 +62,7 @@ module.exports = {
       UserRepository.generateToken(user, res);
       console.log('쿠키 생성 완료');
 
-      return { message: '로그인 성공' };
+      return;
     } catch (error) {
       console.error(error);
       throw error;
