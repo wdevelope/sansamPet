@@ -14,7 +14,7 @@ async function isAuth(req, res, next) {
     const decoded = jwt.verify(extractedToken, config.jwt.secretKey); // 토큰 검증
 
     if (decoded) {
-      const userId = decoded.userId;
+      const userId = decoded.user_id;
       const foundUser = await User.findByPk(userId);
       if (foundUser) {
         req.user = { id: foundUser.id }; // 유저 ID를 req.user에 저장
