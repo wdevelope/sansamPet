@@ -1,8 +1,5 @@
-// user.repository.js 파일
-
 const { Users } = require('../models');
 const jwt = require('jsonwebtoken');
-const config = require('../config/config.js');
 
 module.exports = {
   registerUser: async (nickname, password) => {

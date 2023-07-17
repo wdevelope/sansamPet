@@ -1,5 +1,3 @@
-// user.controller.js
-
 const UserService = require('../services/user.service.js');
 
 module.exports = {
