@@ -17,7 +17,7 @@ async function isAuth(req, res, next) {
       const userId = decoded.user_id;
       const foundUser = await User.findByPk(userId);
       if (foundUser) {
-        req.user = { id: foundUser.id }; // 유저 ID를 req.user에 저장
+        req.user = { user_id: foundUser.user_id }; // 유저 ID를 req.user에 저장
         next();
       } else {
         return res.status(400).json({ message: '존재하지 않는 회원입니다.' });
