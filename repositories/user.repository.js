@@ -21,12 +21,15 @@ module.exports = {
     return user;
   },
 
-  generateToken: (user, res) => {
+  generateToken: (Users, res) => {
     // JWT 토큰 생성
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRE_TIME,
-    });
-    console.log(token);
+    const token = jwt.sign(
+      { userId: Users.user_id },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: process.env.JWT_EXPIRE_TIME,
+      },
+    );
     // 쿠키에 토큰 설정
     res.cookie('Authorization', `Bearer ${token}`);
   },

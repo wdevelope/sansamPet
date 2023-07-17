@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/users.js');
+const { Users } = require('../models');
 const config = require('../config/config.js');
 
 async function isAuth(req, res, next) {
@@ -12,10 +12,9 @@ async function isAuth(req, res, next) {
   try {
     const extractedToken = token.split(' ')[1]; // 'Bearer' 접두사 제거 후 토큰 추출
     const decoded = jwt.verify(extractedToken, config.jwt.secretKey); // 토큰 검증
-
     if (decoded) {
-      const userId = decoded.user_id;
-      const foundUser = await User.findByPk(userId);
+      const userId = decoded.userId;
+      const foundUser = await Users.findByPk(userId);
       if (foundUser) {
         req.user = { user_id: foundUser.user_id }; // 유저 ID를 req.user에 저장
         next();

@@ -11,13 +11,14 @@ const app = express();
 const http = Server(app);
 
 app.use(express.json());
+app.use(cookieParser());
+
 app.use('/api', [
   usersRouter,
   petsittersRouter,
   reservationsRouter,
   reviewsRouter,
 ]);
-app.use(cookieParser());
 app.use(express.static('public'));
 
 module.exports = http;
