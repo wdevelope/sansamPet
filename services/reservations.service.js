@@ -44,26 +44,97 @@ class ReservationService {
   };
   viewAllReservations = async user_id => {
     const returns = new Returns('예약 조회');
-
     const reservations = await this.reservationRepository.viewAllReservations(
       user_id,
     );
-    if (reservations[0].reservation_id) {
-      return {
-        status: 200,
-        message: returns.status200(),
-        reservations: {
-          user_nickname: reservations[0].User.nickname,
-          petsitter_name: reservations[0].Petsitter.name,
-          reservationAt: reservations[0].reservationAt,
-        },
-      };
-    } else if (reservations && !reservations[0].reservation_id) {
-      return {
-        status: 200,
-        message: '예약이 없습니다. 첫 예약을 진행해 주세요.',
-      };
-    } else {
+    try {
+      if (reservations[0].reservation_id) {
+        const showreservations = reservations.map(reservation => {
+          return {
+            reservation_id: reservation.reservation_id,
+            user_nickname: reservation.User.nickname,
+            petsitter_name: reservation.Petsitter.name,
+            reservationAt: reservation.reservationAt,
+          };
+        });
+        return {
+          status: 200,
+          message: returns.status200(),
+          reservations: showreservations,
+        };
+      } else if (reservations && !reservations[0].reservation_id) {
+        return {
+          status: 200,
+          message: '예약이 없습니다. 첫 예약을 진행해 주세요.',
+        };
+      } else {
+        return returns.status400();
+      }
+    } catch (err) {
+      return returns.status400();
+    }
+  };
+  updateOneReservation = async (
+    user_id,
+    petsitter_id,
+    reservationAt,
+    reservation_id,
+  ) => {
+    const returns = new Returns('예약 수정');
+    try {
+      if (!petsitter_id || !reservationAt || !user_id || !reservation_id) {
+        return returns.status400();
+      }
+      const reservation = await this.reservationRepository.updateOneReservation(
+        user_id,
+        petsitter_id,
+        reservationAt,
+        reservation_id,
+      );
+      if (reservation) {
+        return returns.status200();
+      } else {
+        return returns.status400();
+      }
+    } catch (err) {
+      return returns.status400();
+    }
+  };
+  deleteOneReservation = async (user_id, reservation_id) => {
+    const returns = new Returns('예약 삭제');
+    try {
+      if (!user_id || !reservation_id) {
+        return returns.status400();
+      }
+      const reservation = await this.reservationRepository.deleteOneReservation(
+        user_id,
+        reservation_id,
+      );
+      if (reservation) {
+        return returns.status200();
+      } else {
+        return returns.status400();
+      }
+    } catch (err) {
+      return returns.status400();
+    }
+  };
+  permenantDeleteReservation = async (user_id, reservation_id) => {
+    const returns = new Returns('예약 영구 삭제');
+    try {
+      if (user_id !== 1 || !reservation_id) {
+        return returns.status400();
+      }
+      const reservation =
+        await this.reservationRepository.permenantDeleteReservation(
+          reservation_id,
+        );
+      if (reservation) {
+        return returns.status200();
+      } else {
+        return returns.status400();
+      }
+    } catch (err) {
       return returns.status400();
     }
   };
