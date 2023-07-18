@@ -135,25 +135,25 @@ class ReservationService {
     reservationId,
   ) => {
     const returns = new Returns('예약 수정');
-    // try {
-    if (!petsitterId || !reservationAt || !userId || !reservationId) {
-      return returns.status400();
-    }
-    const reservation = await this.reservationRepository.updateOneReservation(
-      userId,
-      petsitterId,
-      reservationAt,
-      reservationId,
-    );
+    try {
+      if (!petsitterId || !reservationAt || !userId || !reservationId) {
+        return returns.status400();
+      }
+      const reservation = await this.reservationRepository.updateOneReservation(
+        userId,
+        petsitterId,
+        reservationAt,
+        reservationId,
+      );
 
-    if (reservation[0]) {
-      return returns.status200();
-    } else {
+      if (reservation[0]) {
+        return returns.status200();
+      } else {
+        return returns.status400();
+      }
+    } catch (err) {
       return returns.status400();
     }
-    // } catch (err) {
-    //   return returns.status400();
-    // }
   };
   deleteOneReservation = async (userId, reservationId) => {
     const returns = new Returns('예약 삭제');
