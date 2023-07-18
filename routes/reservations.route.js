@@ -5,16 +5,29 @@ const authmiddleware = require('../middlewares/auth-middleware.js');
 const ReservationsController = require('../controllers/reservations.controller');
 const reservationsContoller = new ReservationsController();
 
-router.get('/reservations', reservationsContoller.viewReservations);
 router.get(
-  '/reservations/petsitters/:petsitter_id',
+  '/reservations',
+  authmiddleware,
   reservationsContoller.viewReservations,
 );
-router.post('/reservations', reservationsContoller.createReservation);
-router.patch('/reservations', reservationsContoller.updateReservation);
-router.delete('/reservations', reservationsContoller.deleteReservation);
+router.post(
+  '/reservations',
+  authmiddleware,
+  reservationsContoller.createReservation,
+);
+router.patch(
+  '/reservations',
+  authmiddleware,
+  reservationsContoller.updateReservation,
+);
+router.delete(
+  '/reservations',
+  authmiddleware,
+  reservationsContoller.deleteReservation,
+);
 router.delete(
   '/admin/reservations',
+  authmiddleware,
   reservationsContoller.permenantDeleteReservation,
 );
 module.exports = router;
