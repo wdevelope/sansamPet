@@ -37,3 +37,10 @@ router.get(
   reservationsContoller.adminViewReservations,
 );
 module.exports = router;
+
+router.get(
+  '/reservations/petsitters/:petsitterId',
+  authmiddleware,
+  reservationsContoller.viewPetsitterReservations,
+);
+module.exports = router;
