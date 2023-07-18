@@ -1,12 +1,15 @@
+simani(petsitterId);
+listReservations();
+
 async function makeReservation() {
   const reservationAt = document.querySelector('#reservationAt').value;
-  const content = document.querySelector('#writeContent').value;
-  const response = await fetch(`http://localhost:3000/api/posts`, {
+  const petsitterId = document.querySelector('#petsitterId').value;
+  const response = await fetch(`http://localhost:3000/api/reservations`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ title, content }),
+    body: JSON.stringify({ reservationAt, petsitterId }),
   });
   const result = await response.json();
   console.log(result.message);
@@ -14,39 +17,43 @@ async function makeReservation() {
   return alert(result.message);
 }
 
-// 게시글 수정
-async function editReservation() {
-  const postId = localStorage.getItem('clickedpost');
-  const title = document.querySelector('#editTitle').value;
-  const content = document.querySelector('#editContent').value;
-  const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
+async function editReservation(reservationId) {
+  const reservationAt = document.querySelecftor('#reservationAt').value;
+  const petsitterId = document.querySelector('#petsitterId').value;
+  const response = await fetch(
+    `http://localhost:3000/api/reservations?reservationId=${reservationId}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ reservationAt, petsitterId }),
     },
-    body: JSON.stringify({ title, content }),
-  });
+  );
   const result = await response.json();
   console.log(result.message);
   window.location.reload();
   return alert(result.message);
 }
 
-async function deleteReservationd(postId) {
-  const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
+async function deleteReservation(reservationId) {
+  const response = await fetch(
+    `http://localhost:3000/api/reservations?reservationId=${reservationId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  });
+  );
   const result = await response.json();
   console.log(result.message);
-  window.location.href = 'http://localhost:3000/newsfeeds.html';
+  window.location.reload();
   return alert(result.message);
 }
 
 async function listReservations() {
-  const response = await fetch(`http://localhost:3000/api/petsitters`, {
+  const response = await fetch(`http://localhost:3000/api/reservations`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -54,27 +61,41 @@ async function listReservations() {
   });
   const result = await response.json();
   console.log(result.message);
-  const simanis = result.petsitters
-    .map(simani => {
-      return `
-        <div class="card" style="width: 18rem">
-          <img src="${simani.imgurl}" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">${simani.name}</h5>
-            <p class="card-text">${simani.description}</p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">An item</li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-          </ul>
-          <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-          </div>
-        </div>`;
+  const reservations = result.reservations
+    .map(reservation => {
+      return `<div>
+                <p>예약 번호: ${reservation.reservationId}</p>
+                <p>예약 날짜: ${reservation.reservationAt}</p>
+                <p>예약 고객: ${reservation.nickname}</p>
+                <p>산삼 시터: ${reservation.name}</p>
+              </div>
+              `;
     })
     .join('');
-  document.querySelector('main').innerHTML = simanis;
+  document.querySelector('main').innerHTML = reservations;
+  return;
+}
+
+async function simani(petsitterId) {
+  const response = await fetch(
+    `http://localhost:3000/api/petsitters/:${petsitterId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  const simani = result.petsitter;
+  const simanidata = `<div>
+                          <img src="${simani.imgurl}"></img>
+                          <p>이름: ${simani.name}</p>
+                          <p>경력: ${simani.signInCareer}</p>
+                          <p>설명: ${simani.description}</p>
+                        </div>
+                        `;
+  document.querySelector('main').innerHTML = simanidata;
   return;
 }
