@@ -5,14 +5,10 @@ module.exports = {
   register: async (req, res) => {
     const { nickname, password, confirm } = req.body;
     try {
-      const newUser = await UserService.registerUser(
-        nickname,
-        password,
-        confirm,
-      );
-      res.status(201).json(newUser);
+      await UserService.registerUser(nickname, password, confirm);
+      res.status(201).json({ message: '회원 가입에 성공하였습니다.' });
     } catch (error) {
-      res.status(error.status || 400).json({ message: error.message });
+      res.status(400).json({ message: error.message });
     }
   },
 
@@ -20,8 +16,8 @@ module.exports = {
   login: async (req, res) => {
     const { nickname, password } = req.body;
     try {
-      const token = await UserService.loginUser(nickname, password, res);
-      res.status(200).json(token);
+      await UserService.loginUser(nickname, password, res);
+      res.status(200).json({ message: '로그인에 성공했습니다.' });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
