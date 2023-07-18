@@ -2,10 +2,13 @@ const { Reservations, Users, Petsitters } = require('../models');
 
 class ReservationRepository {
   createOneReservation = async (petsitter_id, reservationAt, user_id) => {
-    const reservation = await Reservations.create({
-      petsitter_id,
-      reservationAt,
-      user_id,
+    const reservation = await Reservations.findOrCreate({
+      where: { reservationAt, petsitter_id },
+      defaults: {
+        petsitter_id,
+        reservationAt,
+        user_id,
+      },
     });
     return reservation;
   };

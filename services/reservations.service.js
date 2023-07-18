@@ -33,8 +33,10 @@ class ReservationService {
         reservationAt,
         user_id,
       );
-      if (reservation) {
+      if (reservation[1]) {
         return returns.status200();
+      } else if (!reservation[1]) {
+        return returns.status400();
       } else {
         return returns.status400();
       }
