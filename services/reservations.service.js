@@ -49,32 +49,32 @@ class ReservationService {
     const reservations = await this.reservationRepository.viewAllReservations(
       user_id,
     );
-    try {
-      if (reservations[0].reservation_id) {
-        const showreservations = reservations.map(reservation => {
-          return {
-            reservation_id: reservation.reservation_id,
-            user_nickname: reservation.User.nickname,
-            petsitter_name: reservation.Petsitter.name,
-            reservationAt: reservation.reservationAt,
-          };
-        });
+    // try {
+    if (!reservations[0]) {
+      return {
+        status: 200,
+        message: '예약이 없습니다. 첫 예약을 진행해 주세요.',
+      };
+    } else if (reservations) {
+      const showreservations = reservations.map(reservation => {
         return {
-          status: 200,
-          message: returns.status200(),
-          reservations: showreservations,
+          reservation_id: reservation.reservation_id,
+          user_nickname: reservation.User.nickname,
+          petsitter_name: reservation.Petsitter.name,
+          reservationAt: reservation.reservationAt,
         };
-      } else if (reservations && !reservations[0].reservation_id) {
-        return {
-          status: 200,
-          message: '예약이 없습니다. 첫 예약을 진행해 주세요.',
-        };
-      } else {
-        return returns.status400();
-      }
-    } catch (err) {
-      return returns.status400();
+      });
+      return {
+        status: 200,
+        message: returns.status200(),
+        reservations: showreservations,
+      };
     }
+    // } else {
+    //   return returns.status400();
+    // }
+    // } catch (err) {
+    //   return returns.status400();
   };
   updateOneReservation = async (
     user_id,
@@ -124,7 +124,7 @@ class ReservationService {
   permenantDeleteReservation = async (user_id, reservation_id) => {
     const returns = new Returns('예약 영구 삭제');
     try {
-      if (user_id !== 1 || !reservation_id) {
+      if (user_id !== 11 || !reservation_id) {
         return returns.status400();
       }
       const reservation =
