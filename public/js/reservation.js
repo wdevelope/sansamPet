@@ -1,6 +1,19 @@
 // simani(petsitterId);
 listReservations();
 
+const socket = io.connect('/');
+
+socket.on('NOTICE_EVERYONE', function (notice) {
+  noticeNotification(notice.notice);
+});
+
+function noticeNotification(notice, date) {
+  const messageHtml = `공지사항 <br/>${notice} <br/><small>(${date})</small>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>`;
+  const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" id="noticeAlert" role="alert">${messageHtml}</div></br>`;
+  document.querySelector('#navbar').insertAdjacentHTML('afterend', htmlTemp);
+}
+
 async function editReservation(reservationId) {
   const reservationAt = document.querySelector('#date').value;
   const petsitterId = document.querySelector('#simanichoice').value;

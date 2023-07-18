@@ -1,33 +1,21 @@
-const { Reservations, Users, Petsitters } = require('../models');
+const { Petsitters } = require('../models');
 
-class ReservationRepository {
-  createOneReservation = async (petsitterId, reservationAt, userId) => {
-    const reservation = await Reservations.findOrCreate({
-      where: { reservationAt, petsitterId },
-      defaults: {
-        petsitterId,
-        reservationAt,
-        userId,
-      },
+class SimaniRepository {
+  createSimani = async (name, imgurl, signInCareer, description) => {
+    const simani = await Petsitters.create({
+      name,
+      imgurl,
+      signInCareer,
+      description,
     });
-    return reservation;
+    return simani;
   };
 
-  viewAllReservations = async userId => {
-    const reservations = await Reservations.findAll({
-      where: { userId, deletedAt: null },
-      include: [
-        {
-          model: Users,
-          attributes: ['nickname'],
-        },
-        {
-          model: Petsitters,
-          attributes: ['name'],
-        },
-      ],
+  viewSimanis = async () => {
+    const simanis = await Petsitters.findAll({
+      where: { deletedAt: null },
     });
-    return reservations;
+    return simanis;
   };
 
   viewPetsitterReservations = async petsitterId => {
@@ -109,4 +97,4 @@ class ReservationRepository {
   };
 }
 
-module.exports = ReservationRepository;
+module.exports = SimaniRepository;

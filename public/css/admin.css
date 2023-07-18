@@ -1,25 +1,51 @@
 main {
-    display: grid;
-    grid-gap: 20px;
-    margin-top: 20px;
-    justify-content: center;
-    justify-items: center;
-  }
-  
-  @media (min-width: 500px) {
-    main {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (min-width: 900px) {
-    main {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
+  display: grid;
+  grid-gap: 20px;
+  margin-top: 20px;
+  justify-content: left;
+  justify-items: left;
+}
 
-#reservation{
-    margin: 20px 20px 20px 20px;
-    padding: 20px 20px 20px 20px;
-    background-color: rgb(212, 251, 166);
+@media (min-width: 500px) {
+  main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  main {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+#reservation {
+  margin: 20px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
+  background-color: rgb(212, 251, 166);
+  color: darkslategrey;
+  width: 400px;
+}
+
+#adminalert {
+  margin: 20px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
+  width: 400px;
+}
+
+#registerSimani,
+#editSimani,
+#deleteSimani {
+  display: none;
+}
+
+#adminlabel {
+  font-weight: 900;
+  font-size: 30px;
+  margin: 10px 10px 10px 30px;
+}
+
+#alertlistbox {
+  width: 500px;
+  border-radius: 5px;
+  border: darkgreen 2px solid;
 }

@@ -6,10 +6,10 @@ const socketIdMap = {};
 let admin = '';
 
 io.on('connection', sock => {
-  const { watchLogin, watchByeBye } = initSocket(sock);
+  const { watchLogin, watchByeBye, watchNotice } = initSocket(sock);
 
   watchLogin();
-
+  watchNotice();
   watchByeBye();
 });
 
@@ -33,6 +33,16 @@ function initSocket(sock) {
   }
 
   return {
+    watchNotice: () => {
+      watchEvent('NOTICE', data => {
+        const payload = {
+          notice: data.notice,
+          date: new Date().toISOString(),
+        };
+        console.log('전체 공지 발송', payload.notice, payload.date);
+        notifyEveryone('NOTICE_EVERYONE', payload);
+      });
+    },
     watchLogin: () => {
       watchEvent('LOGIN', data => {
         const payload = {

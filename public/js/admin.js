@@ -1,10 +1,16 @@
 const socket = io.connect('/');
 
 socket.on('LOGIN_DATA', function (data) {
-  console.log('여기 실행');
   const { nickname, date } = data;
   loginNotification(nickname, date);
 });
+
+function notice() {
+  const noticecontent = document.querySelector('#noticecontent').value;
+  socket.emit('NOTICE', {
+    notice: noticecontent,
+  });
+}
 
 async function login() {
   const password = document.querySelector('#password').value;
@@ -23,12 +29,15 @@ async function login() {
       socket.emit('LOGIN', {
         nickname: `관리자 페이지에 권한이 없는 사용자${nickname}`,
       });
+      document.querySelector(
+        'main',
+      ).innerHTML = `<h2>접근 권한이 없습니다.</h2>`;
       return alert('권한이 없습니다.');
     } else {
-      listReservations();
       socket.emit('ADMINLOGIN', {
         nickname,
       });
+      listReservations();
       return alert(result.message);
     }
   }
@@ -37,18 +46,16 @@ async function login() {
 function loginNotification(targetNickname, date) {
   const messageHtml = `${targetNickname}님이 로그인하였습니다. <br /><small>(${date})</small>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>`;
-  const alt = document.querySelector('#customerAlert');
-  if (alt) {
-    alt.html(messageHtml);
-  } else {
-    const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" role="alert">${messageHtml}</div></br>`;
-
-    const alertlist = document.querySelector('#alertlist');
-    alertlist.insertAdjacentHTML('afterbegin', htmlTemp);
-  }
+  const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" id="adminalert" role="alert">${messageHtml}</div></br>`;
+  const alertlist = document.querySelector('#alertlist');
+  alertlist.innerHTML = htmlTemp;
 }
 
 async function listReservations() {
+  document.querySelector('#registerSimani').style.display = 'block';
+  document.querySelector('#editSimani').style.display = 'block';
+  document.querySelector('#deleteSimani').style.display = 'block';
+  document.querySelector('#adminlogin').style.display = 'none';
   const response = await fetch(`http://localhost:3000/api/admin/reservations`, {
     method: 'GET',
     headers: {
@@ -61,7 +68,7 @@ async function listReservations() {
     .map(reservation => {
       return `
       <div id = "reservation">
-      <p>예약 번호: ${reservation.reservationId}</p>
+      <h4>예약 번호: ${reservation.reservationId}</h4>
       <p>예약 날짜: ${reservation.reservationAt}</p>
       <p>산삼 시터: ${reservation.Petsitter.name}</p>
       <p>고객 성함: ${reservation.User.nickname}</p>
@@ -69,6 +76,11 @@ async function listReservations() {
        `;
     })
     .join('');
+  const noticebox = `
+                    <label>공지사항</label></br>
+                    <textarea id="noticecontent"></textarea>
+                    <button onclick="notice()">모든 사용자에게 알림 전송</button>`;
   document.querySelector('#reservationlist').innerHTML = reservations;
+  document.querySelector('#notice').innerHTML = noticebox;
   return;
 }

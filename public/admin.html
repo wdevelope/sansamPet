@@ -31,12 +31,20 @@
             </div>
             <form class="form-inline ml-auto" id="point">
                 <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" data-toggle="modal"
-                    data-target="#loginModal">
+                    data-target="#loginModal" id="adminlogin">
                     로그인
                 </button>
-                <button class="btn btn-outline-light my-2 my-sm-0" type="button" data-toggle="modal"
-                    data-target="#registerModal">
+                <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" data-toggle="modal"
+                    data-target="#registerModal" id="registerSimani">
                     심마니 등록
+                </button>
+                <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" data-toggle="modal"
+                    data-target="#registerModal" id="editSimani">
+                    심마니 수정
+                </button>
+                <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" data-toggle="modal"
+                    data-target="#registerModal" id="deleteSimani">
+                    심마니 삭제
                 </button>
             </form>
         </div>
@@ -111,10 +119,13 @@
     </div>
 
     <main>
-        <div id=alertlist></div>
-        <div id=reservationlist></div>
+        <div id="reservationlist"></div>
+        <div>
+            <div id="notice"></div>
+            <div id="alertlist"></div>
+        </div>
     </main>
-    <script src="./socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="./js/admin.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
