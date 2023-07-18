@@ -9,18 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.Reservations, {
-        sourceKey: 'petsitter_id',
-        foreignKey: 'petsitter_id',
+        sourceKey: 'petsitterId',
+        foreignKey: 'petsitterId',
       });
       this.hasMany(models.Reviews, {
-        sourceKey: 'petsitter_id',
-        foreignKey: 'petsitter_id',
+        sourceKey: 'petsitterId',
+        foreignKey: 'petsitterId',
       });
     }
   }
   Petsitters.init(
     {
-      petsitter_id: {
+      petsitterId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
@@ -50,6 +50,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
         type: DataTypes.STRING,
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
       },
     },
     {

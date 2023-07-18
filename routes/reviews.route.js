@@ -8,7 +8,7 @@ const reviewsController = new ReviewsController();
 
 // 리뷰 작성
 router.post(
-  '/petsitters/:petsitter_id/review/:reservation_id',
+  '/petsitters/:petsitterId/review/:reservationId',
   reviewsController.reviewPostController,
 );
 
@@ -17,13 +17,13 @@ router.get('/petsitters', reviewsController.getAllReviewController);
 
 // 리뷰 수정
 router.patch(
-  '/petsitters/:petsitter_id/review/:review_id',
+  '/petsitters/:petsitterId/review/:reviewId',
   reviewsController.reviewUpdate,
 );
 
 // 리뷰 삭제
 router.delete(
-  '/petsitters/:petsitter_id/review/:review_id',
+  '/petsitters/:petsitterId/review/:reviewId',
   reviewsController.reviewDelete,
 );
 

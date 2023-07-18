@@ -22,16 +22,16 @@ class Returns {
 class ReservationService {
   reservationRepository = new ReservationRepository();
 
-  createOneReservation = async (petsitter_id, reservationAt, user_id) => {
+  createOneReservation = async (petsitterId, reservationAt, userId) => {
     const returns = new Returns('예약 작성');
     try {
-      if (!petsitter_id || !reservationAt || !user_id) {
+      if (!petsitterId || !reservationAt || !userId) {
         return returns.status400();
       }
       const reservation = await this.reservationRepository.createOneReservation(
-        petsitter_id,
+        petsitterId,
         reservationAt,
-        user_id,
+        userId,
       );
       if (reservation[1]) {
         return returns.status200();
@@ -44,10 +44,10 @@ class ReservationService {
       return returns.status400();
     }
   };
-  viewAllReservations = async user_id => {
+  viewAllReservations = async userId => {
     const returns = new Returns('예약 조회');
     const reservations = await this.reservationRepository.viewAllReservations(
-      user_id,
+      userId,
     );
     try {
       if (!reservations[0]) {
@@ -58,7 +58,7 @@ class ReservationService {
       } else if (reservations) {
         const showreservations = reservations.map(reservation => {
           return {
-            reservation_id: reservation.reservation_id,
+            reservationId: reservation.reservationId,
             user_nickname: reservation.User.nickname,
             petsitter_name: reservation.Petsitter.name,
             reservationAt: reservation.reservationAt,
@@ -76,10 +76,10 @@ class ReservationService {
       return returns.status400();
     }
   };
-  adminViewReservations = async user_id => {
+  adminViewReservations = async userId => {
     const returns = new Returns('관리자 예약 조회');
     const reservations = await this.reservationRepository.adminViewReservations(
-      user_id,
+      userId,
     );
     try {
       if (reservations) {
@@ -96,23 +96,23 @@ class ReservationService {
     }
   };
   updateOneReservation = async (
-    user_id,
-    petsitter_id,
+    userId,
+    petsitterId,
     reservationAt,
-    reservation_id,
+    reservationId,
   ) => {
     const returns = new Returns('예약 수정');
     try {
-      if (!petsitter_id || !reservationAt || !user_id || !reservation_id) {
+      if (!petsitterId || !reservationAt || !userId || !reservationId) {
         return returns.status400();
       }
       const reservation = await this.reservationRepository.updateOneReservation(
-        user_id,
-        petsitter_id,
+        userId,
+        petsitterId,
         reservationAt,
-        reservation_id,
+        reservationId,
       );
-      if (reservation) {
+      if (reservation.petsitterId) {
         return returns.status200();
       } else {
         return returns.status400();
@@ -121,15 +121,15 @@ class ReservationService {
       return returns.status400();
     }
   };
-  deleteOneReservation = async (user_id, reservation_id) => {
+  deleteOneReservation = async (userId, reservationId) => {
     const returns = new Returns('예약 삭제');
     try {
-      if (!user_id || !reservation_id) {
+      if (!userId || !reservationId) {
         return returns.status400();
       }
       const reservation = await this.reservationRepository.deleteOneReservation(
-        user_id,
-        reservation_id,
+        userId,
+        reservationId,
       );
       if (reservation) {
         return returns.status200();
@@ -140,15 +140,15 @@ class ReservationService {
       return returns.status400();
     }
   };
-  permenantDeleteReservation = async (user_id, reservation_id) => {
+  permenantDeleteReservation = async (userId, reservationId) => {
     const returns = new Returns('예약 영구 삭제');
     try {
-      if (user_id !== 1 || !reservation_id) {
+      if (userId !== 2 || !reservationId) {
         return returns.status400();
       }
       const reservation =
         await this.reservationRepository.permenantDeleteReservation(
-          reservation_id,
+          reservationId,
         );
       if (reservation) {
         return returns.status200();

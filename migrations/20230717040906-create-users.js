@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
-      user_id: {
+      userId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
@@ -31,11 +31,6 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
-      },
-      isDelete: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
       },
     });
   },

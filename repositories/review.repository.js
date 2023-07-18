@@ -3,19 +3,14 @@ const { sequelize } = require('../models');
 const { QueryTypes } = require('sequelize');
 
 class ReviewsRepositories {
-  reviewPostRepository = async (
-    content,
-    petsitter_id,
-    star,
-    reservation_id,
-  ) => {
+  reviewPostRepository = async (content, petsitterId, star, reservationId) => {
     console.log('게시시작');
     try {
       const post = await Reviews.create({
         content,
-        user_id: 1,
-        reservation_id,
-        petsitter_id,
+        userId: 1,
+        reservationId,
+        petsitterId,
         star,
       });
       console.log('게시성공');
@@ -36,22 +31,22 @@ class ReviewsRepositories {
     return post;
   };
 
-  reviewUpdateRepository = async (content, user_id, review_id, star) => {
+  reviewUpdateRepository = async (content, userId, reviewId, star) => {
     const post = await Reviews.update(
       {
-        user_id,
+        userId,
         content,
-        review_id,
+        reviewId,
         star,
       },
-      { where: { review_id } },
+      { where: { reviewId } },
     );
     // 내보낸다.
     return post;
   };
 
-  reviewDeleteRepository = async review_id => {
-    const post = await Reviews.destroy({ where: { review_id } });
+  reviewDeleteRepository = async reviewId => {
+    const post = await Reviews.destroy({ where: { reviewId } });
     // 내보낸다.
     return post;
   };

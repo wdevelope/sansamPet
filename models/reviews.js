@@ -9,40 +9,40 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Reservations, {
-        targetKey: 'reservation_id',
-        foreignKey: 'reservation_id',
+        targetKey: 'reservationId',
+        foreignKey: 'reservationId',
         onDelete: 'cascade',
       });
       this.belongsTo(models.Users, {
-        targetKey: 'user_id',
-        foreignKey: 'user_id',
+        targetKey: 'userId',
+        foreignKey: 'userId',
         onDelete: 'cascade',
       });
       this.belongsTo(models.Petsitters, {
-        targetKey: 'petsitter_id',
-        foreignKey: 'petsitter_id',
+        targetKey: 'petsitterId',
+        foreignKey: 'petsitterId',
         onDelete: 'cascade',
       });
     }
   }
   Reviews.init(
     {
-      review_id: {
+      reviewId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
       },
-      reservation_id: {
+      reservationId: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      petsitter_id: {
+      petsitterId: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      user_id: {
+      userId: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
@@ -66,11 +66,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       deletedAt: {
         type: DataTypes.DATE,
-      },
-      isDelete: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
       },
     },
     {

@@ -2,21 +2,21 @@ const { Reservations, Users, Petsitters } = require('../models');
 const { Op } = require('sequelize');
 
 class ReservationRepository {
-  createOneReservation = async (petsitter_id, reservationAt, user_id) => {
+  createOneReservation = async (petsitterId, reservationAt, userId) => {
     const reservation = await Reservations.findOrCreate({
-      where: { reservationAt, petsitter_id },
+      where: { reservationAt, petsitterId },
       defaults: {
-        petsitter_id,
+        petsitterId,
         reservationAt,
-        user_id,
+        userId,
       },
     });
     return reservation;
   };
 
-  viewAllReservations = async user_id => {
+  viewAllReservations = async userId => {
     const reservations = await Reservations.findAll({
-      where: { user_id, isDelete: 0 },
+      where: { userId, deletedAt: null },
       include: [
         {
           model: Users,
@@ -48,46 +48,46 @@ class ReservationRepository {
     return reservations;
   };
   updateOneReservation = async (
-    user_id,
-    petsitter_id,
+    userId,
+    petsitterId,
     reservationAt,
-    reservation_id,
+    reservationId,
   ) => {
     const existreservation = await Reservations.findOne({
-      where: { petsitter_id, reservationAt },
+      where: { petsitterId, reservationAt, deletedAt: null },
     });
 
     if (!existreservation) {
       const reservation = Reservations.update(
         {
-          petsitter_id,
+          petsitterId,
           reservationAt,
         },
         {
           where: {
-            reservation_id,
-            user_id,
-            isDelete: 0,
+            reservationId,
+            userId,
+            deletedAt: null,
           },
         },
       );
       return reservation;
     }
-    return false;
+    return;
   };
-  deleteOneReservation = async (user_id, reservation_id) => {
+  deleteOneReservation = async (userId, reservationId) => {
+    const now = new Date();
     const reservation = await Reservations.update(
       {
-        isDelete: 1,
-        deletedAt: new Date(),
+        deletedAt: now,
       },
-      { where: { reservation_id, user_id, isDelete: 0 } },
+      { where: { reservationId, userId } },
     );
     return reservation;
   };
-  permenantDeleteReservation = async reservation_id => {
+  permenantDeleteReservation = async reservationId => {
     const reservation = await Reservations.destroy({
-      where: { reservation_id, isDelete: 1 },
+      where: { reservationId },
     });
     return reservation;
   };

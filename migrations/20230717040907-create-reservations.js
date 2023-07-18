@@ -3,27 +3,27 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Reservations', {
-      reservation_id: {
+      reservationId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
+      userId: {
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'user_id',
+          key: 'userId',
         },
         onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
       },
-      petsitter_id: {
+      petsitterId: {
         allowNull: false,
         references: {
           model: 'Petsitters',
-          key: 'petsitter_id',
+          key: 'petsitterId',
         },
         onDelete: 'CASCADE',
         type: Sequelize.INTEGER,
@@ -43,11 +43,6 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
-      },
-      isDelete: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
       },
     });
   },

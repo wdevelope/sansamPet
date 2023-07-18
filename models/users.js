@@ -9,18 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.Reviews, {
-        sourceKey: 'user_id',
-        foreignKey: 'user_id',
+        sourceKey: 'userId',
+        foreignKey: 'userId',
       });
       this.hasMany(models.Reservations, {
-        sourceKey: 'user_id',
-        foreignKey: 'user_id',
+        sourceKey: 'userId',
+        foreignKey: 'userId',
       });
     }
   }
   Users.init(
     {
-      user_id: {
+      userId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
@@ -48,11 +48,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       deletedAt: {
         type: DataTypes.DATE,
-      },
-      isDelete: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
       },
     },
     {

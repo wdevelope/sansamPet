@@ -4,20 +4,20 @@ class ReservationsController {
   reservationService = new ReservationService();
 
   createReservation = async (req, res) => {
-    const { user_id } = res.locals;
-    const { petsitter_id, reservationAt } = req.body;
+    const { userId } = res.locals;
+    const { petsitterId, reservationAt } = req.body;
     const { status, message } =
       await this.reservationService.createOneReservation(
-        petsitter_id,
+        petsitterId,
         reservationAt,
-        user_id,
+        userId,
       );
     return res.status(status).json({ message });
   };
   viewReservations = async (req, res) => {
-    const { user_id } = res.locals;
+    const { userId } = res.locals;
     const { status, message, reservations } =
-      await this.reservationService.viewAllReservations(user_id);
+      await this.reservationService.viewAllReservations(userId);
     return res.status(status).json({ message, reservations });
   };
   adminViewReservations = async (req, res) => {
@@ -26,37 +26,34 @@ class ReservationsController {
     return res.status(status).json({ message, reservations });
   };
   updateReservation = async (req, res) => {
-    const { user_id } = res.locals;
-    const { petsitter_id, reservationAt } = req.body;
-    const { reservation_id } = req.query;
+    const { userId } = res.locals;
+    const { petsitterId, reservationAt } = req.body;
+    const { reservationId } = req.query;
 
     const { status, message } =
       await this.reservationService.updateOneReservation(
-        user_id,
-        petsitter_id,
+        userId,
+        petsitterId,
         reservationAt,
-        reservation_id,
+        reservationId,
       );
     return res.status(status).json({ message });
   };
   deleteReservation = async (req, res) => {
-    const { user_id } = res.locals;
-    const { reservation_id } = req.query;
+    const { userId } = res.locals;
+    const { reservationId } = req.query;
 
     const { status, message } =
-      await this.reservationService.deleteOneReservation(
-        user_id,
-        reservation_id,
-      );
+      await this.reservationService.deleteOneReservation(userId, reservationId);
     return res.status(status).json({ message });
   };
   permenantDeleteReservation = async (req, res) => {
-    const { user_id } = res.locals;
-    const { reservation_id } = req.query;
+    const { userId } = res.locals;
+    const { reservationId } = req.query;
     const { status, message } =
       await this.reservationService.permenantDeleteReservation(
-        user_id,
-        reservation_id,
+        userId,
+        reservationId,
       );
     return res.status(status).json({ message });
   };
