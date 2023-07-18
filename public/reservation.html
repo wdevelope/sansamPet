@@ -1,73 +1,45 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" href="./css/index.css" />
-    <title>reservation</title>
-  </head>
 
-  <body>
-    <!-- nav 바 -->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-success sticky-top">
-      <div class="navbar-brand">
-        <i class="fas fa-leaf fa-2x mr-2"> 산삼펫</i>
-      </div>
-      <button
-        class="navbar-toggler"
-        data-toggle="collapse"
-        data-target="#expandme"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="expandme">
-        <div class="navbar-nav"></div>
-      </div>
-    </nav>
-    <!-- 본문 예약현황 세션 -->
-    <section>
-      <div id="reservationList" class="container mt-4">
-        <div class="row justify-content-center">
-          <div class="col">
-            <h3>예약 현황</h3>
-            <hr />
-          </div>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <title>reservation</title>
+</head>
 
-        <div class="row justify-content-center mt-3">
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Petsitter A</h5>
-                <p class="card-text">7월 21일 예약 완료!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row justify-content-center mt-3">
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Petsitter B</h5>
-                <p class="card-text">9월 7일 예약완료!</p>
-              </div>
-            </div>
-          </div>
+<body>
+  <!-- nav 바 -->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-success sticky-top">
+    <div class="navbar-brand">
+      <i class="fas fa-leaf fa-2x mr-2"> 산삼펫</i>
+    </div>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#expandme">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="expandme">
+      <div class="navbar-nav"></div>
+    </div>
+  </nav>
+  <!-- 본문 예약현황 세션 -->
+  <section>
+    <div id="reservationList" class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col">
+          <h3>예약 현황</h3>
+          <hr />
         </div>
       </div>
-    </section>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+      <div id="reservations"></div>
+
+
+  </section>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/reservation.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>

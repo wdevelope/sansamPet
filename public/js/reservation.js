@@ -1,25 +1,9 @@
-simani(petsitterId);
+// simani(petsitterId);
 listReservations();
 
-async function makeReservation() {
-  const reservationAt = document.querySelector('#reservationAt').value;
-  const petsitterId = document.querySelector('#petsitterId').value;
-  const response = await fetch(`http://localhost:3000/api/reservations`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ reservationAt, petsitterId }),
-  });
-  const result = await response.json();
-  console.log(result.message);
-  window.location.reload();
-  return alert(result.message);
-}
-
 async function editReservation(reservationId) {
-  const reservationAt = document.querySelecftor('#reservationAt').value;
-  const petsitterId = document.querySelector('#petsitterId').value;
+  const reservationAt = document.querySelector('#date').value;
+  const petsitterId = document.querySelector('#simanichoice').value;
   const response = await fetch(
     `http://localhost:3000/api/reservations?reservationId=${reservationId}`,
     {
@@ -63,39 +47,77 @@ async function listReservations() {
   console.log(result.message);
   const reservations = result.reservations
     .map(reservation => {
-      return `<div>
-                <p>예약 번호: ${reservation.reservationId}</p>
-                <p>예약 날짜: ${reservation.reservationAt}</p>
-                <p>예약 고객: ${reservation.nickname}</p>
-                <p>산삼 시터: ${reservation.name}</p>
+      return `<div class="row justify-content-center mt-3">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">심마니 ${
+                        reservation.petsitter_name
+                      }</h5>
+                      <p>예약 번호: ${reservation.reservationId}</p>
+                      <p class="card-text"> 
+                      ${reservation.reservationAt.substr(0, 10)} 예약 완료!</p>
+                      <button type="button" id="resvBtn" data-toggle="modal"
+                      data-target="#loginModal">
+                      수정
+                    </button>
+                      <button id="resvBtn" onclick="deleteReservation(
+                        ${reservation.reservationId})">삭제</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              `;
+            <div>
+            <div
+              class="modal fade"
+              id="loginModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="date">날짜</label>
+                        <input type="date" class="form-control" id="date" />
+                      </div>
+                      <label>심마니 선택</label></br>
+                      <select class="form-select" id="simanichoice">
+                        <option selected>-- 나의 원픽 --</option>
+                        <option value="1">김민준</option>
+                        <option value="2">엄한솔</option>
+                        <option value="3">우성원</option>
+                        <option value="4">이다영</option>
+                      </select>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="editReservation(${
+                      reservation.reservationId
+                    })">
+                      수정
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `;
     })
     .join('');
-  document.querySelector('main').innerHTML = reservations;
-  return;
-}
-
-async function simani(petsitterId) {
-  const response = await fetch(
-    `http://localhost:3000/api/petsitters/:${petsitterId}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  const result = await response.json();
-  console.log(result.message);
-  const simani = result.petsitter;
-  const simanidata = `<div>
-                          <img src="${simani.imgurl}"></img>
-                          <p>이름: ${simani.name}</p>
-                          <p>경력: ${simani.signInCareer}</p>
-                          <p>설명: ${simani.description}</p>
-                        </div>
-                        `;
-  document.querySelector('main').innerHTML = simanidata;
+  document.querySelector('#reservations').innerHTML = reservations;
   return;
 }

@@ -28,8 +28,9 @@ class ReservationsController {
     return res.status(status).json({ message, reservations });
   };
   adminViewReservations = async (req, res) => {
+    const { userId } = res.locals;
     const { status, message, reservations } =
-      await this.reservationService.adminViewReservations();
+      await this.reservationService.adminViewReservations(userId);
     return res.status(status).json({ message, reservations });
   };
   updateReservation = async (req, res) => {

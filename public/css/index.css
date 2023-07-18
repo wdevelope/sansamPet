@@ -59,3 +59,15 @@ main {
   width: 100%;
   height: auto;
 }
+
+h3{
+  color:white;
+}
+
+#resvBtn{
+  background-color: black;
+  color: white;
+  border-radius: 10%;
+  border: none;
+  padding: 8px 10px 8px 10px;
+}
