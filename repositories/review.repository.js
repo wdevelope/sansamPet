@@ -21,15 +21,36 @@ class ReviewsRepositories {
     }
   };
 
-  getAllReviewRepository = async postId => {
-    // 쿼리 문법을 직접 입력해서 가져온다.
-    const post = await sequelize.query(
-      `SELECT * FROM sansam.Reviews LIMIT 30;`,
-      { type: QueryTypes.SELECT },
-    );
-    // 내보낸다.
-    return post;
+  getAllReviewRepository = async petsitterId => {
+    console.log('불러오기 시작');
+    try {
+      const reviews = await Reviews.findAll({
+        attributes: [
+          'content',
+          'userId',
+          'createdAt',
+          'updatedAt',
+          'star',
+          'reservationId',
+          'reviewId',
+        ],
+        where: { petsitterId },
+      });
+      console.log('불러오기 성공');
+      return reviews;
+    } catch (error) {
+      console.error('불러오기 실패:', error.message);
+      throw error;
+    }
   };
+
+  // // 쿼리 문법을 직접 입력해서 가져온다.
+  // const post = await sequelize.query(
+  //   `SELECT * FROM sansam.Reviews LIMIT 30;`,
+  //   { type: QueryTypes.SELECT },
+  // );
+  // // 내보낸다.
+  // return post;
 
   reviewUpdateRepository = async (content, userId, reviewId, star) => {
     const post = await Reviews.update(
@@ -51,5 +72,4 @@ class ReviewsRepositories {
     return post;
   };
 }
-
 module.exports = ReviewsRepositories;

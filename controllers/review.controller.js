@@ -18,28 +18,31 @@ class ReviewsController {
   };
 
   getAllReviewController = async (req, res) => {
+    const { petsitterId } = req.params;
     const { status, message, allPost } =
-      await this.reviewsService.getAllReviewService();
+      await this.reviewsService.getAllReviewService(petsitterId);
     return res.status(status).json({ message, allPost });
   };
 
   reviewUpdate = async (req, res) => {
-    const { content, userId, star } = req.body;
-    const { reviewId } = req.params;
+    const { userId } = res.locals;
+    const { content, star } = req.body;
+    const { reviewId, petsitterId } = req.params;
     const { status, message } = await this.reviewsService.reviewUpdateService(
       content,
       userId,
       reviewId,
       star,
+      petsitterId,
     );
     return res.status(status).json({ message });
   };
 
   reviewDelete = async (req, res) => {
-    const { userId } = req.body;
+    const { userId } = res.locals;
     // 정말 삭제 할 것인지 confirm을 띄워서 isDelete의 값을 만든다.
     const { isDelete } = req.body;
-    const { reviewId } = req.params;
+    const { reviewId, petsitterId } = req.params;
     const { status, message } = await this.reviewsService.reviewDeleteService(
       isDelete,
       reviewId,

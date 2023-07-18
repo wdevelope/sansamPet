@@ -27,8 +27,10 @@ class ReviewsService {
     }
   };
 
-  getAllReviewService = async () => {
-    const allPost = await this.reviewsRepositories.getAllReviewRepository();
+  getAllReviewService = async petsitterId => {
+    const allPost = await this.reviewsRepositories.getAllReviewRepository(
+      petsitterId,
+    );
     if (allPost && !allPost[0]) {
       return {
         status: 200,
@@ -48,32 +50,38 @@ class ReviewsService {
     }
   };
 
-  reviewUpdateService = async (content, userId, reviewId, star) => {
-    try {
-      if (!content || !star) {
-        return {
-          status: 400,
-          message: '미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.',
-        };
-      }
-      const target = await Reviews.findOne({ where: { reviewId, userId } });
-      if (!target) {
-        return { status: 400, message: '수정 게시글 조회에 실패하였습니다.' };
-      }
-      const post = await this.reviewsRepositories.reviewUpdateRepository(
-        content,
-        userId,
-        reviewId,
-        star,
-      );
-      if (post) {
-        return { status: 200, message: '게시물 수정에 성공하였습니다.' };
-      } else {
-        return { status: 400, message: '게시물 수정에 실패하였습니다.' };
-      }
-    } catch (err) {
-      return { status: 400, message: '게시글 수정 실패' };
+  reviewUpdateService = async (
+    content,
+    userId,
+    reviewId,
+    star,
+    petsitterId,
+  ) => {
+    // try {
+    if (!content || !star) {
+      return {
+        status: 400,
+        message: '미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.',
+      };
     }
+    const target = await Reviews.findOne({ where: { reviewId, userId } });
+    if (!target) {
+      return { status: 400, message: '수정 게시글 조회에 실패하였습니다.' };
+    }
+    const post = await this.reviewsRepositories.reviewUpdateRepository(
+      content,
+      userId,
+      reviewId,
+      star,
+    );
+    if (post) {
+      return { status: 200, message: '게시물 수정에 성공하였습니다.' };
+    } else {
+      return { status: 400, message: '게시물 수정에 실패하였습니다.' };
+    }
+    // } catch (err) {
+    //   return { status: 400, message: '게시글 수정 실패' };
+    // }
   };
   reviewDeleteService = async (isDelete, reviewId, userId) => {
     try {
