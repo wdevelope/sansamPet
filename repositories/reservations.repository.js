@@ -71,10 +71,10 @@ class ReservationRepository {
     reservationId,
   ) => {
     const existreservation = await Reservations.findOne({
-      where: { petsitterId, reservationAt, deletedAt: null },
+      where: { petsitterId, reservationAt },
     });
 
-    if (!existreservation) {
+    if (!existreservation || !existreservation.deletedAt) {
       const reservation = Reservations.update(
         {
           petsitterId,
