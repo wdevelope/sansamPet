@@ -1,5 +1,5 @@
 // 시작하자 실행 될 함수들
-listsimanis();
+// listsimanis();
 buttons();
 
 const socket = io.connect('/');
@@ -57,6 +57,11 @@ async function signup() {
 // 예약 조회 클릭
 function clickReservation() {
   location.href = 'http://localhost:3000/reservation.html';
+}
+
+// 심마니 클릭
+function clicksimani() {
+  location.href = 'http://localhost:3000/sitterInfo.html';
 }
 
 // 심마니들 카드 붙이기

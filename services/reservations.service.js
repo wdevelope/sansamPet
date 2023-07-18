@@ -45,7 +45,7 @@ class ReservationService {
     }
   };
   viewAllReservations = async userId => {
-    const returns = new Returns('예약 조회');
+    const returns = new Returns('사용자별 예약 조회');
     const reservations = await this.reservationRepository.viewAllReservations(
       userId,
     );
@@ -66,7 +66,7 @@ class ReservationService {
         });
         return {
           status: 200,
-          message: returns.status200(),
+          message: '사용자별 예약 조회에 성공하였습니다.',
           reservations: showreservations,
         };
       } else {
