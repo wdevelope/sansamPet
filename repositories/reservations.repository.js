@@ -1,4 +1,5 @@
 const { Reservations, Users, Petsitters } = require('../models');
+const { Op } = require('sequelize');
 
 class ReservationRepository {
   createOneReservation = async (petsitter_id, reservationAt, user_id) => {
@@ -35,14 +36,27 @@ class ReservationRepository {
     reservationAt,
     reservation_id,
   ) => {
-    const reservation = await Reservations.update(
-      {
-        petsitter_id,
-        reservationAt,
-      },
-      { where: { reservation_id, user_id, isDelete: 0 } },
-    );
-    return reservation;
+    const existreservation = await Reservations.findOne({
+      where: { petsitter_id, reservationAt },
+    });
+
+    if (!existreservation) {
+      const reservation = Reservations.update(
+        {
+          petsitter_id,
+          reservationAt,
+        },
+        {
+          where: {
+            reservation_id,
+            user_id,
+            isDelete: 0,
+          },
+        },
+      );
+      return reservation;
+    }
+    return false;
   };
   deleteOneReservation = async (user_id, reservation_id) => {
     const reservation = await Reservations.update(
