@@ -1,12 +1,17 @@
-// 로그인 버튼에 걸어 줄 함수
-// input : #loginNickname, #loginPassword
-// button : login
+// 시작하자 실행 될 함수들
+listsimanis();
+
+const socket = io.connect('/');
+
+socket.on('LOGIN_DATA', function (data) {
+  const { nickname, date } = data;
+  loginNotification(nickname, date);
+});
+
 async function login() {
-  const password = document.querySelector('#loginPassword').value;
-  const nickname = document.querySelector('#loginNickname').value;
-  const loginbtn = document.querySelector('#loginbtn');
-  const signupbtn = document.querySelector('#signupbtn');
-  const reservationbtn = document.querySelector('#reservationbtn');
+  const password = document.querySelector('#password').value;
+  const nickname = document.querySelector('#nickname').value;
+  const point = document.querySelector('#point');
   const response = await fetch(`http://localhost:3000/api/login`, {
     method: 'POST',
     headers: {
@@ -20,20 +25,18 @@ async function login() {
     socket.emit('LOGIN', {
       nickname,
     });
-    loginbtn.style.display = none;
-    signupbtn.style.display = none;
-    reservationbtn.style.display = block;
+    const reservationBtn = `<button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" onclick="clickReservation()">
+                                예약 현황
+                            </button>`;
+    point.innerHTML = reservationBtn;
   }
   return alert(result.message);
 }
 
-// 회원가입 버튼에 걸어줄 함수
-// input : #signupNickname, #signupPassword, #signupConfirm
-// button : signup
 async function signup() {
-  const confirm = document.querySelector('#signupConfirm').value;
-  const password = document.querySelector('#signupPassword').value;
-  const nickname = document.querySelector('#signupNickname').value;
+  const confirm = document.querySelector('#confirmPassword').value;
+  const password = document.querySelector('#registerPassword').value;
+  const nickname = document.querySelector('#registerNickname').value;
   const response = await fetch(`http://localhost:3000/api/signup`, {
     method: 'POST',
     headers: {
@@ -82,6 +85,6 @@ async function listsimanis() {
       </div>`;
     })
     .join('');
-  document.querySelector('main').insertAdjacentHTML('beforeend', simanis);
+  document.querySelector('main').innerHTML = simanis;
   return;
 }
