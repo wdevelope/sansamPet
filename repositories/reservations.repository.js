@@ -31,6 +31,23 @@ class ReservationRepository {
     return reservations;
   };
 
+  viewPetsitterReservations = async petsitterId => {
+    const reservations = await Reservations.findAll({
+      where: { petsitterId, deletedAt: null },
+      include: [
+        {
+          model: Users,
+          attributes: ['nickname'],
+        },
+        {
+          model: Petsitters,
+          attributes: ['name'],
+        },
+      ],
+    });
+    return reservations;
+  };
+
   adminViewReservations = async () => {
     const reservations = await Reservations.findAll({
       include: [

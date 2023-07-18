@@ -3,6 +3,13 @@ const ReservationService = require('../services/reservations.service');
 class ReservationsController {
   reservationService = new ReservationService();
 
+  viewPetsitterReservations = async (req, res) => {
+    const { petsitterId } = req.params;
+    const { status, message, reservations } =
+      await this.reservationService.viewPetsitterReservations(petsitterId);
+    return res.status(status).json({ message, reservations });
+  };
+
   createReservation = async (req, res) => {
     const { userId } = res.locals;
     const { petsitterId, reservationAt } = req.body;
