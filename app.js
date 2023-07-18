@@ -9,9 +9,17 @@ require('./db');
 
 const app = express();
 const http = Server(app);
+const cors = require('cors');
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  }),
+);
 
 app.use('/api', [
   usersRouter,

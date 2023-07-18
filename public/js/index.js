@@ -1,17 +1,13 @@
 // 시작하자 실행 될 함수들
 listsimanis();
+buttons();
 
 const socket = io.connect('/');
-
-socket.on('LOGIN_DATA', function (data) {
-  const { nickname, date } = data;
-  loginNotification(nickname, date);
-});
 
 async function login() {
   const password = document.querySelector('#password').value;
   const nickname = document.querySelector('#nickname').value;
-  const point = document.querySelector('#point');
+
   const response = await fetch(`http://localhost:3000/api/login`, {
     method: 'POST',
     headers: {
@@ -25,12 +21,21 @@ async function login() {
     socket.emit('LOGIN', {
       nickname,
     });
-    const reservationBtn = `<button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" onclick="clickReservation()">
-                                예약 현황
-                            </button>`;
-    point.innerHTML = reservationBtn;
+    sessionStorage.setItem('loggedin', '1');
+    location.reload();
   }
   return alert(result.message);
+}
+
+function buttons() {
+  if (sessionStorage.getItem('loggedin') == 1) {
+    const reservationBtn = document.querySelector('#reservationBtn');
+    const loginBtn = document.querySelector('#loginBtn');
+    const signupBtn = document.querySelector('#signupBtn');
+    reservationBtn.style.display = 'block';
+    loginBtn.style.display = 'none';
+    signupBtn.style.display = 'none';
+  }
 }
 
 async function signup() {

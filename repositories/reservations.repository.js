@@ -30,6 +30,23 @@ class ReservationRepository {
     });
     return reservations;
   };
+
+  adminViewReservations = async () => {
+    const reservations = await Reservations.findAll({
+      include: [
+        {
+          model: Users,
+          attributes: ['nickname'],
+        },
+        {
+          model: Petsitters,
+          attributes: ['name'],
+        },
+      ],
+      order: [['updatedAt', 'DESC']],
+    });
+    return reservations;
+  };
   updateOneReservation = async (
     user_id,
     petsitter_id,

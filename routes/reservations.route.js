@@ -30,4 +30,10 @@ router.delete(
   authmiddleware,
   reservationsContoller.permenantDeleteReservation,
 );
+
+router.get(
+  '/admin/reservations',
+  authmiddleware,
+  reservationsContoller.adminViewReservations,
+);
 module.exports = router;

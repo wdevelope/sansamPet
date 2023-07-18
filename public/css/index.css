@@ -17,3 +17,7 @@ main {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+#reservationBtn{
+  display: none;
+}
