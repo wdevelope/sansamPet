@@ -1,0 +1,19 @@
+main {
+  display: grid;
+  grid-gap: 20px;
+  margin-top: 20px;
+  justify-content: center;
+  justify-items: center;
+}
+
+@media (min-width: 500px) {
+  main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  main {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
