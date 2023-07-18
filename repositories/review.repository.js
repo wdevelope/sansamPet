@@ -3,19 +3,14 @@ const { sequelize } = require('../models');
 const { QueryTypes } = require('sequelize');
 
 class ReviewsRepositories {
-  reviewPostRepository = async (
-    content,
-    petsitter_id,
-    star,
-    reservation_id,
-  ) => {
+  reviewPostRepository = async (content, petsitterId, star, reservationId) => {
     console.log('게시시작');
     try {
       const post = await Reviews.create({
         content,
-        user_id: 1,
-        reservation_id,
-        petsitter_id,
+        userID: 1,
+        reservationId,
+        petsitterId,
         star,
       });
       console.log('게시성공');
@@ -36,22 +31,39 @@ class ReviewsRepositories {
     return post;
   };
 
-  reviewUpdateRepository = async (content, user_id, review_id, star) => {
-    const post = await Reviews.update(
-      {
-        user_id,
-        content,
-        review_id,
-        star,
-      },
-      { where: { review_id } },
-    );
-    // 내보낸다.
-    return post;
+  reviewUpdateRepository = async (
+    content,
+    userID,
+    reviewId,
+    star,
+    isDelete,
+  ) => {
+    if (isDelete === true) {
+      const post = await Reviews.update(
+        {
+          isDelete: 1,
+        },
+        { where: { reviewId } },
+      );
+      // 내보낸다.
+      return post;
+    } else {
+      const post = await Reviews.update(
+        {
+          userID,
+          content,
+          reviewId,
+          star,
+        },
+        { where: { reviewId } },
+      );
+      // 내보낸다.
+      return post;
+    }
   };
 
-  reviewDeleteRepository = async review_id => {
-    const post = await Reviews.destroy({ where: { review_id } });
+  reviewDeleteRealRepository = async reviewId => {
+    const post = await Reviews.destroy({ where: { reviewId } });
     // 내보낸다.
     return post;
   };

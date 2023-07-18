@@ -9,35 +9,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.Reviews, {
-        sourceKey: 'reservation_id',
-        foreignKey: 'reservation_id',
+        sourceKey: 'reservationId',
+        foreignKey: 'reservationId',
       });
       this.belongsTo(models.Users, {
-        targetKey: 'user_id',
-        foreignKey: 'user_id',
+        targetKey: 'userID',
+        foreignKey: 'userID',
         onDelete: 'cascade',
       });
       this.belongsTo(models.Petsitters, {
-        targetKey: 'petsitter_id',
-        foreignKey: 'petsitter_id',
+        targetKey: 'petsitterId',
+        foreignKey: 'petsitterId',
         onDelete: 'cascade',
       });
     }
   }
   Reservations.init(
     {
-      reservation_id: {
+      reservationId: {
         allowNull: false,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
       },
-      user_id: {
+      userID: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      petsitter_id: {
+      petsitterId: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
