@@ -76,13 +76,46 @@ class ReservationService {
       return returns.status400();
     }
   };
+
+  viewPetsitterReservations = async petsitterId => {
+    const returns = new Returns('펫시터별 예약 조회');
+    const reservations =
+      await this.reservationRepository.viewPetsitterReservations(petsitterId);
+    try {
+      if (!reservations[0]) {
+        return {
+          status: 200,
+          message: '예약이 없습니다. 첫 예약을 진행해 주세요.',
+        };
+      } else if (reservations) {
+        const showreservations = reservations.map(reservation => {
+          return {
+            reservationId: reservation.reservationId,
+            user_nickname: reservation.User.nickname,
+            petsitter_name: reservation.Petsitter.name,
+            reservationAt: reservation.reservationAt,
+          };
+        });
+        return {
+          status: 200,
+          message: returns.status200(),
+          reservations: showreservations,
+        };
+      } else {
+        return returns.status400();
+      }
+    } catch (err) {
+      return returns.status400();
+    }
+  };
+
   adminViewReservations = async userId => {
     const returns = new Returns('관리자 예약 조회');
     const reservations = await this.reservationRepository.adminViewReservations(
       userId,
     );
     try {
-      if (reservations) {
+      if (reservations && userId == 2) {
         return {
           status: 200,
           message: '관리자 예약 조회에 성공하였습니다.',
