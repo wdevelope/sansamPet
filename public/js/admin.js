@@ -12,6 +12,11 @@ function notice() {
   });
 }
 
+//로고 홈으로
+function logo() {
+  location.href = 'http://localhost:3000';
+}
+
 async function login() {
   const password = document.querySelector('#password').value;
   const nickname = document.querySelector('#nickname').value;
@@ -56,6 +61,7 @@ async function listReservations() {
   document.querySelector('#editSimani').style.display = 'block';
   document.querySelector('#deleteSimani').style.display = 'block';
   document.querySelector('#adminlogin').style.display = 'none';
+  document.querySelector('#superDeleteSimani').style.display = 'block';
   const response = await fetch(`http://localhost:3000/api/admin/reservations`, {
     method: 'GET',
     headers: {
@@ -72,31 +78,104 @@ async function listReservations() {
       <p>예약 날짜: ${reservation.reservationAt}</p>
       <p>산삼 시터: ${reservation.Petsitter.name}</p>
       <p>고객 성함: ${reservation.User.nickname}</p>
+      <p>삭제 날짜: ${reservation.deletedAt}</p>
+      <button type="button" class="btn btn-outline-light my-2 my-sm-0" onclick="superDeleteResv(${reservation.reservationId})">삭제</button>
       </div>
        `;
     })
     .join('');
-  const noticebox = `
+  const noticebox = `<div id = noticebox>
                     <label>공지사항</label></br>
                     <textarea id="noticecontent"></textarea>
-                    <button onclick="notice()">모든 사용자에게 알림 전송</button>`;
+                    <button class="btn btn-outline-light my-2 my-sm-0" onclick="notice()">모든 사용자에게 알림 전송</button>
+                    <div>`;
   document.querySelector('#reservationlist').innerHTML = reservations;
   document.querySelector('#notice').innerHTML = noticebox;
   return;
 }
 
-async function createSimani() {
-  const reservationAt = document.querySelector('#date').value;
-  const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
-  const response = await fetch(`http://localhost:3000/api/reservations`, {
+async function registerSimani() {
+  const description = document.querySelector('#description').value;
+  const name = document.querySelector('#registerNickname').value;
+  const signInCareer = document.querySelector('#signInCareer').value;
+  const imgurl = document.querySelector('#imgurl').value;
+  const response = await fetch(`http://localhost:3000/api/admin/simanis`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ reservationAt, petsitterId }),
+    body: JSON.stringify({ signInCareer, imgurl, name, description }),
   });
   const result = await response.json();
   console.log(result.message);
   window.location.reload();
+  return alert(result.message);
+}
+
+async function editSimani() {
+  const description = document.querySelector('#editdescription').value;
+  const name = document.querySelector('#editNickname').value;
+  const signInCareer = document.querySelector('#editsignInCareer').value;
+  const imgurl = document.querySelector('#editimgurl').value;
+  const response = await fetch(
+    `http://localhost:3000/api/admin/simanis?name=${name}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ signInCareer, imgurl, description }),
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  return alert(result.message);
+}
+
+async function deleteSimani() {
+  const name = document.querySelector('#deleteNickname').value;
+  const response = await fetch(
+    `http://localhost:3000/api/admin/simanis?name=${name}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  return alert(result.message);
+}
+
+async function superDeleteSimani() {
+  const name = document.querySelector('#superDeleteNickname').value;
+  const response = await fetch(
+    `http://localhost:3000/api/superadmin/simanis?name=${name}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  return alert(result.message);
+}
+
+async function superDeleteResv(reservationId) {
+  const response = await fetch(
+    `http://localhost:3000/api/admin/reservations?reservationId=${reservationId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  listReservations();
   return alert(result.message);
 }

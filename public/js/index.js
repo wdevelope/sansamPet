@@ -1,6 +1,7 @@
 // 시작하자 실행 될 함수들
 listsimanis();
 buttons();
+enter();
 
 const socket = io.connect('/');
 
@@ -19,6 +20,15 @@ function noticeNotification(notice, date) {
 function logo() {
   location.href = 'http://localhost:3000';
 }
+
+function enter() {
+  document.getElementById('search').addEventListener('keyup', function (e) {
+    if (e.code === 'Enter') {
+      document.getElementById('searchBtn').click();
+    }
+  });
+}
+
 //로그인
 async function login() {
   const password = document.querySelector('#password').value;

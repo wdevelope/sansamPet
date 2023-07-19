@@ -7,7 +7,7 @@ class PetsitterRepository {
       `SELECT p.petsitterId, p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
           FROM Petsitters AS p
           LEFT JOIN Reviews as r on p.petsitterId = r.petsitterId 
-              WHERE p.deletedAt IS NULL
+              WHERE p.deletedAt IS NULL AND r.deletedAt IS NULL
               GROUP BY p.petsitterId 
               ORDER BY starAvg DESC`,
       { type: QueryTypes.SELECT },
@@ -20,7 +20,7 @@ class PetsitterRepository {
       `SELECT p.petsitterId, p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
           FROM Petsitters AS p
           LEFT JOIN Reviews as r on p.petsitterId = r.petsitterId 
-              WHERE p.deletedAt IS NULL AND p.petsitterId = :petsitterId
+              WHERE p.deletedAt IS NULL AND r.deletedAt IS NULL AND p.petsitterId = :petsitterId
               GROUP BY p.petsitterId 
               ORDER BY starAvg DESC`,
       { replacements: { petsitterId }, type: QueryTypes.SELECT },

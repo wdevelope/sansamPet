@@ -18,7 +18,7 @@ class SimaniRepository {
     return simanis;
   };
 
-  editSimani = async (name, imgurl, signInCareer, description, petsitterId) => {
+  editSimani = async (name, imgurl, signInCareer, description) => {
     const simani = Petsitters.update(
       {
         name,
@@ -28,26 +28,26 @@ class SimaniRepository {
       },
       {
         where: {
-          petsitterId,
+          name,
           deletedAt: null,
         },
       },
     );
     return simani;
   };
-  deleteSimani = async petsitterId => {
+  deleteSimani = async name => {
     const now = new Date();
     const simani = await Petsitters.update(
       {
         deletedAt: now,
       },
-      { where: { petsitterId } },
+      { where: { name } },
     );
     return simani;
   };
-  superDeleteSimani = async petsitterId => {
+  superDeleteSimani = async name => {
     const simani = await Petsitters.destroy({
-      where: { petsitterId },
+      where: { name },
     });
     return simani;
   };

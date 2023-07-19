@@ -5,7 +5,7 @@ const config = require('../config/config.js');
 async function isAuth(req, res, next) {
   const token = req.cookies['Authorization']; // 쿠키에서 토큰 추출
 
-  if (!token || !token.startsWith('Bearer')) {
+  if (!token) {
     return res.status(400).json({ message: '토큰이 제공되지 않았습니다.' });
   }
 

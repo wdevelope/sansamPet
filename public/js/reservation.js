@@ -119,6 +119,11 @@ async function listReservations() {
                         <option value="2">엄한솔</option>
                         <option value="3">우성원</option>
                         <option value="4">이다영</option>
+                        <option value="5">원장님</option>
+                        <option value="6">뽀로로</option>
+                        <option value="7">르탄이</option>
+                        <option value="9">해리포터</option>
+                        <option value="10">시나모롤</option>
                       </select>
                     </form>
                   </div>

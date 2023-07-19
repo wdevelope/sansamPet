@@ -48,6 +48,7 @@ async function simani() {
   const result = await response.json();
   console.log(result.message);
   const simani = result.petsitter;
+  let star_repeat = '⭐️'.repeat(simani.star);
   const simanidata = ` <div class="container mt-4">
                         <div class="row justify-content-center">
                             <div class="col-md-5">
@@ -61,7 +62,8 @@ async function simani() {
                                     ${simani.description}
                                 </p>
                                 <div class="d-flex justify-content-between">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
+                                  ${star_repeat}
+                                    <button class="btn btn-primary" id ="resvBtn" data-toggle="modal" data-target="#reservationModal">
                                     예약하기
                                     </button>
                                 </div>

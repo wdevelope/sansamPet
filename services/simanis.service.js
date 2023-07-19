@@ -69,24 +69,10 @@ class SimaniService {
     }
   };
 
-  editSimani = async (
-    name,
-    imgurl,
-    signInCareer,
-    description,
-    userId,
-    petsitterId,
-  ) => {
+  editSimani = async (name, imgurl, signInCareer, description, userId) => {
     const returns = new Returns('심마니 정보 수정');
     try {
-      if (
-        !name ||
-        !imgurl ||
-        !signInCareer ||
-        !description ||
-        !userId ||
-        !petsitterId
-      ) {
+      if (!name || !imgurl || !signInCareer || !description || !userId) {
         return returns.status400();
       }
       const simani = await this.simaniRepository.editSimani(
@@ -94,7 +80,6 @@ class SimaniService {
         imgurl,
         signInCareer,
         description,
-        petsitterId,
       );
       if (simani[0] && userId == 2) {
         return returns.status200();
@@ -105,13 +90,13 @@ class SimaniService {
       return returns.status400();
     }
   };
-  deleteSimani = async (userId, petsitterId) => {
+  deleteSimani = async (userId, name) => {
     const returns = new Returns('심마니 삭제');
     try {
-      if (!userId == 2 || !petsitterId) {
+      if (!userId == 2 || !name) {
         return returns.status400();
       }
-      const reservation = await this.simaniRepository.deleteSimani(petsitterId);
+      const reservation = await this.simaniRepository.deleteSimani(name);
       if (reservation) {
         return returns.status200();
       } else {
@@ -121,15 +106,13 @@ class SimaniService {
       return returns.status400();
     }
   };
-  superDeleteSimani = async (userId, petsitterId) => {
+  superDeleteSimani = async (userId, name) => {
     const returns = new Returns('심마니 영구 삭제');
     try {
-      if (userId !== 2 || !petsitterId) {
+      if (userId !== 2 || !name) {
         return returns.status400();
       }
-      const reservation = await this.simaniRepository.superDeleteSimani(
-        petsitterId,
-      );
+      const reservation = await this.simaniRepository.superDeleteSimani(name);
       if (reservation) {
         return returns.status200();
       } else {
