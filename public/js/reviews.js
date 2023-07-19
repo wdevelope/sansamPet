@@ -21,16 +21,16 @@ async function listOfReviews(petsitterId) {
       let star_repeat = '⭐️'.repeat(review.star);
       console.log(petsitterId);
       console.log(review.reviewId);
-      return `<div id = "shadedBox">
-    <p>${review.User.nickname}님의 예약 번호 ${
+      return `<div class = "shadedBox">
+    <p id ="reviewtitle">${review.User.nickname}님의 예약 번호 ${
       review.reservationId
     } 번에 대한 리뷰입니다. </p>
-    <p>${review.content}</p>
+    <p id ="reviewcontent">${review.content}</p>
     <p>${star_repeat}</p>
     <p>작성 : ${review.createdAt.split('T')[0]}</p>
     <p>수정 : ${review.updatedAt.split('T')[0]}</p>
     <br>
-    <button class="btn btn-success" id="reviewBtn" onClick="reviewHideController(${petsitterId},${
+    <button id="reviewBtn" onClick="reviewHideController(${petsitterId},${
       review.reviewId
     })">리뷰삭제</button>
     <button type="button" id="reviewBtn" data-toggle="modal"
@@ -75,7 +75,7 @@ async function listOfReviews(petsitterId) {
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="reviewUpdateController(${petsitterId},${
+          <button type="button" id="reviewBtn" onclick="reviewUpdateController(${petsitterId},${
             review.reviewId
           })">
             수정

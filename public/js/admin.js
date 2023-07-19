@@ -74,7 +74,7 @@ async function listReservations() {
     .map(reservation => {
       return `
       <div id = "reservation">
-      <h4>예약 번호: ${reservation.reservationId}</h4>
+      <p id="resvtitle">예약 번호: ${reservation.reservationId}</p>
       <p>예약 날짜: ${reservation.reservationAt}</p>
       <p>산삼 시터: ${reservation.Petsitter.name}</p>
       <p>고객 성함: ${reservation.User.nickname}</p>

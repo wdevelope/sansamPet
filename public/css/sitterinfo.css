@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Gamja+Flower&family=Jua&family=Noto+Sans+KR&display=swap');
-
-* {
-  font-family: 'Bagel Fat One', cursive;
-  font-family: 'Gamja Flower', cursive;
-  font-family: 'Jua', sans-serif;
-  font-family: 'Noto Sans KR', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Diphylleia&family=Nanum+Myeongjo&display=swap');
 
 body::before {
   content: '';
@@ -25,8 +18,12 @@ body {
   background-size: auto;
 }
 
+#navbar {
+  background-color: rgb(35, 44, 44);
+}
+
 #logo:hover {
-  color: LightSalmon;
+  color: lightgray;
   cursor: pointer;
 }
 
@@ -79,8 +76,17 @@ h3 {
   color: white;
 }
 
-#resvBtn {
+#resvBtn,
+#reviewBtn {
   background-color: black;
+  color: white;
+  border-radius: 10%;
+  border: none;
+  padding: 8px 10px 8px 10px;
+}
+
+.writereviewBtn {
+  background-color: darkolivegreen;
   color: white;
   border-radius: 10%;
   border: none;
@@ -97,7 +103,26 @@ h3 {
   box-shadow: 12px 12px 2px 1px rgb(86, 122, 122);
   margin: 20px 40px 20px 20px;
   padding: 20px 40px 20px 20px;
+  font-size: 17px;
 }
-#searchBtn {
-  width: 80px;
+.reservationBox {
+  padding: 20px 40px 20px 20px;
+}
+
+#reviewcontent {
+  font-family: 'Diphylleia', serif;
+}
+#resvtitle {
+  font-size: 30px;
+  font-weight: 800;
+  color: rgb(35, 44, 44);
+}
+
+#reviewtitle,
+#resvdate {
+  color: black;
+  background-color: rgb(160, 183, 183);
+  font-size: 15px;
+  padding: 5px;
+  font-weight: 600;
 }
