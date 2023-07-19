@@ -83,14 +83,8 @@ class ReviewsService {
     //   return { status: 400, message: '게시글 수정 실패' };
     // }
   };
-  reviewDeleteService = async (isDelete, reviewId, userId) => {
+  reviewDeleteService = async (reviewId, userId) => {
     try {
-      if (isDelete === false) {
-        return {
-          status: 400,
-          message: '본인 요청으로 삭제 취소',
-        };
-      }
       const target = await Reviews.findOne({ where: { reviewId, userId } });
       if (!target) {
         return { status: 400, message: '삭제 게시글 조회에 실패하였습니다.' };

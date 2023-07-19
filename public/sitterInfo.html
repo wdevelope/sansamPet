@@ -45,7 +45,7 @@
               <hr />
               <h6>리뷰 작성</h6>
               <div class="form-group">
-                <textarea class="form-control" id="content" rows="4" placeholder="리뷰 내용"></textarea>
+                <input class="form-control" id="content" rows="4" placeholder="리뷰 내용">
                 <div class="input-group mb-3">
                   <label class="input-group-text" for="inputGroupSelect01">별점</label>
                   <select class="form-select" id="star">
@@ -58,6 +58,7 @@
                   </select>
                 </div>
               </div>
+              <!-- 현재 petsitterId reservationId 는 .js에서 const로 설정해둠 꼭 수정할 것 -->
               <button class="btn btn-success" id="reviewCreate" onClick="reviewCreate(petsitterId,reservationId)">리뷰
                 작성</button>
             </div>

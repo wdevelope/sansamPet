@@ -40,11 +40,8 @@ class ReviewsController {
 
   reviewDelete = async (req, res) => {
     const { userId } = res.locals;
-    // 정말 삭제 할 것인지 confirm을 띄워서 isDelete의 값을 만든다.
-    const { isDelete } = req.body;
     const { reviewId, petsitterId } = req.params;
     const { status, message } = await this.reviewsService.reviewDeleteService(
-      isDelete,
       reviewId,
       userId,
     );

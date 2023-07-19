@@ -35,6 +35,7 @@ class ReviewsRepositories {
           'reviewId',
         ],
         where: { petsitterId },
+        order: [['createdAt', 'DESC']],
       });
       console.log('불러오기 성공');
       return reviews;
