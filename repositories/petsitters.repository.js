@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 class PetsitterRepository {
   viewallpesitters = async () => {
     const petsitters = await sequelize.query(
-      `SELECT p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
+      `SELECT p.petsitterId, p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
           FROM Petsitters AS p
           LEFT JOIN Reviews as r on p.petsitterId = r.petsitterId 
               WHERE p.deletedAt IS NULL
@@ -17,7 +17,7 @@ class PetsitterRepository {
 
   viewonepetsitter = async petsitterId => {
     const petsitters = await sequelize.query(
-      `SELECT p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
+      `SELECT p.petsitterId, p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
           FROM Petsitters AS p
           LEFT JOIN Reviews as r on p.petsitterId = r.petsitterId 
               WHERE p.deletedAt IS NULL AND p.petsitterId = :petsitterId

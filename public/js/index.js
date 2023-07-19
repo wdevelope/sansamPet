@@ -1,5 +1,5 @@
 // 시작하자 실행 될 함수들
-// listsimanis();
+listsimanis();
 buttons();
 
 const socket = io.connect('/');
@@ -72,7 +72,8 @@ function clickReservation() {
 }
 
 // 심마니 클릭
-function clicksimani() {
+function clicksimani(petsitterId) {
+  localStorage.setItem('clickedPetsitter', `${petsitterId}`);
   location.href = 'http://localhost:3000/sitterInfo.html';
 }
 
@@ -88,22 +89,18 @@ async function listsimanis() {
   console.log(result.message);
   const simanis = result.petsitters
     .map(simani => {
+      let star_repeat = '⭐️'.repeat(simani.star);
       return `
-      <div class="card" style="width: 18rem">
+      <div class="card" style="width: 18rem" onclick ="clicksimani(${simani.petsitterId})">
         <img src="${simani.imgurl}" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title">${simani.name}</h5>
           <p class="card-text">${simani.description}</p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">${star_repeat}</li>
+          <li class="list-group-item">${simani.signInCareer} 일간 산삼을 키웠습니다.</li>
         </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
       </div>`;
     })
     .join('');

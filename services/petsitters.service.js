@@ -36,6 +36,7 @@ class PetsitterService {
           const career = petsitter.signInCareer;
           const now = new Date();
           return {
+            petsitterId: petsitter.petsitterId,
             name: petsitter.name,
             imgurl: petsitter.imgurl,
             description: petsitter.description,
@@ -69,6 +70,7 @@ class PetsitterService {
         const career = petsitter[0].signInCareer;
         const now = new Date();
         const showpetsitter = {
+          petsitterId: petsitter[0].petsitterId,
           name: petsitter[0].name,
           imgurl: petsitter[0].imgurl,
           description: petsitter[0].description,

@@ -1,13 +1,11 @@
 //./js/reviews.js
-const petsitterId = 1;
-const reservationId = 3;
+const petsitterId = localStorage.getItem('clickedPetsitter');
 
 // 바로 실행
 listOfReviews(petsitterId);
 
 // 붙여넣기
 async function listOfReviews(petsitterId) {
-  console.log('붙여넣기 시작함');
   const response = await fetch(
     `http://localhost:3000/api/petsitters/${petsitterId}/reviews`,
     {
@@ -19,10 +17,11 @@ async function listOfReviews(petsitterId) {
   );
   const result = await response.json();
   console.log(result);
-  const reviews = result.allPost.map(review => {
-    console.log('petsitterId :', petsitterId);
-    console.log('review.reviewId :', review.reviewId);
-    return `<div class="shadedBox">
+  const reviews = result.allPost
+    .map(review => {
+      console.log(petsitterId);
+      console.log(review.reviewId);
+      return `<div>
     <p style="display:none;">시터번호 : ${petsitterId}</p>
     <div class='line2'>
     <p>${review.userId} 회원님의 ${
@@ -90,10 +89,10 @@ async function listOfReviews(petsitterId) {
     </div>
   </div>
   `;
-  });
-  console.log('reviews :', reviews);
+    })
+    .join('');
+  console.log(reviews);
   document.querySelector('#reviewsList').innerHTML = reviews;
-  console.log('붙여넣기 완료');
   return;
 }
 
@@ -128,7 +127,7 @@ async function reviewUpdate(petsitterId, reviewId) {
   const star = document.querySelector('#reviewstar').value;
   console.log('선언함');
   const response = await fetch(
-    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
+    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reservationId}`,
     {
       method: 'PATCH',
       headers: {
