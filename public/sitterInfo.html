@@ -1,125 +1,175 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/index.css" />
+    <title>sitterInfo</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link rel="stylesheet" href="./css/index.css" />
-  <title>sitterInfo</title>
-</head>
-
-<body>
-  <!-- nav 바 -->
-  <nav id="navbar" class="navbar navbar-expand-sm navbar-dark bg-success sticky-top">
-    <div class="navbar-brand">
-      <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()"> 산삼 pet</i>
-    </div>
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#expandme">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="expandme">
-      <div class="navbar-nav"></div>
-    </div>
-  </nav>
-  <!-- 본문 예약현황 세션 -->
-  <section>
-    <div class="container mt-4">
-      <div class="row justify-content-center">
-        <div class="col-md-5">
-          <div class="card">
-            <div class="card-img-container">
-              <img src="./img/seongwon.png" alt="Sitter Image" />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">심마니</h5>
-              <p class="card-text">
-                산삼 육성에 인생을 바쳤습니다. 산테크로 내집마련 가즈아~!
-              </p>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
-                  예약하기
+  <body>
+    <!-- nav 바 -->
+    <nav
+      id="navbar"
+      class="navbar navbar-expand-sm navbar-dark bg-success sticky-top"
+    >
+      <div class="navbar-brand">
+        <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()">
+          산삼 pet</i
+        >
+      </div>
+      <button
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#expandme"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="expandme">
+        <div class="navbar-nav"></div>
+      </div>
+    </nav>
+    <!-- 본문 예약현황 세션 -->
+    <section>
+      <div class="container mt-4">
+        <div class="row justify-content-center">
+          <div class="col-md-5">
+            <div class="card">
+              <div class="card-img-container">
+                <img src="./img/seongwon.png" alt="Sitter Image" />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">심마니</h5>
+                <p class="card-text">
+                  산삼 육성에 인생을 바쳤습니다. 산테크로 내집마련 가즈아~!
+                </p>
+                <div class="d-flex justify-content-between">
+                  <button
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#reservationModal"
+                  >
+                    예약하기
+                  </button>
+                </div>
+                <hr />
+                <h6>리뷰 작성</h6>
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    id="content"
+                    rows="4"
+                    placeholder="리뷰 내용"
+                  />
+                  <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01"
+                      >별점</label
+                    >
+                    <select class="form-select" id="star">
+                      <option selected>-- 선택하기 --</option>
+                      <option value="1">⭐</option>
+                      <option value="2">⭐⭐</option>
+                      <option value="3">⭐⭐⭐</option>
+                      <option value="4">⭐⭐⭐⭐</option>
+                      <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- 현재 petsitterId reservationId 는 .js에서 const로 설정해둠 꼭 수정할 것 -->
+                <button
+                  class="btn btn-success"
+                  id="reviewCreate"
+                  onClick="reviewCreate(petsitterId,reservationId)"
+                >
+                  리뷰 작성
                 </button>
               </div>
-              <hr />
-              <h6>리뷰 작성</h6>
-              <div class="form-group">
-                <input class="form-control" id="content" rows="4" placeholder="리뷰 내용">
-                <div class="input-group mb-3">
-                  <label class="input-group-text" for="inputGroupSelect01">별점</label>
-                  <select class="form-select" id="star">
-                    <option selected>-- 선택하기 --</option>
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                  </select>
-                </div>
+              <div id="reviewsList">
+                <!-- 리뷰 붙는 곳 -->
               </div>
-              <!-- 현재 petsitterId reservationId 는 .js에서 const로 설정해둠 꼭 수정할 것 -->
-              <button class="btn btn-success" id="reviewCreate" onClick="reviewCreate(petsitterId,reservationId)">리뷰
-                작성</button>
-            </div>
-            <div id="reviewsList">
-              <!-- 리뷰 붙는 곳 -->
             </div>
           </div>
-        </div>
-        <div class="col-md-7">
-          <!-- 예약 현황 div -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">예약 현황</h5>
-              <!-- 예약 현황 내용 추가 -->
-              <div id="sitterReservation"></div>
+          <div class="col-md-7">
+            <!-- 예약 현황 div -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">예약 현황</h5>
+                <!-- 예약 현황 내용 추가 -->
+                <div id="sitterReservation"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 예약 모달 -->
-  <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="reservationModalLabel">예약하기</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="name">이름</label>
-              <input type="text" class="form-control" id="name" placeholder="이름을 입력해주세요" />
-            </div>
-            <div class="form-group">
-              <label for="date">날짜</label>
-              <input type="date" class="form-control" id="date" />
-            </div>
-            <div class="form-group">
-              <label for="message">메시지</label>
-              <textarea class="form-control" id="message" rows="4" placeholder="메시지를 입력해주세요"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">예약 완료</button>
+    <!-- 예약 모달 -->
+    <div
+      class="modal fade"
+      id="reservationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="reservationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reservationModalLabel">예약하기</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="name">이름</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="이름을 입력해주세요"
+                />
+              </div>
+              <div class="form-group">
+                <label for="date">날짜</label>
+                <input type="date" class="form-control" id="date" />
+              </div>
+              <div class="form-group">
+                <label for="message">메시지</label>
+                <textarea
+                  class="form-control"
+                  id="message"
+                  rows="4"
+                  placeholder="메시지를 입력해주세요"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">예약 완료</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="./js/reviews.js"></script>
-  <script src="./js/sitterInfo.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/reviews.js"></script>
+    <script src="./js/sitterInfo.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
 </html>

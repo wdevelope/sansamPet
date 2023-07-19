@@ -1,28 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Gamja+Flower&family=Jua&family=Noto+Sans+KR&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500&family=Noto+Sans+KR:wght@300&family=Orbit&display=swap');
 * {
-  font-family: 'Bagel Fat One', cursive;
-  font-family: 'Gamja Flower', cursive;
-  font-family: 'Jua', sans-serif;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-body::before {
-  content: '';
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: -1;
-}
-
-body {
-  background-image: url('../img/ginseng.jpg');
-  background-repeat: repeat;
-  background-size: auto;
+  font-family: 'Orbit', sans-serif;
 }
 
 #logo:hover {
@@ -31,7 +9,22 @@ body {
 }
 
 #logo {
-  font-size: 1.7rem;
+  font-size: 1.8rem;
+}
+
+header {
+  display: inline-block;
+  color: black;
+
+  margin-left: 30px;
+  margin-top: 30px;
+  border-bottom: 1px solid black;
+}
+
+h2,
+h5 {
+  font-family: 'Orbit', sans-serif;
+  font-weight: bold;
 }
 
 main {
@@ -40,16 +33,6 @@ main {
   margin-top: 20px;
   justify-content: center;
   justify-items: center;
-}
-
-main > .card {
-  transition: transform 0.3s;
-}
-
-main > .card:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-  border-color: black;
 }
 
 @media (min-width: 500px) {
@@ -64,19 +47,33 @@ main > .card:hover {
   }
 }
 
+main > .card:hover {
+  cursor: pointer;
+}
+
+main > .card img {
+  border-radius: 200px;
+}
+
+main > .card {
+  border: none;
+  width: 15rem;
+}
+
+.card-img-container img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.list-group-item {
+  border: none;
+  color: #4f772d;
+}
+
 #reservationBtn,
 #adminBtn,
 #logoutBtn {
   display: none;
-}
-
-.card-img-container img {
-  width: 100%;
-  height: auto;
-}
-
-h3 {
-  color: white;
 }
 
 #resvBtn {
@@ -103,4 +100,30 @@ h3 {
 }
 #searchBtn {
   width: 80px;
+}
+
+footer {
+  background-color: #f8f8f8;
+  text-align: center;
+  padding: 5px;
+  margin-top: 30px;
+}
+
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.company-info {
+  font-weight: bold;
+}
+
+.contact-info {
+  margin-top: 20px;
+}
+
+.footer-content::after {
+  content: '';
+  display: block;
+  clear: both;
 }
