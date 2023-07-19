@@ -12,7 +12,7 @@ router.delete('/admin/simanis', authmiddleware, simanisContoller.deleteSimani);
 router.delete(
   '/superadmin/simanis',
   authmiddleware,
-  simanisContoller.superdeleteSimani,
+  simanisContoller.superDeleteSimani,
 );
 
 module.exports = router;
