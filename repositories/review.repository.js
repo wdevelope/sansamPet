@@ -34,7 +34,7 @@ class ReviewsRepositories {
           'reservationId',
           'reviewId',
         ],
-        where: { petsitterId },
+        where: { petsitterId, deletedAt: null },
         order: [['createdAt', 'DESC']],
       });
       console.log('불러오기 성공');
@@ -60,6 +60,17 @@ class ReviewsRepositories {
         content,
         reviewId,
         star,
+      },
+      { where: { reviewId } },
+    );
+    // 내보낸다.
+    return post;
+  };
+
+  reviewHideRepository = async (userId, reviewId) => {
+    const post = await Reviews.update(
+      {
+        deletedAt: Date.now,
       },
       { where: { reviewId } },
     );

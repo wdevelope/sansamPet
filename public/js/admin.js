@@ -84,3 +84,19 @@ async function listReservations() {
   document.querySelector('#notice').innerHTML = noticebox;
   return;
 }
+
+async function createSimani() {
+  const reservationAt = document.querySelector('#date').value;
+  const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
+  const response = await fetch(`http://localhost:3000/api/reservations`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ reservationAt, petsitterId }),
+  });
+  const result = await response.json();
+  console.log(result.message);
+  window.location.reload();
+  return alert(result.message);
+}

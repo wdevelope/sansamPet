@@ -15,7 +15,11 @@ function noticeNotification(notice, date) {
   const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" id="noticeAlert" role="alert">${messageHtml}</div></br>`;
   document.querySelector('#navbar').insertAdjacentHTML('afterend', htmlTemp);
 }
-
+//로고 홈으로
+function logo() {
+  location.href = 'http://localhost:3000';
+}
+//로그인
 async function login() {
   const password = document.querySelector('#password').value;
   const nickname = document.querySelector('#nickname').value;
@@ -33,23 +37,35 @@ async function login() {
     socket.emit('LOGIN', {
       nickname,
     });
-    sessionStorage.setItem('loggedin', '1');
+    sessionStorage.setItem('loggedin', nickname);
     location.reload();
   }
   return alert(result.message);
 }
 
+function adminapage() {
+  location.href = 'http://localhost:3000/admin.html';
+}
+//버튼
 function buttons() {
-  if (sessionStorage.getItem('loggedin') == 1) {
+  if (sessionStorage.getItem('loggedin')) {
     const reservationBtn = document.querySelector('#reservationBtn');
     const loginBtn = document.querySelector('#loginBtn');
     const signupBtn = document.querySelector('#signupBtn');
+    const logoutBtn = document.querySelector('#logoutBtn');
+
     reservationBtn.style.display = 'block';
+    logoutBtn.style.display = 'block';
     loginBtn.style.display = 'none';
     signupBtn.style.display = 'none';
   }
+  if (sessionStorage.getItem('loggedin') == 'ADMIN') {
+    console.log('통과');
+    const adminBtn = document.querySelector('#adminBtn');
+    adminBtn.style.display = 'block';
+  }
 }
-
+//회원가입
 async function signup() {
   const confirm = document.querySelector('#confirmPassword').value;
   const password = document.querySelector('#registerPassword').value;
@@ -105,5 +121,51 @@ async function listsimanis() {
     })
     .join('');
   document.querySelector('main').innerHTML = simanis;
+  return;
+}
+
+// 로그아웃
+async function logout() {
+  const response = await fetch(`http://localhost:3000/api/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const result = await response.json();
+  console.log(result.message);
+  sessionStorage.clear();
+  location.reload();
+  return alert(result.message);
+}
+
+async function search() {
+  const name = document.querySelector('#search').value;
+  const response = await fetch(
+    `http://localhost:3000/api/petsitterssearch?name=${name}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  const simani = result.petsitter;
+  let star_repeat = '⭐️'.repeat(simani.star);
+  const data = `
+      <div class="card" style="width: 18rem" onclick ="clicksimani(${simani.petsitterId})">
+        <img src="${simani.imgurl}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">${simani.name}</h5>
+          <p class="card-text">${simani.description}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">${star_repeat}</li>
+          <li class="list-group-item">${simani.signInCareer} 일간 산삼을 키웠습니다.</li>
+        </ul>
+      </div>`;
+  document.querySelector('main').innerHTML = data;
   return;
 }

@@ -25,18 +25,31 @@ body {
   background-size: auto;
 }
 
-.navbar-brand {
-  font-family: 'Bagel Fat One', cursive;
-  font-family: 'Gamja Flower', cursive;
-  font-family: 'Jua', sans-serif;
-  font-family: 'Noto Sans KR', sans-serif;
+#logo:hover {
+  color: LightSalmon;
+  cursor: pointer;
 }
+
+#logo {
+  font-size: 1.7rem;
+}
+
 main {
   display: grid;
   grid-gap: 20px;
   margin-top: 20px;
   justify-content: center;
   justify-items: center;
+}
+
+main > .card {
+  transition: transform 0.3s;
+}
+
+main > .card:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  border-color: black;
 }
 
 @media (min-width: 500px) {
@@ -51,7 +64,9 @@ main {
   }
 }
 
-#reservationBtn {
+#reservationBtn,
+#adminBtn,
+#logoutBtn {
   display: none;
 }
 
@@ -85,4 +100,7 @@ h3 {
 
 .shadedBox {
   box-shadow: inset 10px 10px 100px #b4b4b4;
+}
+#searchBtn {
+  width: 80px;
 }

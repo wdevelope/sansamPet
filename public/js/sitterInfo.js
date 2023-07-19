@@ -1,4 +1,11 @@
+const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
+
 simani();
+listOfReviews(petsitterId);
+
+function logo() {
+  location.href = 'http://localhost:3000';
+}
 const socket = io.connect('/');
 
 socket.on('NOTICE_EVERYONE', function (notice) {
@@ -29,7 +36,6 @@ async function makeReservation() {
 }
 
 async function simani() {
-  const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   const response = await fetch(
     `http://localhost:3000/api/petsitters/${petsitterId}`,
     {
@@ -62,7 +68,7 @@ async function simani() {
                                 <hr />
                                 <h6>리뷰 작성</h6>
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="4" placeholder="리뷰 내용"></textarea>
+                                    <textarea class="form-control" rows="4" placeholder="리뷰 내용" id="content"></textarea>
                                     <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupSelect01">별점</label>
                                     <select class="form-select" id="star">
@@ -89,36 +95,71 @@ async function simani() {
                                 <div class="card-body">
                                 <h5 class="card-title">예약 현황</h5>
                                 <!-- 예약 현황 내용 추가 -->
+                                <div id = sitterReservation></div>
                                 </div>
                             </div>
                             </div>
                         </div>
                         </div>
                         <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="reservationModalLabel">예약하기</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="date">날짜</label>
-              <input type="date" class="form-control" id="date" />
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="makeReservation()">예약 완료</button>
-        </div>
-      </div>
-    </div>
-  </div>
+                          aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="reservationModalLabel">예약하기</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form>
+                                  <div class="form-group">
+                                    <label for="date">날짜</label>
+                                    <input type="date" class="form-control" id="date" />
+                                  </div>
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="makeReservation()">예약 완료</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         `;
   document.querySelector('section').innerHTML = simanidata;
   return;
 }
+async function sitterReservation() {
+  const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
+  const response = await fetch(
+    `http://localhost:3000/api/reservations/petsitters/${petsitterId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+
+  if (response.status === 200) {
+    const reservations = result.reservations
+      .map(reservation => {
+        return `<div class="shadedBox">
+                <h2>${reservation.reservationAt.substr(0, 10)}</h2>
+                <h4>${reservation.user_nickname}</h4>
+                <h4>${reservation.reservationId}</h4>
+               </div>`;
+      })
+      .join('');
+    document.querySelector('#sitterReservation').innerHTML = reservations;
+  } else {
+    document.querySelector('#sitterReservation').innerHTML =
+      '예약이 존재하지 않습니다.';
+  }
+}
+//페이지 로딩시 함수 자동호출
+document.addEventListener('DOMContentLoaded', function () {
+  sitterReservation();
+});

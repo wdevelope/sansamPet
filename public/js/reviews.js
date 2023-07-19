@@ -1,9 +1,7 @@
 //./js/reviews.js
-const petsitterId = localStorage.getItem('clickedPetsitter');
-
-// 바로 실행
-listOfReviews(petsitterId);
-
+function logo() {
+  location.href = 'http://localhost:3000';
+}
 // 붙여넣기
 async function listOfReviews(petsitterId) {
   const response = await fetch(
@@ -19,9 +17,10 @@ async function listOfReviews(petsitterId) {
   console.log(result);
   const reviews = result.allPost
     .map(review => {
+      let star_repeat = '⭐️'.repeat(review.star);
       console.log(petsitterId);
       console.log(review.reviewId);
-      return `<div>
+      return `<div class="shadedBox">
     <p style="display:none;">시터번호 : ${petsitterId}</p>
     <div class='line2'>
     <p>${review.userId} 회원님의 ${
@@ -29,18 +28,18 @@ async function listOfReviews(petsitterId) {
     } 번 서비스 리뷰입니다. </p>
     </div>
     <p>리뷰내용 : ${review.content}</p>
-    <p>별★점☆ : ${review.star}</p>
+    <p>${star_repeat}</p>
     <div class='line2'>
     <p>작성날짜 : ${review.createdAt.split('T')[0]}</p>
     <p>수정날짜 : ${review.updatedAt.split('T')[0]}</p>
     </div>
-
-    <button class="btn btn-success" id="reviewCreate" onClick="reviewDelete(${petsitterId},${
+    <br>
+    <button class="btn btn-success" id="reviewCreate" onClick="reviewHideController(${petsitterId},${
       review.reviewId
     })">리뷰삭제</button>
     <button type="button" id="resvBtn" data-toggle="modal"
     data-target="#loginModal">
-    수정
+    리뷰수정
   </button>
     <div
     class="modal fade"
@@ -50,8 +49,8 @@ async function listOfReviews(petsitterId) {
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" class="shadedBox" role="document">
-      <div class="modal-content">
+    <div class="modal-dialog"  role="document">
+      <div class="modal-content" class="shadedBox">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
           <button
@@ -79,7 +78,7 @@ async function listOfReviews(petsitterId) {
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="reviewUpdate(${petsitterId},${
+          <button type="button" class="btn btn-primary" onclick="reviewUpdateController(${petsitterId},${
             review.reviewId
           })">
             수정
@@ -88,24 +87,24 @@ async function listOfReviews(petsitterId) {
       </div>
     </div>
   </div>
+  <div><br></div>
   `;
     })
     .join('');
-  console.log(reviews);
   document.querySelector('#reviewsList').innerHTML = reviews;
   return;
 }
 
 //  생성
-async function reviewCreate(petsitterId, reviewId) {
+async function reviewCreate(petsitterId) {
   console.log('리뷰게시 시작함');
   //입력받아야하지만 일단 설정
-
-  let content = $('#content').val();
-  let star = $('#star').val();
+  const reservationId = document.querySelector('#reservationId').value;
+  const content = document.querySelector('#content').value;
+  const star = document.querySelector('#star').value;
 
   const response = await fetch(
-    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
+    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reservationId}`,
     {
       method: 'POST',
       headers: {
@@ -121,13 +120,13 @@ async function reviewCreate(petsitterId, reviewId) {
 }
 
 //  수정
-async function reviewUpdate(petsitterId, reviewId) {
+async function reviewUpdateController(petsitterId, reviewId) {
   console.log('리뷰수정 시작함');
   const content = document.querySelector('#reviewcontent').value;
   const star = document.querySelector('#reviewstar').value;
   console.log('선언함');
   const response = await fetch(
-    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reservationId}`,
+    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
     {
       method: 'PATCH',
       headers: {
@@ -144,24 +143,47 @@ async function reviewUpdate(petsitterId, reviewId) {
   return alert(result.message);
 }
 
-//  삭제
-async function reviewDelete(petsitterId, reviewId) {
+//  삭제 ( 가리기 )
+async function reviewHideController(petsitterId, reviewId) {
+  console.log('리뷰 가리기 시작');
   if (!confirm('진짜로 삭제하시겠습니까?')) {
     alert('삭제가 취소되었습니다.');
     return false;
   }
 
   const response = await fetch(
-    `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
+    `http://localhost:3000/api/petsitters/${petsitterId}/reviewHide/${reviewId}`,
     {
-      method: 'DELETE',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
     },
   );
-  console.log('DELETE 요청 시도함');
+  console.log('리뷰 가리기 시도');
   const result = await response.json();
   location.reload();
   return alert(result.message);
 }
+
+// //  삭제 (진짜로)
+// async function reviewDeleteController(petsitterId, reviewId) {
+//   if (!confirm('진짜로 삭제하시겠습니까?')) {
+//     alert('삭제가 취소되었습니다.');
+//     return false;
+//   }
+
+//   const response = await fetch(
+//     `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
+//     {
+//       method: 'DELETE',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     },
+//   );
+//   console.log('DELETE 요청 시도함');
+//   const result = await response.json();
+//   location.reload();
+//   return alert(result.message);
+// }

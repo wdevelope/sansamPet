@@ -3,6 +3,7 @@ const ReviewsService = require('../services/review.service');
 class ReviewsController {
   reviewsService = new ReviewsService();
 
+  // 리뷰 작성
   reviewPostController = async (req, res) => {
     const { content, star } = req.body;
     const { petsitterId, reservationId } = req.params;
@@ -17,6 +18,7 @@ class ReviewsController {
     return res.status(status).json({ message });
   };
 
+  // 리뷰 불러오기
   getAllReviewController = async (req, res) => {
     const { petsitterId } = req.params;
     const { status, message, allPost } =
@@ -24,7 +26,8 @@ class ReviewsController {
     return res.status(status).json({ message, allPost });
   };
 
-  reviewUpdate = async (req, res) => {
+  // 리뷰 업데이트
+  reviewUpdateController = async (req, res) => {
     const { userId } = res.locals;
     const { content, star } = req.body;
     const { reviewId, petsitterId } = req.params;
@@ -38,7 +41,19 @@ class ReviewsController {
     return res.status(status).json({ message });
   };
 
-  reviewDelete = async (req, res) => {
+  // 리뷰 삭제 (가리기)
+  reviewHideController = async (req, res) => {
+    const { userId } = res.locals;
+    const { reviewId } = req.params;
+    const { status, message } = await this.reviewsService.reviewHideService(
+      userId,
+      reviewId,
+    );
+    return res.status(status).json({ message });
+  };
+
+  // 리뷰 진짜로 삭제
+  reviewDeleteController = async (req, res) => {
     const { userId } = res.locals;
     const { reviewId, petsitterId } = req.params;
     const { status, message } = await this.reviewsService.reviewDeleteService(

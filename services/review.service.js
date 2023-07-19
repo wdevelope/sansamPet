@@ -57,37 +57,58 @@ class ReviewsService {
     star,
     petsitterId,
   ) => {
-    // try {
-    if (!content || !star) {
-      return {
-        status: 400,
-        message: '미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.',
-      };
+    try {
+      if (!content || !star) {
+        return {
+          status: 400,
+          message: '미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.',
+        };
+      }
+      const target = await Reviews.findOne({ where: { reviewId, userId } });
+      if (!target) {
+        return { status: 400, message: '리뷰 수정에 실패하였습니다.' };
+      }
+      const post = await this.reviewsRepositories.reviewUpdateRepository(
+        content,
+        userId,
+        reviewId,
+        star,
+      );
+      if (post) {
+        return { status: 200, message: '리뷰 수정에 성공하였습니다.' };
+      } else {
+        return { status: 400, message: '리뷰 수정에 실패하였습니다.' };
+      }
+    } catch (err) {
+      return { status: 400, message: '리뷰 수정 실패' };
     }
-    const target = await Reviews.findOne({ where: { reviewId, userId } });
-    if (!target) {
-      return { status: 400, message: '수정 리뷰 조회에 실패하였습니다.' };
-    }
-    const post = await this.reviewsRepositories.reviewUpdateRepository(
-      content,
-      userId,
-      reviewId,
-      star,
-    );
-    if (post) {
-      return { status: 200, message: '리뷰 수정에 성공하였습니다.' };
-    } else {
-      return { status: 400, message: '리뷰 수정에 실패하였습니다.' };
-    }
-    // } catch (err) {
-    //   return { status: 400, message: '리뷰 수정 실패' };
-    // }
   };
+
+  reviewHideService = async (userId, reviewId) => {
+    try {
+      const target = await Reviews.findOne({ where: { reviewId, userId } });
+      if (!target) {
+        return { status: 400, message: '리뷰 삭제에 실패하였습니다.' };
+      }
+      const post = await this.reviewsRepositories.reviewHideRepository(
+        userId,
+        reviewId,
+      );
+      if (post) {
+        return { status: 200, message: '리뷰 삭제에 성공하였습니다.' };
+      } else {
+        return { status: 400, message: '리뷰 삭제에 실패하였습니다.' };
+      }
+    } catch (err) {
+      return { status: 400, message: '리뷰 삭제 실패' };
+    }
+  };
+
   reviewDeleteService = async (reviewId, userId) => {
     try {
       const target = await Reviews.findOne({ where: { reviewId, userId } });
       if (!target) {
-        return { status: 400, message: '삭제 리뷰 조회에 실패하였습니다.' };
+        return { status: 400, message: '리뷰 삭제에 실패하였습니다.' };
       }
       const post = await this.reviewsRepositories.reviewDeleteRepository(
         reviewId,

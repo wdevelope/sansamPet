@@ -26,6 +26,7 @@ class ReservationRepository {
           attributes: ['name'],
         },
       ],
+      order: [['updatedAt', 'DESC']],
     });
     return reservations;
   };
@@ -43,6 +44,7 @@ class ReservationRepository {
           attributes: ['name'],
         },
       ],
+      order: [['reservationAt', 'DESC']],
     });
     return reservations;
   };

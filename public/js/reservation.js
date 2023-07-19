@@ -7,6 +7,10 @@ socket.on('NOTICE_EVERYONE', function (notice) {
   noticeNotification(notice.notice);
 });
 
+function logo() {
+  location.href = 'http://localhost:3000';
+}
+
 function noticeNotification(notice, date) {
   const messageHtml = `공지사항 <br/>${notice} <br/><small>(${date})</small>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>`;

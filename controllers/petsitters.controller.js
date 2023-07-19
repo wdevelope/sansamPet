@@ -17,7 +17,7 @@ class PetsittersController {
   };
 
   viewonepetsitterbynickname = async (req, res) => {
-    const { name } = req.body;
+    const { name } = req.query;
     const { status, message, petsitter } =
       await this.petsitterService.viewonepetsitterbynickname(name);
     return res.status(status).json({ message, petsitter });

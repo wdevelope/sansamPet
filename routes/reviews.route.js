@@ -22,14 +22,21 @@ router.get(
 router.patch(
   '/petsitters/:petsitterId/review/:reviewId',
   authmiddleware,
-  reviewsController.reviewUpdate,
+  reviewsController.reviewUpdateController,
 );
 
-// 리뷰 삭제
+// 리뷰 삭제 (가리기)
+router.patch(
+  '/petsitters/:petsitterId/reviewHide/:reviewId',
+  authmiddleware,
+  reviewsController.reviewHideController,
+);
+
+// 리뷰 진짜로 삭제
 router.delete(
   '/petsitters/:petsitterId/review/:reviewId',
   authmiddleware,
-  reviewsController.reviewDelete,
+  reviewsController.reviewDeleteController,
 );
 
 module.exports = router;
