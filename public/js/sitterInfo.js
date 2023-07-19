@@ -146,7 +146,7 @@ async function sitterReservation() {
   if (response.status === 200) {
     const reservations = result.reservations
       .map(reservation => {
-        return `<div class="shadedBox">
+        return `<div id = "reservationbox">
                 <h2>${reservation.reservationAt.substr(0, 10)}</h2>
                 <h4>${reservation.user_nickname}</h4>
                 <h4>${reservation.reservationId}</h4>

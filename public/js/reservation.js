@@ -96,7 +96,7 @@ async function listReservations() {
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">예약 수정</h5>
                     <button
                       type="button"
                       class="close"

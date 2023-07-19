@@ -1,4 +1,4 @@
-const { Reviews } = require('../models');
+const { Reviews, Users, Petsitters } = require('../models');
 const { sequelize } = require('../models');
 const { QueryTypes } = require('sequelize');
 
@@ -33,6 +33,16 @@ class ReviewsRepositories {
           'star',
           'reservationId',
           'reviewId',
+        ],
+        include: [
+          {
+            model: Users,
+            attributes: ['nickname'],
+          },
+          {
+            model: Petsitters,
+            attributes: ['name'],
+          },
         ],
         where: { petsitterId, deletedAt: null },
         order: [['createdAt', 'DESC']],

@@ -23,24 +23,25 @@ async function listOfReviews(petsitterId) {
       return `<div class="shadedBox">
     <p style="display:none;">시터번호 : ${petsitterId}</p>
     <div class='line2'>
-    <p>${review.userId} 회원님의 ${
+    <p>${review.User.nickname} 회원님의 ${
       review.reservationId
     } 번 서비스 리뷰입니다. </p>
     </div>
-    <p>리뷰내용 : ${review.content}</p>
+    <p>${review.content}</p>
     <p>${star_repeat}</p>
     <div class='line2'>
-    <p>작성날짜 : ${review.createdAt.split('T')[0]}</p>
-    <p>수정날짜 : ${review.updatedAt.split('T')[0]}</p>
+    <p>작성 : ${review.createdAt.split('T')[0]}</p>
+    <p>수정 : ${review.updatedAt.split('T')[0]}</p>
     </div>
     <br>
-    <button class="btn btn-success" id="reviewCreate" onClick="reviewHideController(${petsitterId},${
+    <button class="btn btn-success" id="reviewBtn" onClick="reviewHideController(${petsitterId},${
       review.reviewId
     })">리뷰삭제</button>
-    <button type="button" id="resvBtn" data-toggle="modal"
+    <button type="button" id="reviewBtn" data-toggle="modal"
     data-target="#loginModal">
     리뷰수정
   </button>
+  </div>
     <div
     class="modal fade"
     id="loginModal"
@@ -50,7 +51,7 @@ async function listOfReviews(petsitterId) {
     aria-hidden="true"
   >
     <div class="modal-dialog"  role="document">
-      <div class="modal-content" class="shadedBox">
+      <div class="modal-content" >
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
           <button
