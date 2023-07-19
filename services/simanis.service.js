@@ -89,14 +89,14 @@ class SimaniService {
       ) {
         return returns.status400();
       }
-      const reservation = await this.simaniRepository.editSimani(
-        userId,
+      const simani = await this.simaniRepository.editSimani(
+        name,
+        imgurl,
+        signInCareer,
+        description,
         petsitterId,
-        reservationAt,
-        reservationId,
       );
-
-      if (reservation[0]) {
+      if (simani[0] && userId == 2) {
         return returns.status200();
       } else {
         return returns.status400();
@@ -105,16 +105,13 @@ class SimaniService {
       return returns.status400();
     }
   };
-  deleteOneReservation = async (userId, reservationId) => {
-    const returns = new Returns('예약 삭제');
+  deleteSimani = async (userId, petsitterId) => {
+    const returns = new Returns('심마니 삭제');
     try {
-      if (!userId || !reservationId) {
+      if (!userId == 2 || !petsitterId) {
         return returns.status400();
       }
-      const reservation = await this.reservationRepository.deleteOneReservation(
-        userId,
-        reservationId,
-      );
+      const reservation = await this.simaniRepository.deleteSimani(petsitterId);
       if (reservation) {
         return returns.status200();
       } else {
@@ -124,16 +121,15 @@ class SimaniService {
       return returns.status400();
     }
   };
-  permenantDeleteReservation = async (userId, reservationId) => {
-    const returns = new Returns('예약 영구 삭제');
+  superDeleteSimani = async (userId, petsitterId) => {
+    const returns = new Returns('심마니 영구 삭제');
     try {
-      if (userId !== 2 || !reservationId) {
+      if (userId !== 2 || !petsitterId) {
         return returns.status400();
       }
-      const reservation =
-        await this.reservationRepository.permenantDeleteReservation(
-          reservationId,
-        );
+      const reservation = await this.simaniRepository.superDeleteSimani(
+        petsitterId,
+      );
       if (reservation) {
         return returns.status200();
       } else {

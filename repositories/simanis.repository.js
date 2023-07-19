@@ -18,82 +18,38 @@ class SimaniRepository {
     return simanis;
   };
 
-  viewPetsitterReservations = async petsitterId => {
-    const reservations = await Reservations.findAll({
-      where: { petsitterId, deletedAt: null },
-      include: [
-        {
-          model: Users,
-          attributes: ['nickname'],
-        },
-        {
-          model: Petsitters,
-          attributes: ['name'],
-        },
-      ],
-    });
-    return reservations;
-  };
-
-  adminViewReservations = async () => {
-    const reservations = await Reservations.findAll({
-      include: [
-        {
-          model: Users,
-          attributes: ['nickname'],
-        },
-        {
-          model: Petsitters,
-          attributes: ['name'],
-        },
-      ],
-      order: [['updatedAt', 'DESC']],
-    });
-    return reservations;
-  };
-  updateOneReservation = async (
-    userId,
-    petsitterId,
-    reservationAt,
-    reservationId,
-  ) => {
-    const existreservation = await Reservations.findOne({
-      where: { petsitterId, reservationAt },
-    });
-
-    if (!existreservation || !existreservation.deletedAt) {
-      const reservation = Reservations.update(
-        {
+  editSimani = async (name, imgurl, signInCareer, description, petsitterId) => {
+    const simani = Petsitters.update(
+      {
+        name,
+        imgurl,
+        signInCareer,
+        description,
+      },
+      {
+        where: {
           petsitterId,
-          reservationAt,
+          deletedAt: null,
         },
-        {
-          where: {
-            reservationId,
-            userId,
-            deletedAt: null,
-          },
-        },
-      );
-      return reservation;
-    }
-    return;
+      },
+    );
+    return simani;
   };
-  deleteOneReservation = async (userId, reservationId) => {
+  deleteSimani = async petsitterId => {
     const now = new Date();
-    const reservation = await Reservations.update(
+    const simani = await Petsitters.update(
       {
         deletedAt: now,
       },
-      { where: { reservationId, userId } },
+      { where: { petsitterId } },
     );
-    return reservation;
+    return simani;
   };
-  permenantDeleteReservation = async reservationId => {
-    const reservation = await Reservations.destroy({
-      where: { reservationId },
+  superDeleteSimani = async petsitterId => {
+    const simani = await Petsitters.destroy({
+      where: { petsitterId },
     });
-    return reservation;
+    return simani;
   };
 }
 

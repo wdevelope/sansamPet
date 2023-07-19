@@ -44,17 +44,17 @@ class SimanisController {
     const { userId } = res.locals;
     const { petsitterId } = req.query;
 
-    const { status, message } = await this.reservationService.deleteSimani(
+    const { status, message } = await this.simaniService.deleteSimani(
       userId,
       petsitterId,
     );
     return res.status(status).json({ message });
   };
 
-  superdeleteSimani = async (req, res) => {
+  superDeleteSimani = async (req, res) => {
     const { userId } = res.locals;
     const { petsitterId } = req.query;
-    const { status, message } = await this.reservationService.superdeleteSimani(
+    const { status, message } = await this.simaniService.superDeleteSimani(
       userId,
       petsitterId,
     );
