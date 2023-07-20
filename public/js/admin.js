@@ -28,10 +28,6 @@ function loginNotification(targetNickname, date) {
 }
 
 async function listReservations() {
-  document.querySelector('#registerSimani').style.display = 'block';
-  document.querySelector('#editSimani').style.display = 'block';
-  document.querySelector('#deleteSimani').style.display = 'block';
-  document.querySelector('#superDeleteSimani').style.display = 'block';
   const response = await fetch(`http://localhost:3000/api/admin/reservations`, {
     method: 'GET',
     headers: {
@@ -43,7 +39,12 @@ async function listReservations() {
   console.log(result.message);
   if (response.status == 200) {
     socket.emit(result.ROOMTITLE);
+    document.querySelector('#registerSimani').style.display = 'block';
+    document.querySelector('#editSimani').style.display = 'block';
+    document.querySelector('#deleteSimani').style.display = 'block';
+    document.querySelector('#superDeleteSimani').style.display = 'block';
   }
+
   const reservations = result.reservations
     .map(reservation => {
       return `
