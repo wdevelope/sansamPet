@@ -62,7 +62,7 @@ function adminapage() {
 }
 //버튼
 function buttons() {
-  if (sessionStorage.getItem('authorization')) {
+  if (sessionStorage.getItem('Authorization')) {
     const reservationBtn = document.querySelector('#reservationBtn');
     const loginBtn = document.querySelector('#loginBtn');
     const signupBtn = document.querySelector('#signupBtn');

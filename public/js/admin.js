@@ -78,6 +78,7 @@ async function registerSimani() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
     },
     body: JSON.stringify({ signInCareer, imgurl, name, description }),
   });
