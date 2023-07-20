@@ -58,6 +58,10 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE,
       },
+      googleId: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

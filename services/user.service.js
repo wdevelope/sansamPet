@@ -1,5 +1,4 @@
 'use strict';
-
 const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/user.repository');
 const jwt = require('jsonwebtoken');
@@ -68,7 +67,6 @@ module.exports = {
         },
       );
 
-      console.log(token);
       return token;
     } catch (error) {
       console.error(error);
