@@ -48,6 +48,7 @@ async function simani() {
   const result = await response.json();
   console.log(result.message);
   const simani = result.petsitter;
+  let star_repeat = '⭐️'.repeat(simani.star);
   const simanidata = ` <div class="container mt-4">
                         <div class="row justify-content-center">
                             <div class="col-md-5">
@@ -61,7 +62,8 @@ async function simani() {
                                     ${simani.description}
                                 </p>
                                 <div class="d-flex justify-content-between">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
+                                  ${star_repeat}
+                                    <button class="btn btn-primary" id ="resvBtn" data-toggle="modal" data-target="#reservationModal">
                                     예약하기
                                     </button>
                                 </div>
@@ -82,7 +84,7 @@ async function simani() {
                                     <input id = "reservationId" placeholder="예약 번호"></input>
                                     </div>
                                 </div>
-                                <button class="btn btn-success" onclick="reviewCreate(${petsitterId})">리뷰 작성</button>
+                                <button class="writereviewBtn" onclick="reviewCreate(${petsitterId})">리뷰 작성</button>
                                 </div>
                                 <div id="reviewsList">
                                   <!-- 리뷰 붙는 곳 -->
@@ -92,8 +94,8 @@ async function simani() {
                             <div class="col-md-7">
                             <!-- 예약 현황 div -->
                             <div class="card">
-                                <div class="card-body">
-                                <h5 class="card-title">예약 현황</h5>
+                                <div class="reservationBox">
+                                <p id="resvtitle">예약 현황</p>
                                 <!-- 예약 현황 내용 추가 -->
                                 <div id = sitterReservation></div>
                                 </div>
@@ -146,10 +148,10 @@ async function sitterReservation() {
   if (response.status === 200) {
     const reservations = result.reservations
       .map(reservation => {
-        return `<div class="shadedBox">
-                <h2>${reservation.reservationAt.substr(0, 10)}</h2>
-                <h4>${reservation.user_nickname}</h4>
-                <h4>${reservation.reservationId}</h4>
+        return `<div class = "shadedBox">
+                <p id="resvdate">${reservation.reservationAt.substr(0, 10)}</p>
+                <p>예약 고객 : ${reservation.user_nickname}</p>
+                <p>예약 번호 : ${reservation.reservationId}</p>
                </div>`;
       })
       .join('');

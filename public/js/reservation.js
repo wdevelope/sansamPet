@@ -96,7 +96,7 @@ async function listReservations() {
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">예약 수정</h5>
                     <button
                       type="button"
                       class="close"
@@ -119,6 +119,11 @@ async function listReservations() {
                         <option value="2">엄한솔</option>
                         <option value="3">우성원</option>
                         <option value="4">이다영</option>
+                        <option value="5">원장님</option>
+                        <option value="6">뽀로로</option>
+                        <option value="7">르탄이</option>
+                        <option value="9">해리포터</option>
+                        <option value="10">시나모롤</option>
                       </select>
                     </form>
                   </div>

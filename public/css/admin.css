@@ -6,6 +6,15 @@ main {
   justify-items: left;
 }
 
+#navbar {
+  background-color: rgb(35, 44, 44);
+}
+
+#logo:hover {
+  color: lightgrey;
+  cursor: pointer;
+}
+
 @media (min-width: 500px) {
   main {
     grid-template-columns: repeat(2, 1fr);
@@ -21,8 +30,8 @@ main {
 #reservation {
   margin: 20px 20px 20px 20px;
   padding: 20px 20px 20px 20px;
-  background-color: rgb(212, 251, 166);
-  color: darkslategrey;
+  background-color: darkslategrey;
+  color: white;
   width: 400px;
 }
 
@@ -34,18 +43,35 @@ main {
 
 #registerSimani,
 #editSimani,
-#deleteSimani {
+#deleteSimani,
+#superDeleteSimani {
   display: none;
 }
 
-#adminlabel {
-  font-weight: 900;
-  font-size: 30px;
-  margin: 10px 10px 10px 30px;
+#noticebox {
+  margin: 20px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
+  background-color: rgb(5, 95, 95);
+  color: white;
+  width: 400px;
 }
 
-#alertlistbox {
-  width: 500px;
-  border-radius: 5px;
-  border: darkgreen 2px solid;
+#noticecontent {
+  width: 350px;
+  height: 100px;
+}
+
+#resvtitle {
+  color: black;
+  background-color: rgb(160, 183, 183);
+  font-size: 17px;
+  padding: 5px;
+  font-weight: 600;
+}
+.loginbtn {
+  background-color: black;
+  color: white;
+  border-radius: 10%;
+  border: none;
+  padding: 8px 10px 8px 10px;
 }

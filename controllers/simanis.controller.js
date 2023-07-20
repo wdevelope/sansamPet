@@ -26,8 +26,8 @@ class SimanisController {
 
   editSimani = async (req, res) => {
     const { userId } = res.locals;
-    const { name, imgurl, signInCareer, description } = req.body;
-    const { petsitterId } = req.query;
+    const { imgurl, signInCareer, description } = req.body;
+    const { name } = req.query;
 
     const { status, message } = await this.simaniService.editSimani(
       name,
@@ -35,28 +35,27 @@ class SimanisController {
       signInCareer,
       description,
       userId,
-      petsitterId,
     );
     return res.status(status).json({ message });
   };
 
   deleteSimani = async (req, res) => {
     const { userId } = res.locals;
-    const { petsitterId } = req.query;
+    const { name } = req.query;
 
     const { status, message } = await this.simaniService.deleteSimani(
       userId,
-      petsitterId,
+      name,
     );
     return res.status(status).json({ message });
   };
 
   superDeleteSimani = async (req, res) => {
     const { userId } = res.locals;
-    const { petsitterId } = req.query;
+    const { name } = req.query;
     const { status, message } = await this.simaniService.superDeleteSimani(
       userId,
-      petsitterId,
+      name,
     );
     return res.status(status).json({ message });
   };

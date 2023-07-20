@@ -1,4 +1,5 @@
 //./js/reviews.js
+
 function logo() {
   location.href = 'http://localhost:3000';
 }
@@ -20,27 +21,23 @@ async function listOfReviews(petsitterId) {
       let star_repeat = '⭐️'.repeat(review.star);
       console.log(petsitterId);
       console.log(review.reviewId);
-      return `<div class="shadedBox">
-    <p style="display:none;">시터번호 : ${petsitterId}</p>
-    <div class='line2'>
-    <p>${review.userId} 회원님의 ${
+      return `<div class = "shadedBox">
+    <p id ="reviewtitle">${review.User.nickname}님의 예약 번호 ${
       review.reservationId
-    } 번 서비스 리뷰입니다. </p>
-    </div>
-    <p>리뷰내용 : ${review.content}</p>
+    } 번에 대한 리뷰입니다. </p>
+    <p id ="reviewcontent">${review.content}</p>
     <p>${star_repeat}</p>
-    <div class='line2'>
-    <p>작성날짜 : ${review.createdAt.split('T')[0]}</p>
-    <p>수정날짜 : ${review.updatedAt.split('T')[0]}</p>
-    </div>
+    <p>작성 : ${review.createdAt.split('T')[0]}</p>
+    <p>수정 : ${review.updatedAt.split('T')[0]}</p>
     <br>
-    <button class="btn btn-success" id="reviewCreate" onClick="reviewHideController(${petsitterId},${
+    <button id="reviewBtn" onClick="reviewHideController(${petsitterId},${
       review.reviewId
     })">리뷰삭제</button>
-    <button type="button" id="resvBtn" data-toggle="modal"
+    <button type="button" id="reviewBtn" data-toggle="modal"
     data-target="#loginModal">
     리뷰수정
   </button>
+  </div>
     <div
     class="modal fade"
     id="loginModal"
@@ -50,7 +47,7 @@ async function listOfReviews(petsitterId) {
     aria-hidden="true"
   >
     <div class="modal-dialog"  role="document">
-      <div class="modal-content" class="shadedBox">
+      <div class="modal-content" >
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
           <button
@@ -78,7 +75,7 @@ async function listOfReviews(petsitterId) {
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="reviewUpdateController(${petsitterId},${
+          <button type="button" id="reviewBtn" onclick="reviewUpdateController(${petsitterId},${
             review.reviewId
           })">
             수정
@@ -115,7 +112,7 @@ async function reviewCreate(petsitterId) {
   );
   console.log('POST 요청 시도함');
   const result = await response.json();
-  location.reload();
+  listOfReviews(petsitterId);
   return alert(result.message);
 }
 
@@ -140,6 +137,7 @@ async function reviewUpdateController(petsitterId, reviewId) {
   console.log('response :', response);
   const result = await response.json();
   location.reload();
+  listOfReviews(petsitterId);
   return alert(result.message);
 }
 
@@ -163,6 +161,7 @@ async function reviewHideController(petsitterId, reviewId) {
   console.log('리뷰 가리기 시도');
   const result = await response.json();
   location.reload();
+  listOfReviews(petsitterId);
   return alert(result.message);
 }
 
