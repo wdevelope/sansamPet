@@ -135,3 +135,25 @@ footer {
   border: none;
   padding: 8px 10px 8px 10px;
 }
+
+.google-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #4285f4;
+  border-radius: 2px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  font-family: 'Roboto', sans-serif; /* Google font family */
+  font-size: 16px;
+  width: 200px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.google-icon {
+  height: 20px;
+  margin-right: 20px;
+}
