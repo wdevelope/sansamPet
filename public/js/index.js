@@ -1,3 +1,20 @@
+// 구글
+window.onload = function () {
+  if (
+    document.cookie.split(';').some(item => item.trim().startsWith('user='))
+  ) {
+    const userCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('user='))
+      .split('=')[1];
+    const user = JSON.parse(decodeURIComponent(userCookie));
+    sessionStorage.setItem('Authorization', 'Bearer ' + user.token); // 'Bearer' added
+    sessionStorage.setItem('loginId', user.user.nickname);
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+  buttons();
+};
+
 // 시작하자 실행 될 함수들
 listsimanis();
 enter();
@@ -38,6 +55,7 @@ async function login() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
     },
     body: JSON.stringify({ nickname, password }),
   });
@@ -50,12 +68,16 @@ async function login() {
     sessionStorage.setItem(
       'Authorization',
       response.headers.get('Authorization'),
-      sessionStorage.setItem('loginId', nickname),
     );
+    sessionStorage.setItem('loginId', nickname);
     location.reload();
   }
   return alert(result.message);
 }
+//구글 로그인
+document.getElementsByClassName('google-login')[0].onclick = function () {
+  window.location.href = '/auth/google';
+};
 
 function adminapage() {
   location.href = 'http://localhost:3000/admin.html';
@@ -67,11 +89,13 @@ function buttons() {
     const loginBtn = document.querySelector('#loginBtn');
     const signupBtn = document.querySelector('#signupBtn');
     const logoutBtn = document.querySelector('#logoutBtn');
+    const loginGoogle = document.querySelector('.google-login');
 
     reservationBtn.style.display = 'block';
     logoutBtn.style.display = 'block';
     loginBtn.style.display = 'none';
     signupBtn.style.display = 'none';
+    loginGoogle.style.display = 'block';
   }
   if (sessionStorage.getItem('loginId') == 'ADMIN') {
     const adminBtn = document.querySelector('#adminBtn');
@@ -183,7 +207,3 @@ async function search() {
   document.querySelector('main').innerHTML = data;
   return;
 }
-
-document.getElementById('google-login').onclick = function () {
-  window.location.href = '/auth/google';
-};

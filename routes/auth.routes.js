@@ -3,11 +3,20 @@ const passport = require('passport');
 const router = express.Router();
 
 // 로그인 라우트
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
+);
 
-// 콜백 라우트
+// Google 로그인 후 redirect 처리
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.redirect('/profile'); // 사용자가 로그인한 후 리다이렉션할 위치
+  // user 객체를 쿠키로 설정
+  res.cookie('user', JSON.stringify(req.user));
+  // JWT 토큰을 응답 헤더에 추가
+  res.setHeader('Authorization', 'Bearer ' + req.user.token);
+  // 메인 페이지로 리다이렉트
+
+  res.redirect('http://localhost:3000');
 });
 
 module.exports = router;

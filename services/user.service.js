@@ -67,7 +67,6 @@ module.exports = {
         },
       );
 
-      console.log(token);
       return token;
     } catch (error) {
       console.error(error);

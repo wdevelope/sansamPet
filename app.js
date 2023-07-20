@@ -25,9 +25,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/auth', authRoutes);
-//
-
 require('./db');
 
 const http = Server(app);
@@ -42,6 +39,8 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use('/auth', authRoutes);
 
 app.use('/api', [
   usersRouter,
