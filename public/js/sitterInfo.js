@@ -95,10 +95,17 @@ async function simani() {
                             <div class="col-md-7">
                             <!-- 예약 현황 div -->
                             <div class="card">
+                            <div class='rap'>
+                              <div class="header">
+                                
+                                <h2 class='dateTitle'></h2>
+                               
+                              </div>
                                 <div class="reservationBox">
-                                <p id="resvtitle">예약 현황</p>
+                                <p id="resvtitle">예약 가능 날짜</p>
+                                
                                 <!-- 예약 현황 내용 추가 -->
-                                <div id = sitterReservation></div>
+                                <div id = sitterReservation class="grid"></div>
                                 </div>
                             </div>
                             </div>
@@ -143,25 +150,89 @@ async function sitterReservation() {
       },
     },
   );
+
   const result = await response.json();
   console.log(result.message);
 
-  if (response.status === 200) {
-    const reservations = result.reservations
-      .map(reservation => {
-        return `<div class = "shadedBox">
-                <p id="resvdate">${reservation.reservationAt.substr(0, 10)}</p>
-                <p>예약 고객 : ${reservation.user_nickname}</p>
-                <p>예약 번호 : ${reservation.reservationId}</p>
-               </div>`;
-      })
-      .join('');
-    document.querySelector('#sitterReservation').innerHTML = reservations;
+  const date = new Date();
+  console.log('date :', date, typeof date);
+
+  const currentYear = new Date(date).getFullYear();
+  const currentMonth = new Date(date).getMonth() + 1;
+  const day = date.getDate();
+  const lastDay = new Date(currentYear, currentMonth, 0).getDate();
+
+  // const firstDay = new Date(date.setDate(1)).getDay();
+  // const lastDay = new Date(currentYear, currentMonth, 0).getDate();
+  // 오늘의 요일을 0(일)~6(토) 으로 반환
+  const today = date.getDay();
+  let firstDate = today;
+  console.log('첫날 :', firstDate);
+  if (firstDate === 0) {
+    firstDate = 6;
   } else {
-    document.querySelector('#sitterReservation').innerHTML =
-      '예약이 존재하지 않습니다.';
+    firstDate = firstDate - 1;
+  }
+  console.log('전날 :', firstDate);
+
+  const firstDay = day;
+  const finalDay = firstDay + 30;
+  console.log('firstDay', firstDay, typeof firstDay);
+  console.log('finalDay', finalDay, typeof finalDay);
+
+  console.log('ddd', currentYear, currentMonth);
+
+  const limitDay = date + finalDay;
+  const nextDay = Math.ceil(limitDay / 7) * 7;
+
+  let htmlDummy = '';
+
+  // 현재 날짜 정보 표시하기
+  document.querySelector(
+    `.dateTitle`,
+  ).innerText = `${currentYear}년 ${currentMonth}월`;
+
+  for (let i = 0; i < firstDate; i++) {
+    htmlDummy += `<div class="noColor">${i}</div>`;
+  }
+
+  for (let i = firstDay; i <= finalDay; i++) {
+    let i2 = i;
+    if (i > lastDay) {
+      i2 = i - lastDay;
+    }
+    htmlDummy += `
+    <div class="shadedBoxCalendar">${i2}</div>
+    `;
+  }
+
+  document.querySelector('#sitterReservation').innerHTML = htmlDummy;
+
+  const sitterReservationElement = document.querySelector('#sitterReservation');
+
+  if (response.status === 200) {
+    const reservations = result.reservations;
+    for (const reservation of reservations) {
+      const reservationAt = new Date(reservation.reservationAt);
+      const day = reservationAt.getDate();
+      console.log('day :', typeof day, day);
+
+      // document.getElementById(day.toString());
+      const targetElement = document.querySelector(
+        `.shadedBoxCalendar:nth-child(${day})`,
+      );
+      if (targetElement) {
+        const parentElement = targetElement.parentElement;
+        targetElement.className = 'shadedBoxCalendarBooked';
+        // targetElement.classList.add('shadedBoxCalendarBooked');
+
+        // const parentElement = targetElement.parentElement;
+        // parentElement.className = 'shadedBoxCalendarBooked';
+      }
+    }
   }
 }
+
 //페이지 로딩시 함수 자동호출
 document.addEventListener('DOMContentLoaded', function () {
   sitterReservation();
