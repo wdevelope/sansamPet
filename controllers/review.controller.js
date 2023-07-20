@@ -30,7 +30,8 @@ class ReviewsController {
   reviewUpdateController = async (req, res) => {
     const { userId } = res.locals;
     const { content, star } = req.body;
-    const { reviewId, petsitterId } = req.params;
+    let { reviewId, petsitterId } = req.params;
+    reviewId = Number(reviewId);
     const { status, message } = await this.reviewsService.reviewUpdateService(
       content,
       userId,

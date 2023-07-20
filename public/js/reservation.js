@@ -27,6 +27,7 @@ async function editReservation(reservationId) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
       body: JSON.stringify({ reservationAt, petsitterId }),
     },
@@ -44,6 +45,7 @@ async function deleteReservation(reservationId) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     },
   );
@@ -58,6 +60,7 @@ async function listReservations() {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
     },
   });
   const result = await response.json();

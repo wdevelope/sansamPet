@@ -12,40 +12,11 @@ function notice() {
   });
 }
 
+listReservations();
+
 //로고 홈으로
 function logo() {
   location.href = 'http://localhost:3000';
-}
-
-async function login() {
-  const password = document.querySelector('#password').value;
-  const nickname = document.querySelector('#nickname').value;
-  const response = await fetch(`http://localhost:3000/api/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ nickname, password }),
-  });
-  const result = await response.json();
-  console.log(result.message);
-  if (response.status == 200) {
-    if (nickname !== 'ADMIN') {
-      socket.emit('LOGIN', {
-        nickname: `관리자 페이지에 권한이 없는 사용자${nickname}`,
-      });
-      document.querySelector(
-        'main',
-      ).innerHTML = `<h2>접근 권한이 없습니다.</h2>`;
-      return alert('권한이 없습니다.');
-    } else {
-      socket.emit('ADMINLOGIN', {
-        nickname,
-      });
-      listReservations();
-      return alert(result.message);
-    }
-  }
 }
 
 function loginNotification(targetNickname, date) {
@@ -60,16 +31,19 @@ async function listReservations() {
   document.querySelector('#registerSimani').style.display = 'block';
   document.querySelector('#editSimani').style.display = 'block';
   document.querySelector('#deleteSimani').style.display = 'block';
-  document.querySelector('#adminlogin').style.display = 'none';
   document.querySelector('#superDeleteSimani').style.display = 'block';
   const response = await fetch(`http://localhost:3000/api/admin/reservations`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
     },
   });
   const result = await response.json();
   console.log(result.message);
+  if (response.status == 200) {
+    socket.emit('ADMINLOGIN', { nickname: 'ADMIN' });
+  }
   const reservations = result.reservations
     .map(reservation => {
       return `
@@ -123,6 +97,7 @@ async function editSimani() {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
       body: JSON.stringify({ signInCareer, imgurl, description }),
     },
@@ -140,6 +115,7 @@ async function deleteSimani() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     },
   );
@@ -156,6 +132,7 @@ async function superDeleteSimani() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     },
   );
@@ -171,6 +148,7 @@ async function superDeleteResv(reservationId) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     },
   );

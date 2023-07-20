@@ -3,7 +3,7 @@ const { Users } = require('../models');
 const config = require('../config/config.js');
 
 async function isAuth(req, res, next) {
-  const token = req.headers['Authorization']; // 쿠키에서 토큰 추출
+  const token = req.headers.authorization;
 
   if (!token) {
     return res.status(400).json({ message: '토큰이 제공되지 않았습니다.' });

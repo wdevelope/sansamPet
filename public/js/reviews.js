@@ -5,22 +5,21 @@ function logo() {
 }
 // 붙여넣기
 async function listOfReviews(petsitterId) {
+  petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   const response = await fetch(
     `http://localhost:3000/api/petsitters/${petsitterId}/reviews`,
     {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     },
   );
   const result = await response.json();
-  console.log(result);
   const reviews = result.allPost
     .map(review => {
       let star_repeat = '⭐️'.repeat(review.star);
-      console.log(petsitterId);
-      console.log(review.reviewId);
       return `<div class = "shadedBox">
     <p id ="reviewtitle">${review.User.nickname}님의 예약 번호 ${
       review.reservationId
@@ -30,9 +29,9 @@ async function listOfReviews(petsitterId) {
     <p>작성 : ${review.createdAt.split('T')[0]}</p>
     <p>수정 : ${review.updatedAt.split('T')[0]}</p>
     <br>
-    <button id="reviewBtn" onClick="reviewHideController(${petsitterId},${
-      review.reviewId
-    })">리뷰삭제</button>
+    <button id="reviewBtn" onClick="reviewHideController(${petsitterId},${Number(
+      review.reviewId,
+    )})">리뷰삭제</button>
     <button type="button" id="reviewBtn" data-toggle="modal"
     data-target="#loginModal">
     리뷰수정
@@ -49,7 +48,7 @@ async function listOfReviews(petsitterId) {
     <div class="modal-dialog"  role="document">
       <div class="modal-content" >
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+          <h5 class="modal-title" id="exampleModalLabel">리뷰 수정하기</h5>
           <button
             type="button"
             class="close"
@@ -61,7 +60,9 @@ async function listOfReviews(petsitterId) {
         </div>
         <div class="modal-body">
           <form>
-          <input id = "reviewcontent" placeholder="리뷰 내용 수정"></input>
+          <input id = "reviewcontent${
+            review.reviewId
+          }" placeholder="리뷰 내용 수정"></input>
           <br><br>
                       <label>별점</label>
                       <select class="form-select" id="reviewstar">
@@ -94,7 +95,7 @@ async function listOfReviews(petsitterId) {
 
 //  생성
 async function reviewCreate(petsitterId) {
-  console.log('리뷰게시 시작함');
+  petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   //입력받아야하지만 일단 설정
   const reservationId = document.querySelector('#reservationId').value;
   const content = document.querySelector('#content').value;
@@ -106,6 +107,7 @@ async function reviewCreate(petsitterId) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
       body: JSON.stringify({ content, star }),
     },
@@ -118,23 +120,22 @@ async function reviewCreate(petsitterId) {
 
 //  수정
 async function reviewUpdateController(petsitterId, reviewId) {
-  console.log('리뷰수정 시작함');
-  const content = document.querySelector('#reviewcontent').value;
+  petsitterId = Number(localStorage.getItem('clickedPetsitter'));
+  const reviewcontent = document.querySelector(
+    `#reviewcontent${reviewId}`,
+  ).value;
   const star = document.querySelector('#reviewstar').value;
-  console.log('선언함');
   const response = await fetch(
     `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
     {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
-      body: JSON.stringify({ content, star }),
+      body: JSON.stringify({ content: reviewcontent, star }),
     },
   );
-  console.log('PATCH 요청 성공함');
-
-  console.log('response :', response);
   const result = await response.json();
   location.reload();
   listOfReviews(petsitterId);
@@ -143,7 +144,7 @@ async function reviewUpdateController(petsitterId, reviewId) {
 
 //  삭제 ( 가리기 )
 async function reviewHideController(petsitterId, reviewId) {
-  console.log('리뷰 가리기 시작');
+  petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   if (!confirm('진짜로 삭제하시겠습니까?')) {
     alert('삭제가 취소되었습니다.');
     return false;
@@ -155,10 +156,10 @@ async function reviewHideController(petsitterId, reviewId) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
       },
     },
   );
-  console.log('리뷰 가리기 시도');
   const result = await response.json();
   location.reload();
   listOfReviews(petsitterId);
