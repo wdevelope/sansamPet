@@ -139,6 +139,7 @@ async function simani() {
   document.querySelector('section').innerHTML = simanidata;
   return;
 }
+
 async function sitterReservation() {
   const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   const response = await fetch(
