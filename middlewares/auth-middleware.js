@@ -4,7 +4,6 @@ const config = require('../config/config.js');
 
 async function isAuth(req, res, next) {
   const token = req.headers.authorization;
-
   if (!token) {
     return res.status(400).json({ message: '토큰이 제공되지 않았습니다.' });
   }

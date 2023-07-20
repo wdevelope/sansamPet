@@ -5,26 +5,33 @@ const { Reviews } = require('../models');
 class ReviewsService {
   reviewsRepositories = new ReviewsRepositories();
 
-  reviewPostService = async (content, petsitterId, star, reservationId) => {
-    try {
-      if (!content || !petsitterId || !star) {
-        return {
-          status: 400,
-          message: '미입력된 항목이 있습니다. 모두 입력하여 주세요.',
-        };
-      }
-      const post = await this.reviewsRepositories.reviewPostRepository(
-        content,
-        petsitterId,
-        star,
-        reservationId,
-      );
-      if (post) {
-        return { status: 200, message: '리뷰 작성에 성공하였습니다.' };
-      }
-    } catch (err) {
-      return { status: 400, message: '리뷰 작성에 실패하였습니다.' };
+  reviewPostService = async (
+    content,
+    petsitterId,
+    star,
+    reservationId,
+    userId,
+  ) => {
+    // try {
+    if (!content || !petsitterId || !star) {
+      return {
+        status: 400,
+        message: '미입력된 항목이 있습니다. 모두 입력하여 주세요.',
+      };
     }
+    const post = await this.reviewsRepositories.reviewPostRepository(
+      content,
+      petsitterId,
+      star,
+      reservationId,
+      userId,
+    );
+    if (post) {
+      return { status: 200, message: '리뷰 작성에 성공하였습니다.' };
+    }
+    // } catch (err) {
+    //   return { status: 400, message: '리뷰 작성에 실패하였습니다.' };
+    // }
   };
 
   getAllReviewService = async petsitterId => {

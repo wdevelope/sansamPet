@@ -3,22 +3,28 @@ const { sequelize } = require('../models');
 const { QueryTypes } = require('sequelize');
 
 class ReviewsRepositories {
-  reviewPostRepository = async (content, petsitterId, star, reservationId) => {
+  reviewPostRepository = async (
+    content,
+    petsitterId,
+    star,
+    reservationId,
+    userId,
+  ) => {
     console.log('게시시작');
-    try {
-      const post = await Reviews.create({
-        content,
-        userId: 1,
-        reservationId,
-        petsitterId,
-        star,
-      });
-      console.log('게시성공');
-      return post;
-    } catch (error) {
-      console.error('게시 실패:', error.message);
-      throw error; // 올바른 오류 핸들링을 위해 오류를 다시 던집니다.
-    }
+    // try {
+    const post = await Reviews.create({
+      content,
+      userId,
+      reservationId,
+      petsitterId,
+      star,
+    });
+    console.log('게시성공');
+    return post;
+    // } catch (error) {
+    //   console.error('게시 실패:', error.message);
+    //   throw error; // 올바른 오류 핸들링을 위해 오류를 다시 던집니다.
+    // }
   };
 
   getAllReviewRepository = async petsitterId => {

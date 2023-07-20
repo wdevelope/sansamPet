@@ -9,6 +9,7 @@ const reviewsController = new ReviewsController();
 // 리뷰 작성
 router.post(
   '/petsitters/:petsitterId/review/:reservationId',
+  authmiddleware,
   reviewsController.reviewPostController,
 );
 
