@@ -110,7 +110,7 @@ h3 {
 
 :root {
   --shadedBoxWidth: 50px;
-  --shadedBoxBoxShadow: 7px 7px 2px 1px rgb(86, 122, 122);
+  --shadedBoxBoxShadow: 7px 7px 2px 1px rgb(100, 111.5, 111.5);
   --shadedBoxPadding: 20px 0px 20px 0px;
   --shadedBoxFontSize: 20px;
   --shadedBoxText-align: center;
@@ -149,25 +149,13 @@ h3 {
   grid-template-columns: repeat(7);
   grid-gap: 0px;
 
-  width: 385px;
+  /* width: 385px; */
 }
 
-/* 좌우 버튼 */
-.btn {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid #000;
-  border-width: 3px 3px 0 0;
-  cursor: pointer;
-}
-
-.prevDay {
-  transform: rotate(-135deg);
-}
-
-.nextDay {
-  transform: rotate(45deg);
+.guid {
+  display: flex;
+  height: var(--shadedBoxWidth);
+  line-height: var(--shadedBoxWidth);
 }
 
 /*  */

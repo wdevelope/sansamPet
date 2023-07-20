@@ -101,6 +101,7 @@ async function simani() {
                             <!-- 예약 현황 div -->
                             <div class="card">
                             <div class='rap'>
+                            
                               <div class="header">
                                 
                                 <h2 class='dateTitle'></h2>
@@ -108,7 +109,26 @@ async function simani() {
                               </div>
                                 <div class="reservationBox">
                                 <p id="resvtitle">예약 가능 날짜</p>
-                                
+                                <div class="guid">
+                                <div class="shadedBoxCalendar">O</div>
+                                <p>　 예약 가능한 날짜</p>
+                                </div>
+                                <div class="guid">
+                                <div class="shadedBoxCalendarBooked" style="color:white">X</div>
+                                <p>　 예약 안 되는 날짜</p>
+                                </div>
+                                <br>
+                             
+                              <div class="grid">
+                                <div class="shadedBoxCalendar" style="background-color: darkgreen;">일</div>
+                                <div class="shadedBoxCalendar" style="background-color: green;">월</div>
+                                <div class="shadedBoxCalendar" style="background-color: green;">화</div>
+                                <div class="shadedBoxCalendar" style="background-color: green;">수</div>
+                                <div class="shadedBoxCalendar" style="background-color: green;">목</div>
+                                <div class="shadedBoxCalendar" style="background-color: green;">금</div>
+                                <div class="shadedBoxCalendar" style="background-color: darkgreen;">토</div>
+                              </div>
+                              <br>
                                 <!-- 예약 현황 내용 추가 -->
                                 <div id = sitterReservation class="grid"></div>
                                 </div>
@@ -174,11 +194,11 @@ async function sitterReservation() {
   const today = date.getDay();
   let firstDate = today;
   console.log('첫날 :', firstDate);
-  if (firstDate === 0) {
-    firstDate = 6;
-  } else {
-    firstDate = firstDate - 1;
-  }
+  // if (firstDate === 0) {
+  //   firstDate = 6;
+  // } else {
+  //   firstDate = firstDate - 1;
+  // }
   console.log('전날 :', firstDate);
 
   const firstDay = day;
@@ -194,21 +214,23 @@ async function sitterReservation() {
   let htmlDummy = '';
 
   // 현재 날짜 정보 표시하기
-  document.querySelector(
-    `.dateTitle`,
-  ).innerText = `${currentYear}년 ${currentMonth}월`;
+  // document.querySelector(
+  //   `.dateTitle`,
+  // ).innerText = `${currentYear}년 ${currentMonth}월`;
 
   for (let i = 0; i < firstDate; i++) {
-    htmlDummy += `<div class="noColor">${i}</div>`;
+    htmlDummy += `<div class="noColor"></div>`;
   }
 
   for (let i = firstDay; i <= finalDay; i++) {
     let i2 = i;
+    let month = currentMonth;
     if (i > lastDay) {
       i2 = i - lastDay;
+      month = month + 1;
     }
     htmlDummy += `
-    <div class="shadedBoxCalendar">${i2}</div>
+    <div class="shadedBoxCalendar" id='${i2}'>${month}/${i2}</div>
     `;
   }
 
@@ -221,20 +243,29 @@ async function sitterReservation() {
     for (const reservation of reservations) {
       const reservationAt = new Date(reservation.reservationAt);
       const day = reservationAt.getDate();
+      const month = reservationAt.getMonth() + 1;
       console.log('day :', typeof day, day);
 
       // document.getElementById(day.toString());
+      // 인덱스를 센다.
+      // .shadedBoxCalendar:nth-child
       const targetElement = document.querySelector(
-        `.shadedBoxCalendar:nth-child(${day})`,
+        `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,
       );
-      if (targetElement) {
-        const parentElement = targetElement.parentElement;
-        targetElement.className = 'shadedBoxCalendarBooked';
-        // targetElement.classList.add('shadedBoxCalendarBooked');
+      console.log(
+        'targetElement.textContent :',
+        typeof targetElement.textContent,
+        targetElement.textContent,
+      );
+      console.log(day);
+      targetElement.className = 'shadedBoxCalendarBooked';
 
-        // const parentElement = targetElement.parentElement;
-        // parentElement.className = 'shadedBoxCalendarBooked';
-      }
+      // const parentElement = targetElement.parentElement;
+
+      // targetElement.classList.add('shadedBoxCalendarBooked');
+
+      // const parentElement = targetElement.parentElement;
+      // parentElement.className = 'shadedBoxCalendarBooked';
     }
   }
 }
