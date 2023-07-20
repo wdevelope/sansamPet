@@ -30,7 +30,7 @@ Java Script, Nodejs , MySQL , HTML , CSS , AWS
 
 ## 5. 와이어 프레임
 
-![wireframe](https://verdantjuly.tistory.com/313)
+[![wireframe](https://verdantjuly.tistory.com/313)](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDAtOg%2FbtsnZ1obflC%2F7esgnDwF6BlYbLtFjJKKd0%2Fimg.png)
 
 ## 6. ERD
 
