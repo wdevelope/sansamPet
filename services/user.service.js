@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/user.repository');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   registerUser: async (nickname, password, confirm) => {
@@ -48,7 +49,7 @@ module.exports = {
   },
 
   //로그인
-  loginUser: async (nickname, password, res) => {
+  loginUser: async (nickname, password) => {
     try {
       const user = await UserRepository.findUserByNickname(nickname);
       const isValidPassword = await bcrypt.compare(password, user.password);
@@ -58,11 +59,17 @@ module.exports = {
           message: '비밀번호가 틀렸습니다.',
         };
       }
+      //토큰 생성
+      const token = jwt.sign(
+        { userId: user.userId },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: process.env.JWT_EXPIRE_TIME,
+        },
+      );
 
-      UserRepository.generateToken(user, res);
-      console.log('쿠키 생성 완료');
-
-      return;
+      console.log(token);
+      return token;
     } catch (error) {
       console.error(error);
       throw error;
