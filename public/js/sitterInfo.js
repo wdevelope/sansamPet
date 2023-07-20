@@ -20,8 +20,13 @@ function noticeNotification(notice, date) {
 }
 
 async function makeReservation() {
-  const reservationAt = document.querySelector('#date').value;
+  const reservationAt = document.querySelector('#date').value.substr(0, 10);
   const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
+  const reservationDate = new Date(reservationAt);
+  const now = new Date();
+  if (reservationDate - now < 0) {
+    return alert('오늘 이후로 예약해 주세요!');
+  }
   const response = await fetch(`http://localhost:3000/api/reservations`, {
     method: 'POST',
     headers: {

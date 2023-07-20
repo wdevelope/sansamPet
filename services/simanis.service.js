@@ -25,7 +25,7 @@ class SimaniService {
   createSimani = async (name, imgurl, signInCareer, description, userId) => {
     const returns = new Returns('심마니 등록');
     try {
-      if ((!name, !imgurl, !signInCareer, !description, !userId == 2)) {
+      if ((!name, !imgurl, !signInCareer, !description, !userId == 1)) {
         return returns.status400();
       }
       const simani = await this.simaniRepository.createSimani(
@@ -55,7 +55,7 @@ class SimaniService {
           status: 200,
           message: '심마니가 없습니다. 이게 무슨 일이야 이렇게 좋은 날에.',
         };
-      } else if (simanis && userId == 2) {
+      } else if (simanis && userId == 1) {
         return {
           status: 200,
           message: '심마니 조회에 성공하였습니다.',
@@ -81,7 +81,7 @@ class SimaniService {
         signInCareer,
         description,
       );
-      if (simani[0] && userId == 2) {
+      if (simani[0] && userId == 1) {
         return returns.status200();
       } else {
         return returns.status400();
@@ -93,7 +93,7 @@ class SimaniService {
   deleteSimani = async (userId, name) => {
     const returns = new Returns('심마니 삭제');
     try {
-      if (!userId == 2 || !name) {
+      if (!userId == 1 || !name) {
         return returns.status400();
       }
       const reservation = await this.simaniRepository.deleteSimani(name);
@@ -109,7 +109,7 @@ class SimaniService {
   superDeleteSimani = async (userId, name) => {
     const returns = new Returns('심마니 영구 삭제');
     try {
-      if (userId !== 2 || !name) {
+      if (userId !== 1 || !name) {
         return returns.status400();
       }
       const reservation = await this.simaniRepository.superDeleteSimani(name);

@@ -50,7 +50,7 @@ async function login() {
     sessionStorage.setItem(
       'Authorization',
       response.headers.get('Authorization'),
-      localStorage.setItem('loginId', nickname),
+      sessionStorage.setItem('loginId', nickname),
     );
     location.reload();
   }
@@ -62,7 +62,7 @@ function adminapage() {
 }
 //버튼
 function buttons() {
-  if (sessionStorage.getItem('authorization')) {
+  if (sessionStorage.getItem('Authorization')) {
     const reservationBtn = document.querySelector('#reservationBtn');
     const loginBtn = document.querySelector('#loginBtn');
     const signupBtn = document.querySelector('#signupBtn');
@@ -73,7 +73,7 @@ function buttons() {
     loginBtn.style.display = 'none';
     signupBtn.style.display = 'none';
   }
-  if (localStorage.getItem('loginId') == 'ADMIN') {
+  if (sessionStorage.getItem('loginId') == 'ADMIN') {
     const adminBtn = document.querySelector('#adminBtn');
     adminBtn.style.display = 'block';
   }

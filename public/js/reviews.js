@@ -138,7 +138,6 @@ async function reviewUpdateController(petsitterId, reviewId) {
   );
   const result = await response.json();
   location.reload();
-  listOfReviews(petsitterId);
   return alert(result.message);
 }
 
