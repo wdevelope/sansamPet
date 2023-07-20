@@ -23,7 +23,6 @@ module.exports = {
       res.status(400).json({ message: error.message });
     }
   },
-
   //로그아웃
   logout: async (req, res) => {
     try {

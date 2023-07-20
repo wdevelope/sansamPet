@@ -53,6 +53,11 @@ async function login() {
   return alert(result.message);
 }
 
+// 네이버 로그인 페이지로 리다이렉트
+function naverLogin() {
+  location.href = 'http://localhost:3000/auth/naver';
+}
+
 function adminapage() {
   location.href = 'http://localhost:3000/admin.html';
 }

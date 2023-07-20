@@ -1,5 +1,4 @@
 'use strict';
-
 const bcrypt = require('bcrypt');
 const UserRepository = require('../repositories/user.repository');
 const jwt = require('jsonwebtoken');
@@ -79,6 +78,29 @@ module.exports = {
   logoutUser: async (req, res) => {
     try {
       await UserRepository.logoutUser(req, res);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  //네이버 회원가입 로그인
+  registerOrLoginWithNaver: async profile => {
+    try {
+      let user = await UserRepository.findUserByNickname(profile.displayName);
+
+      if (!user) {
+        user = await UserRepository.registerUser(profile.displayName, null);
+      }
+
+      const token = jwt.sign(
+        { userId: user.userId },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: process.env.JWT_EXPIRE_TIME,
+        },
+      );
+
+      return { user, token };
     } catch (error) {
       console.error(error);
       throw error;
