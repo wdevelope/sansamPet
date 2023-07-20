@@ -15,7 +15,7 @@
 
 ## 2. 개발 일정
 
-[Plan](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https://blog.kakaocdn.net/dn/byvVKH/btsnZZRsr1C/okAJcpRCYZYKCFCCKGSyc0/img.png)
+![Plan](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https://blog.kakaocdn.net/dn/byvVKH/btsnZZRsr1C/okAJcpRCYZYKCFCCKGSyc0/img.png)
 
 ## 3. 역할 분담
 
@@ -30,11 +30,11 @@ Java Script, Nodejs , MySQL , HTML , CSS , AWS
 
 ## 5. 와이어 프레임
 
-[wireframe](https://verdantjuly.tistory.com/313)
+![wireframe](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDAtOg%2FbtsnZ1obflC%2F7esgnDwF6BlYbLtFjJKKd0%2Fimg.png)
 
 ## 6. ERD
 
-[ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https://blog.kakaocdn.net/dn/sjP0Y/btsn27BcZwE/eulEsyd2Eqo2ikKKZHhQVk/img.png)
+![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https://blog.kakaocdn.net/dn/sjP0Y/btsn27BcZwE/eulEsyd2Eqo2ikKKZHhQVk/img.png)
 
 ## 7. API
 

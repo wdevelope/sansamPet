@@ -23,10 +23,6 @@
             <div class="navbar-nav">
                 <form class="form-inline ml-auto" id="point">
                     <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" data-toggle="modal"
-                        data-target="#loginModal" id="adminlogin">
-                        로그인
-                    </button>
-                    <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" data-toggle="modal"
                         data-target="#registerSimaniModal" id="registerSimani">
                         심마니 등록
                     </button>
@@ -45,36 +41,6 @@
                 </form>
             </div>
     </nav>
-
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="nickname">닉네임</label>
-                            <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요." />
-                        </div>
-                        <div class="form-group">
-                            <label for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요." />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="loginbtn" onclick="login()">로그인</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Register Modal -->
     <div class="modal fade" id="registerSimaniModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -99,7 +65,7 @@
                         </div>
                         <div class="form-group">
                             <label for="imgul">사진</label>
-                            <input type="text" class="form-control" id="imgul" placeholder="심마니 사진 url" />
+                            <input type="text" class="form-control" id="imgurl" placeholder="심마니 사진 url" />
                         </div>
                         <div class="form-group">
                             <label for="description">한마디</label>

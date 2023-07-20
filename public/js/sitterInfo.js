@@ -1,4 +1,4 @@
-const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
+let petsitterId = Number(localStorage.getItem('clickedPetsitter'));
 
 simani();
 listOfReviews(petsitterId);
@@ -26,6 +26,7 @@ async function makeReservation() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
     },
     body: JSON.stringify({ reservationAt, petsitterId }),
   });

@@ -1,7 +1,7 @@
 // 시작하자 실행 될 함수들
 listsimanis();
-buttons();
 enter();
+buttons();
 
 const socket = io.connect('/');
 
@@ -47,7 +47,11 @@ async function login() {
     socket.emit('LOGIN', {
       nickname,
     });
-    sessionStorage.setItem('loggedin', nickname);
+    sessionStorage.setItem(
+      'Authorization',
+      response.headers.get('Authorization'),
+      localStorage.setItem('loginId', nickname),
+    );
     location.reload();
   }
   return alert(result.message);
@@ -63,7 +67,7 @@ function adminapage() {
 }
 //버튼
 function buttons() {
-  if (sessionStorage.getItem('loggedin')) {
+  if (sessionStorage.getItem('authorization')) {
     const reservationBtn = document.querySelector('#reservationBtn');
     const loginBtn = document.querySelector('#loginBtn');
     const signupBtn = document.querySelector('#signupBtn');
@@ -74,8 +78,7 @@ function buttons() {
     loginBtn.style.display = 'none';
     signupBtn.style.display = 'none';
   }
-  if (sessionStorage.getItem('loggedin') == 'ADMIN') {
-    console.log('통과');
+  if (localStorage.getItem('loginId') == 'ADMIN') {
     const adminBtn = document.querySelector('#adminBtn');
     adminBtn.style.display = 'block';
   }
@@ -154,6 +157,7 @@ async function logout() {
   return alert(result.message);
 }
 
+// 검색
 async function search() {
   const name = document.querySelector('#search').value;
   const response = await fetch(

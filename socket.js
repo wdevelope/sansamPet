@@ -6,8 +6,8 @@ const socketIdMap = {};
 let admin = '';
 
 io.on('connection', sock => {
-  const { watchLogin, watchByeBye, watchNotice } = initSocket(sock);
-
+  const { watchLogin, watchByeBye, watchNotice, watchADMIN } = initSocket(sock);
+  watchADMIN();
   watchLogin();
   watchNotice();
   watchByeBye();
@@ -43,6 +43,12 @@ function initSocket(sock) {
         notifyEveryone('NOTICE_EVERYONE', payload);
       });
     },
+
+    watchADMIN: () => {
+      watchEvent('ADMINLOGIN', data => {
+        admin = sock.id;
+      });
+    },
     watchLogin: () => {
       watchEvent('LOGIN', data => {
         const payload = {
@@ -51,14 +57,6 @@ function initSocket(sock) {
         };
         console.log('로그인 기록', payload.nickname, payload.date);
         notifyTo(admin, 'LOGIN_DATA', payload);
-      });
-      watchEvent('ADMINLOGIN', data => {
-        const payload = {
-          nickname: data.nickname,
-          date: new Date().toISOString(),
-        };
-        console.log('로그인 기록', payload.nickname, payload.date);
-        admin = sock.id;
       });
     },
 
