@@ -1,3 +1,4 @@
+const ms = require('ms');
 const { Users } = require('../models');
 const jwt = require('jsonwebtoken');
 
@@ -31,7 +32,12 @@ module.exports = {
       },
     );
     // 쿠키에 토큰 설정
-    res.cookie('Authorization', `Bearer ${token}`);
+    res.cookie('Authorization', `Bearer ${token}`, {
+      //쿠키가 javascript에 접근할 수 없도록 설정, xss공격 방어
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production' ? true : false,
+      maxAge: ms(process.env.JWT_EXPIRE_TIME),
+    });
   },
 
   logoutUser: async (req, res) => {
