@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       deletedAt: {
         type: DataTypes.DATE,
       },
+      googleId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,

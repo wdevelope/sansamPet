@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const usersRouter = require('./routes/users.route');
 const petsittersRouter = require('./routes/petsitters.route');
 const reservationsRouter = require('./routes/reservations.route');
@@ -7,34 +8,33 @@ const simanisRouter = require('./routes/simanis.route');
 const cookieParser = require('cookie-parser');
 const { Server } = require('http');
 const passport = require('passport');
-const naverStrategy = require('passport-naver').Strategy;
-const UserService = require('./services/user.service');
+
+//구글
+const authRoutes = require('./routes/auth.routes');
+const passportSetup = require('./config/passport-setup');
+const session = require('express-session');
+
+//구글
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoutes);
+//
+
 require('./db');
 
-const app = express();
 const http = Server(app);
 const cors = require('cors');
 
 app.use(express.json());
 app.use(cookieParser());
-
-passport.use(
-  new naverStrategy(
-    {
-      clientID: process.env.NAVER_CLIENT_ID,
-      clientSecret: process.env.NAVER_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/api/auth/naver/callback',
-    },
-    async function (accessToken, refreshToken, profile, done) {
-      try {
-        const user = await UserService.registerOrLoginWithNaver(profile);
-        done(null, user.id);
-      } catch (error) {
-        done(error);
-      }
-    },
-  ),
-);
 
 app.use(
   cors({
@@ -43,8 +43,6 @@ app.use(
   }),
 );
 
-app.use(passport.initialize());
-
 app.use('/api', [
   usersRouter,
   petsittersRouter,
@@ -52,6 +50,7 @@ app.use('/api', [
   reviewsRouter,
   simanisRouter,
 ]);
+
 app.use(express.static('public'));
 
 module.exports = http;
