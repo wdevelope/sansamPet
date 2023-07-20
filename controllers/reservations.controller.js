@@ -31,7 +31,9 @@ class ReservationsController {
     const { userId } = res.locals;
     const { status, message, reservations } =
       await this.reservationService.adminViewReservations(userId);
-    return res.status(status).json({ message, reservations });
+    return res
+      .status(status)
+      .json({ message, reservations, ROOMTITLE: 'ADMINLOGIN' });
   };
   updateReservation = async (req, res) => {
     const { userId } = res.locals;

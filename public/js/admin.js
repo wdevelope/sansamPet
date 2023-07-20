@@ -42,7 +42,7 @@ async function listReservations() {
   const result = await response.json();
   console.log(result.message);
   if (response.status == 200) {
-    socket.emit('ADMINLOGIN', { nickname: 'ADMIN' });
+    socket.emit(result.ROOMTITLE);
   }
   const reservations = result.reservations
     .map(reservation => {
