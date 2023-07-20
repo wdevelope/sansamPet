@@ -28,9 +28,14 @@ class ReservationService {
       if (!petsitterId || !reservationAt || !userId) {
         return returns.status400();
       }
+      const reservationDate = new Date(reservationAt);
+      const now = new Date();
+      if (reservationDate - now < 0) {
+        return returns.status400();
+      }
       const reservation = await this.reservationRepository.createOneReservation(
         petsitterId,
-        reservationAt,
+        reservationDate,
         userId,
       );
       if (reservation[1]) {
@@ -115,7 +120,7 @@ class ReservationService {
       userId,
     );
     try {
-      if (reservations && userId == 2) {
+      if (reservations && userId == 1) {
         return {
           status: 200,
           message: '관리자 예약 조회에 성공하였습니다.',
@@ -177,7 +182,7 @@ class ReservationService {
   permenantDeleteReservation = async (userId, reservationId) => {
     const returns = new Returns('예약 영구 삭제');
     try {
-      if (userId !== 2 || !reservationId) {
+      if (userId !== 1 || !reservationId) {
         return returns.status400();
       }
       const reservation =
