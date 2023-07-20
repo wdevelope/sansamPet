@@ -20,6 +20,16 @@ function noticeNotification(notice, date) {
 async function editReservation(reservationId) {
   const reservationAt = document.querySelector('#date').value;
   const petsitterId = document.querySelector('#simanichoice').value;
+  let reservationDate = new Date(reservationAt);
+  reservationDate = reservationDate.getTime();
+  let now = new Date();
+  now = now.getTime();
+  if (reservationDate - now < 0) {
+    return alert('오늘 이후로 예약해 주세요!');
+  }
+  if (2592000000 < reservationDate - now) {
+    return alert('오늘로부터 30일 이내로 예약해 주세요!');
+  }
   const response = await fetch(
     `http://localhost:3000/api/reservations?reservationId=${reservationId}`,
     {
