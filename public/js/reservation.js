@@ -1,4 +1,3 @@
-// simani(petsitterId);
 listReservations();
 
 const socket = io.connect('/');
@@ -21,6 +20,16 @@ function noticeNotification(notice, date) {
 async function editReservation(reservationId) {
   const reservationAt = document.querySelector('#date').value;
   const petsitterId = document.querySelector('#simanichoice').value;
+  let reservationDate = new Date(reservationAt);
+  reservationDate = reservationDate.getTime();
+  let now = new Date();
+  now = now.getTime();
+  if (reservationDate - now < 0) {
+    return alert('오늘 이후로 예약해 주세요!');
+  }
+  if (2592000000 < reservationDate - now) {
+    return alert('오늘로부터 30일 이내로 예약해 주세요!');
+  }
   const response = await fetch(
     `http://localhost:3000/api/reservations?reservationId=${reservationId}`,
     {
@@ -118,15 +127,11 @@ async function listReservations() {
                       <label>심마니 선택</label></br>
                       <select class="form-select" id="simanichoice">
                         <option selected>-- 나의 원픽 --</option>
-                        <option value="1">김민준</option>
-                        <option value="2">엄한솔</option>
-                        <option value="3">우성원</option>
-                        <option value="4">이다영</option>
+                        <option value="1">이다영</option>
+                        <option value="2">우성원</option>
+                        <option value="3">엄한솔</option>
+                        <option value="4">김민준</option>
                         <option value="5">원장님</option>
-                        <option value="6">뽀로로</option>
-                        <option value="7">르탄이</option>
-                        <option value="9">해리포터</option>
-                        <option value="10">시나모롤</option>
                       </select>
                     </form>
                   </div>

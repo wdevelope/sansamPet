@@ -105,8 +105,63 @@ h3 {
   padding: 20px 40px 20px 20px;
   font-size: 17px;
 }
+
+/*  */
+
+:root {
+  --shadedBoxWidth: 50px;
+  --shadedBoxBoxShadow: 7px 7px 2px 1px rgb(100, 111.5, 111.5);
+  --shadedBoxPadding: 20px 0px 20px 0px;
+  --shadedBoxFontSize: 20px;
+  --shadedBoxText-align: center;
+  --shadedBoxText: 10px;
+}
+/* --shadedBoxTextVertical-align: middle; */
+
+.shadedBoxCalendar {
+  color: white;
+  width: var(--shadedBoxWidth);
+  height: var(--shadedBoxWidth);
+  line-height: var(--shadedBoxText);
+  background-color: rgb(35, 44, 44);
+  box-shadow: var(--shadedBoxBoxShadow);
+  padding: var(--shadedBoxPadding);
+  font-size: var(--shadedBoxFontSize);
+  text-align: var(--shadedBoxText-align);
+  vertical-align: var(--shadedBoxTextVertical-align);
+}
+
+.shadedBoxCalendarBooked {
+  color: rgb(165, 179, 179);
+  width: var(--shadedBoxWidth);
+  height: var(--shadedBoxWidth);
+  line-height: var(--shadedBoxText);
+  background-color: rgb(165, 179, 179);
+  box-shadow: var(--shadedBoxBoxShadow);
+  padding: var(--shadedBoxPadding);
+  font-size: var(--shadedBoxFontSize);
+  text-align: var(--shadedBoxText-align);
+  vertical-align: var(--shadedBoxTextVertical-align);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7);
+  grid-gap: 0px;
+
+  /* width: 385px; */
+}
+
+.guid {
+  display: flex;
+  height: var(--shadedBoxWidth);
+  line-height: var(--shadedBoxWidth);
+}
+
+/*  */
+
 .reservationBox {
-  padding: 20px 40px 20px 20px;
+  padding: 20px 20px 20px 20px;
 }
 
 #reviewcontent {
@@ -125,4 +180,11 @@ h3 {
   font-size: 15px;
   padding: 5px;
   font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 5px;
+  width: 385px;
 }
