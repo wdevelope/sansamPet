@@ -1,5 +1,4 @@
 const { Users } = require('../models');
-const jwt = require('jsonwebtoken');
 
 module.exports = {
   registerUser: async (nickname, password) => {
@@ -19,19 +18,6 @@ module.exports = {
       throw { message: '존재하지 않는 닉네임입니다.' };
     }
     return user;
-  },
-
-  generateToken: (Users, res) => {
-    // JWT 토큰 생성
-    const token = jwt.sign(
-      { userId: Users.userId },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: process.env.JWT_EXPIRE_TIME,
-      },
-    );
-    // 쿠키에 토큰 설정
-    res.cookie('Authorization', `Bearer ${token}`);
   },
 
   logoutUser: async (req, res) => {
