@@ -25,6 +25,7 @@ class PetsitterService {
   viewallpesitters = async () => {
     const returns = new Returns('펫시터 전체 조회');
     const petsitters = await this.petsitterRepository.viewallpesitters();
+
     try {
       if (!petsitters[0]) {
         return {
@@ -46,6 +47,7 @@ class PetsitterService {
             star: Math.floor(petsitter.starAvg),
           };
         });
+
         return {
           status: 200,
           message: '산삼 시터 조회에 성공하였습니다.',
@@ -63,6 +65,7 @@ class PetsitterService {
     const petsitter = await this.petsitterRepository.viewonepetsitter(
       petsitterId,
     );
+
     try {
       if (!petsitter[0].name) {
         return returns.status400();
@@ -92,11 +95,13 @@ class PetsitterService {
       return returns.status400();
     }
   };
+
   viewonepetsitterbynickname = async name => {
     const returns = new Returns('펫시터 검색');
     const petsitter = await this.petsitterRepository.viewonepetsitterbynickname(
       name,
     );
+
     try {
       if (!petsitter[0].name) {
         return returns.status400();

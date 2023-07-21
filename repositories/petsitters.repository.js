@@ -12,6 +12,7 @@ class PetsitterRepository {
           ORDER BY starAvg DESC`,
       { type: QueryTypes.SELECT },
     );
+
     return petsitters;
   };
 
@@ -24,6 +25,7 @@ class PetsitterRepository {
               `,
       { replacements: { petsitterId }, type: QueryTypes.SELECT },
     );
+
     return petsitters;
   };
 
@@ -38,6 +40,7 @@ class PetsitterRepository {
               ORDER BY starAvg DESC`,
       { replacements: { name }, type: QueryTypes.SELECT },
     );
+
     return petsitters;
   };
 }

@@ -10,6 +10,7 @@ class ReservationRepository {
         userId,
       },
     });
+
     return reservation;
   };
 
@@ -28,6 +29,7 @@ class ReservationRepository {
       ],
       order: [['updatedAt', 'DESC']],
     });
+
     return reservations;
   };
 
@@ -46,6 +48,7 @@ class ReservationRepository {
       ],
       order: [['reservationAt', 'DESC']],
     });
+
     return reservations;
   };
 
@@ -63,8 +66,10 @@ class ReservationRepository {
       ],
       order: [['updatedAt', 'DESC']],
     });
+
     return reservations;
   };
+
   updateOneReservation = async (
     userId,
     petsitterId,
@@ -91,8 +96,10 @@ class ReservationRepository {
       );
       return reservation;
     }
+
     return;
   };
+
   deleteOneReservation = async (userId, reservationId) => {
     const now = new Date();
     const reservation = await Reservations.update(
@@ -101,12 +108,15 @@ class ReservationRepository {
       },
       { where: { reservationId, userId } },
     );
+
     return reservation;
   };
+
   permenantDeleteReservation = async reservationId => {
     const reservation = await Reservations.destroy({
       where: { reservationId },
     });
+
     return reservation;
   };
 }

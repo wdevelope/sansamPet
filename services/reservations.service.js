@@ -24,6 +24,7 @@ class ReservationService {
 
   createOneReservation = async (petsitterId, reservationAt, userId) => {
     const returns = new Returns('예약 작성');
+
     try {
       if (!petsitterId || !reservationAt || !userId) {
         return returns.status400();
@@ -49,11 +50,14 @@ class ReservationService {
       return returns.status400();
     }
   };
+
   viewAllReservations = async userId => {
     const returns = new Returns('사용자별 예약 조회');
+
     const reservations = await this.reservationRepository.viewAllReservations(
       userId,
     );
+
     try {
       if (!reservations[0]) {
         return {
@@ -84,8 +88,10 @@ class ReservationService {
 
   viewPetsitterReservations = async petsitterId => {
     const returns = new Returns('펫시터별 예약 조회');
+
     const reservations =
       await this.reservationRepository.viewPetsitterReservations(petsitterId);
+
     try {
       if (!reservations[0]) {
         return {
@@ -116,9 +122,11 @@ class ReservationService {
 
   adminViewReservations = async userId => {
     const returns = new Returns('관리자 예약 조회');
+
     const reservations = await this.reservationRepository.adminViewReservations(
       userId,
     );
+
     try {
       if (reservations && userId == 1) {
         return {
@@ -133,6 +141,7 @@ class ReservationService {
       return returns.status400();
     }
   };
+
   updateOneReservation = async (
     userId,
     petsitterId,
@@ -140,6 +149,7 @@ class ReservationService {
     reservationId,
   ) => {
     const returns = new Returns('예약 수정');
+
     try {
       if (!petsitterId || !reservationAt || !userId || !reservationId) {
         return returns.status400();
@@ -160,8 +170,10 @@ class ReservationService {
       return returns.status400();
     }
   };
+
   deleteOneReservation = async (userId, reservationId) => {
     const returns = new Returns('예약 삭제');
+
     try {
       if (!userId || !reservationId) {
         return returns.status400();
@@ -170,6 +182,7 @@ class ReservationService {
         userId,
         reservationId,
       );
+
       if (reservation) {
         return returns.status200();
       } else {
@@ -179,8 +192,10 @@ class ReservationService {
       return returns.status400();
     }
   };
+
   permenantDeleteReservation = async (userId, reservationId) => {
     const returns = new Returns('예약 영구 삭제');
+
     try {
       if (userId !== 1 || !reservationId) {
         return returns.status400();
@@ -189,6 +204,7 @@ class ReservationService {
         await this.reservationRepository.permenantDeleteReservation(
           reservationId,
         );
+
       if (reservation) {
         return returns.status200();
       } else {
