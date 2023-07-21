@@ -16,13 +16,13 @@ router.post(
 // 심마니의 안가려진 리뷰 조회
 router.get(
   '/petsitters/:petsitterId/reviews',
-  authmiddleware,
   reviewsController.getAllReviewController,
 );
 
 // 심마니의 전체 리뷰 조회
 router.get(
   '/petsitters/:petsitterId/reviewsAll',
+  authmiddleware,
   reviewsController.getAllReviewControllerAll,
 );
 

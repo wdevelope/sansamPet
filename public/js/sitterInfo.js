@@ -190,7 +190,6 @@ async function sitterReservation() {
   // console.log(result.message);
   setTimeout(() => {
     const date = new Date();
-    // console.log('date :', date, typeof date);
 
     const currentYear = new Date(date).getFullYear();
     const currentMonth = new Date(date).getMonth() + 1;
@@ -240,7 +239,6 @@ async function sitterReservation() {
         const targetElement = document.querySelector(
           `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,
         );
-
         targetElement.className = 'shadedBoxCalendarBooked';
       }
     }
