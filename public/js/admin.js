@@ -12,9 +12,6 @@ function notice() {
   });
 }
 
-listReservations();
-listReviews();
-
 //로고 홈으로
 function logo() {
   location.href = 'http://localhost:3000';
@@ -25,8 +22,11 @@ function loginNotification(targetNickname, date) {
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>`;
   const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" id="adminalert" role="alert">${messageHtml}</div></br>`;
   const alertlist = document.querySelector('#alertlist');
-  alertlist.innerHTML = htmlTemp;
+  alertlist.insertAdjacentHTML('afterbegin', htmlTemp);
 }
+
+listReservations();
+listReviews();
 
 async function listReservations() {
   const response = await fetch(`http://localhost:3000/api/admin/reservations`, {
