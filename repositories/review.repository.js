@@ -21,7 +21,6 @@ class ReviewsRepositories {
         deletedAt: null,
       },
     });
-
     if (isExist) {
       // 이미 리뷰가 존재하는 경우에 대한 처리
       throw { message: '이미 리뷰를 작성한 예약입니다.' };

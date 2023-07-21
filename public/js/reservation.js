@@ -18,7 +18,7 @@ function noticeNotification(notice, date) {
 }
 
 async function editReservation(reservationId) {
-  const reservationAt = document.querySelector('#date').value;
+  const reservationAt = document.querySelector('#date').value.substr(0, 10);
   const petsitterId = document.querySelector('#simanichoice').value;
   let reservationDate = new Date(reservationAt);
   reservationDate = reservationDate.getTime();

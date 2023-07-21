@@ -1,114 +1,75 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" href="./css/index.css" />
-    <title>samsam pet</title>
-  </head>
 
-  <body>
-    <!-- nav 바 -->
-    <nav id="navbar" class="navbar navbar-expand-sm navbar-dark sticky-top">
-      <div class="navbar-brand">
-        <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()">
-          산삼 pet</i
-        >
-      </div>
-      <button
-        class="navbar-toggler"
-        data-toggle="collapse"
-        data-target="#expandme"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="expandme">
-        <div class="navbar-nav">
-          <!-- 검색창 -->
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="검색"
-            aria-label="Search"
-            id="search"
-          />
-          <button
-            class="btn btn-outline-light my-2 my-sm-0"
-            type="button"
-            onclick="search()"
-            id="searchBtn"
-          >
-            검색
-          </button>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <title>samsam pet</title>
+</head>
 
-        <form class="form-inline ml-auto">
-          <a href="about.html" class="nav-item nav-link white-link">about</a>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="authBtn"
-            data-toggle="modal"
-            data-target="#loginModal"
-          >
-            로그인/회원가입
-          </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="reservationBtn"
-            onclick="clickReservation()"
-          >
-            예약 현황
-          </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="logoutBtn"
-            onclick="logout()"
-          >
-            로그아웃
-          </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="adminBtn"
-            onclick="adminapage()"
-          >
-            관리자
-          </button>
-        </form>
-      </div>
-    </nav>
-
-    <div class="image-container">
-      <img src="./img/about.png" alt="" />
+<body>
+  <!-- nav 바 -->
+  <nav id="navbar" class="navbar navbar-expand-sm navbar-dark sticky-top">
+    <div class="navbar-brand">
+      <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()">
+        산삼 pet</i>
     </div>
-
-    <footer>
-      <div class="footer-content">
-        <p class="company-info">
-          (주)산삼<br />
-          team : 다영 민준 한솔 성원
-        </p>
-        <p class="contact-info">
-          사업자 등록번호: 123-45-6789<br />
-          개인정보관리책임자: 심봤다<br />
-          고객문의 및 연락처: sansam@sansam.com
-        </p>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#expandme">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="expandme">
+      <div class="navbar-nav">
+        <!-- 검색창 -->
+        <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search" id="search" />
+        <button class="btn btn-outline-light my-2 my-sm-0" type="button" onclick="search()" id="searchBtn">
+          검색
+        </button>
       </div>
-    </footer>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+
+      <form class="form-inline ml-auto">
+        <a href="about.html" class="nav-item nav-link white-link">about</a>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="authBtn" data-toggle="modal"
+          data-target="#loginModal" onclick="login()">
+          로그인/회원가입
+        </button>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="reservationBtn"
+          onclick="clickReservation()">
+          예약 현황
+        </button>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="logoutBtn" onclick="logout()">
+          로그아웃
+        </button>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="adminBtn" onclick="adminapage()">
+          관리자
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="image-container">
+    <img src="./img/about.png" alt="" />
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p class="company-info">
+        (주)산삼<br />
+        team : 다영 민준 한솔 성원
+      </p>
+      <p class="contact-info">
+        사업자 등록번호: 123-45-6789<br />
+        개인정보관리책임자: 심봤다<br />
+        고객문의 및 연락처: sansam@sansam.com
+      </p>
+    </div>
+  </footer>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>
