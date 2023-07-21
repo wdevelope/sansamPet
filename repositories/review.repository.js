@@ -145,7 +145,8 @@ class ReviewsRepositories {
         `SELECT r.reservationId
         FROM Reservations AS r
         LEFT JOIN Reviews as v on r.reservationId = v.reservationId 
-            WHERE v.reviewId IS NULL AND r.petsitterId = :petsitterId AND r.userId = :userId AND v.deletedAt IS NULL AND r.deletedAt IS NULL
+            WHERE r.petsitterId = :petsitterId AND r.userId = :userId AND r.deletedAt IS NULL AND (v.deletedAt IS NOT NULL OR v.reviewId IS NULL)
+            GROUP BY r.reservationId
             ORDER BY r.reservationId`,
         {
           replacements: { petsitterId: petsitterId, userId: userId },
@@ -181,7 +182,7 @@ class ReviewsRepositories {
   reviewHideRepository = async (userId, reviewId) => {
     const post = await Reviews.update(
       {
-        deletedAt: Date.now,
+        deletedAt: Date.now(),
       },
       { where: { reviewId } },
     );
