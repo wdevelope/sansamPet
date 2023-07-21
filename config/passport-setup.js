@@ -46,7 +46,7 @@ passport.use(
         const newUser = await Users.create({
           googleId: profile.id,
           nickname: profile.displayName,
-          password: 'default',
+          password: require('crypto').randomBytes(64).toString('hex'),
         });
         const token = jwt.sign(
           { userId: newUser.userId },
