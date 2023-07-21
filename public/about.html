@@ -32,7 +32,7 @@
       <form class="form-inline ml-auto">
         <a href="about.html" class="nav-item nav-link white-link">about</a>
         <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="authBtn" data-toggle="modal"
-          data-target="#loginModal" onclick="login()">
+          data-target="#loginModal">
           로그인/회원가입
         </button>
         <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="reservationBtn"
@@ -48,7 +48,81 @@
       </form>
     </div>
   </nav>
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="nickname">닉네임</label>
+              <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요." />
+            </div>
+            <div class="form-group">
+              <label for="password">비밀번호</label>
+              <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요." />
+            </div>
+          </form>
+        </div>
 
+        <div class="modal-footer">
+          <button class="google-login" type="button" id="btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G"
+              class="google-icon" />
+            Google login
+          </button>
+          <button type="button" class="btn btn-dark" id="btn" onclick="login()">
+            로그인
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+            data-target="#registerModal">
+            회원가입
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">회원가입</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="registerNickname">닉네임</label>
+              <input type="text" class="form-control" id="registerNickname" placeholder="닉네임을 입력하세요." />
+            </div>
+            <div class="form-group">
+              <label for="registerPassword">비밀번호</label>
+              <input type="password" class="form-control" id="registerPassword" placeholder="비밀번호를 입력하세요." />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">비밀번호 확인</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호를 다시 입력하세요." />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn" onclick="signup()">회원가입</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="image-container">
     <img src="./img/about.png" alt="" />
   </div>
