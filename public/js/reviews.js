@@ -96,7 +96,6 @@ async function listOfReviews(petsitterId) {
 //  생성
 async function reviewCreate(petsitterId) {
   petsitterId = Number(localStorage.getItem('clickedPetsitter'));
-  //입력받아야하지만 일단 설정
   const reservationId = document.querySelector('#reservationId').value;
   const content = document.querySelector('#content').value;
   const star = document.querySelector('#star').value;

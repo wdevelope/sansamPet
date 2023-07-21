@@ -19,6 +19,12 @@ class ReviewsService {
           message: '미입력된 항목이 있습니다. 모두 입력하여 주세요.',
         };
       }
+      // const target = await Reviews.findOne({
+      //   where: { reviewId, userId, deletedAt: null },
+      // });
+      // if (!target) {
+      //   return { status: 400, message: '이미 리뷰를 작성한 예약입니다..' };
+      // }
       const post = await this.reviewsRepositories.reviewPostRepository(
         content,
         petsitterId,
@@ -30,7 +36,7 @@ class ReviewsService {
         return { status: 200, message: '리뷰 작성에 성공하였습니다.' };
       }
     } catch (err) {
-      return { status: 400, message: '리뷰 작성에 실패하였습니다.' };
+      return { status: 400, message: err.message };
     }
   };
 

@@ -12,18 +12,33 @@ class ReviewsRepositories {
   ) => {
     console.log('게시시작');
     // try {
-    const post = await Reviews.create({
-      content,
-      userId,
-      reservationId,
-      petsitterId,
-      star,
+    const isExist = await Reviews.findOne({
+      where: {
+        userId: userId,
+        petsitterId: petsitterId,
+        reservationId: reservationId,
+      },
     });
-    console.log('게시성공');
-    return post;
+
+    if (isExist) {
+      // 이미 리뷰가 존재하는 경우에 대한 처리
+      throw { message: '이미 리뷰를 작성한 예약입니다.' };
+    } else {
+      // 리뷰가 없는 경우에만 리뷰 생성
+      const post = await Reviews.create({
+        content,
+        userId,
+        reservationId,
+        petsitterId,
+        star,
+      });
+      console.log('게시성공');
+      return post;
+    }
     // } catch (error) {
     //   console.error('게시 실패:', error.message);
     //   throw error; // 올바른 오류 핸들링을 위해 오류를 다시 던집니다.
+    // }
     // }
   };
 
