@@ -32,7 +32,7 @@ class PetsitterRepository {
   // 심마니 검색
   viewonepetsitterbynickname = async name => {
     const petsitters = await sequelize.query(
-      `SELECT p.name, p.imgurl, p.description, p.signInCareer, IFNULL(AVG(r.star),0) AS starAvg
+      `SELECT p.name, p.imgurl, p.description, p.signInCareer, p.petsitterId, IFNULL(AVG(r.star),0) AS starAvg
           FROM Petsitters AS p
           LEFT JOIN Reviews as r on p.petsitterId = r.petsitterId 
               WHERE p.deletedAt IS NULL AND p.name = :name 
