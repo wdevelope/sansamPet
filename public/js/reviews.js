@@ -111,9 +111,9 @@ async function reviewCreate(petsitterId) {
       body: JSON.stringify({ content, star }),
     },
   );
-  console.log('POST 요청 시도함');
   const result = await response.json();
   listOfReviews(petsitterId);
+  location.reload();
   return alert(result.message);
 }
 
@@ -164,24 +164,33 @@ async function reviewHideController(petsitterId, reviewId) {
   return alert(result.message);
 }
 
-// //  삭제 (진짜로)
-// async function reviewDeleteController(petsitterId, reviewId) {
-//   if (!confirm('진짜로 삭제하시겠습니까?')) {
-//     alert('삭제가 취소되었습니다.');
-//     return false;
-//   }
+async function onPageLoad() {
+  await getNonReviewedreservationId();
+}
 
-//   const response = await fetch(
-//     `http://localhost:3000/api/petsitters/${petsitterId}/review/${reviewId}`,
-//     {
-//       method: 'DELETE',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     },
-//   );
-//   console.log('DELETE 요청 시도함');
-//   const result = await response.json();
-//   location.reload();
-//   return alert(result.message);
-// }
+document.addEventListener('DOMContentLoaded', onPageLoad);
+
+async function getNonReviewedreservationId() {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/petsitters/${petsitterId}/nonReservation`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: sessionStorage.getItem('Authorization'),
+        },
+      },
+    );
+
+    const result = await response.json();
+    const reviews = result.allPost;
+    const resultContents = result.allPost
+      .map(item => `<option value="${item}">${item}</option>`)
+      .join('');
+    document.querySelector('#reservationId').innerHTML = resultContents;
+    return;
+  } catch (error) {
+    console.error('불러오기 실패:', error.message);
+  }
+}

@@ -136,6 +136,34 @@ class ReviewsRepositories {
   // // 내보낸다.
   // return post;
 
+  // 리뷰 안된 예약 불러오기
+
+  getNoneBookedReviewServiceRepository = async (petsitterId, userId) => {
+    console.log('예약된 것 부터 불러오기 시작', petsitterId, userId);
+    try {
+      const filteredReivews = await sequelize.query(
+        `SELECT r.reservationId
+        FROM Reservations AS r
+        LEFT JOIN Reviews as v on r.reservationId = v.reservationId 
+            WHERE v.reviewId IS NULL AND r.petsitterId = :petsitterId AND r.userId = :userId AND v.deletedAt IS NULL AND r.deletedAt IS NULL
+            ORDER BY r.reservationId`,
+        {
+          replacements: { petsitterId: petsitterId, userId: userId },
+          type: QueryTypes.SELECT,
+        },
+      );
+
+      const reservationIds = filteredReivews.map(
+        review => review.reservationId,
+      );
+
+      return reservationIds;
+    } catch (error) {
+      console.error('불러오기 실패:', error);
+      throw error;
+    }
+  };
+
   reviewUpdateRepository = async (content, userId, reviewId, star) => {
     const post = await Reviews.update(
       {

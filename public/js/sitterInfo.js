@@ -46,7 +46,6 @@ async function makeReservation() {
     body: JSON.stringify({ reservationAt, petsitterId }),
   });
   const result = await response.json();
-  console.log(result.message);
   window.location.reload();
   return alert(result.message);
 }
@@ -62,7 +61,6 @@ async function simani() {
     },
   );
   const result = await response.json();
-  console.log(result);
   const simani = result.petsitter;
   let star_repeat = '⭐️'.repeat(simani.star);
   const simanidata = ` <div class="container mt-4">
@@ -97,7 +95,10 @@ async function simani() {
                                         <option value="4">⭐⭐⭐⭐</option>
                                         <option value="5">⭐⭐⭐⭐⭐</option>
                                     </select>
-                                    <input id = "reservationId" placeholder="예약 번호"></input>
+                                    <label class="input-group-text" for="inputGroupSelect01">예약 번호</label>
+                                    <select class="form-select" id="reservationId">
+                                      <!-- 예약번호 붙는 곳 -->
+                                    </select>
                                     </div>
                                 </div>
                                 <button class="writereviewBtn" onclick="reviewCreate(${petsitterId})">리뷰 작성</button>
@@ -186,45 +187,27 @@ async function sitterReservation() {
     },
   );
   const result = await response.json();
-  console.log(result.message);
+  // console.log(result.message);
   setTimeout(() => {
     const date = new Date();
-    console.log('date :', date, typeof date);
+    // console.log('date :', date, typeof date);
 
     const currentYear = new Date(date).getFullYear();
     const currentMonth = new Date(date).getMonth() + 1;
     const day = date.getDate();
     const lastDay = new Date(currentYear, currentMonth, 0).getDate();
 
-    // const firstDay = new Date(date.setDate(1)).getDay();
-    // const lastDay = new Date(currentYear, currentMonth, 0).getDate();
     // 오늘의 요일을 0(일)~6(토) 으로 반환
     const today = date.getDay();
     let firstDate = today;
-    console.log('첫날 :', firstDate);
-    // if (firstDate === 0) {
-    //   firstDate = 6;
-    // } else {
-    //   firstDate = firstDate - 1;
-    // }
-    console.log('전날 :', firstDate);
 
     const firstDay = day;
     const finalDay = firstDay + 30;
-    console.log('firstDay', firstDay, typeof firstDay);
-    console.log('finalDay', finalDay, typeof finalDay);
-
-    console.log('ddd', currentYear, currentMonth);
 
     const limitDay = date + finalDay;
     const nextDay = Math.ceil(limitDay / 7) * 7;
 
     let htmlDummy = '';
-
-    // 현재 날짜 정보 표시하기
-    // document.querySelector(
-    //   `.dateTitle`,
-    // ).innerText = `${currentYear}년 ${currentMonth}월`;
 
     for (let i = 0; i < firstDate; i++) {
       htmlDummy += `<div class="noColor"></div>`;
@@ -253,28 +236,12 @@ async function sitterReservation() {
         const reservationAt = new Date(reservation.reservationAt);
         const day = reservationAt.getDate();
         const month = reservationAt.getMonth() + 1;
-        console.log('day :', typeof day, day);
 
-        // document.getElementById(day.toString());
-        // 인덱스를 센다.
-        // .shadedBoxCalendar:nth-child
         const targetElement = document.querySelector(
           `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,
         );
-        console.log(
-          'targetElement.textContent :',
-          typeof targetElement.textContent,
-          targetElement.textContent,
-        );
-        console.log(day);
+
         targetElement.className = 'shadedBoxCalendarBooked';
-
-        // const parentElement = targetElement.parentElement;
-
-        // targetElement.classList.add('shadedBoxCalendarBooked');
-
-        // const parentElement = targetElement.parentElement;
-        // parentElement.className = 'shadedBoxCalendarBooked';
       }
     }
   }, 50);

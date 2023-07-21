@@ -26,6 +26,13 @@ router.get(
   reviewsController.getAllReviewControllerAll,
 );
 
+// 리뷰 안한 예약 조회
+router.get(
+  '/petsitters/:petsitterId/nonReservation',
+  authmiddleware,
+  reviewsController.getNoneBookedReviewController,
+);
+
 // 리뷰 수정
 router.patch(
   '/petsitters/:petsitterId/review/:reviewId',

@@ -35,6 +35,16 @@ class ReviewsController {
     return res.status(status).json({ message, allPost });
   };
 
+  // 리뷰 안 된 예약
+  getNoneBookedReviewController = async (req, res) => {
+    const { userId } = res.locals;
+    console.log('컨트롤러', userId);
+    const { petsitterId } = req.params;
+    const { status, message, allPost } =
+      await this.reviewsService.getNoneBookedReviewService(userId, petsitterId);
+    return res.status(status).json({ message, allPost });
+  };
+
   // 리뷰 업데이트
   reviewUpdateController = async (req, res) => {
     const { userId } = res.locals;

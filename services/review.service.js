@@ -98,6 +98,32 @@ class ReviewsService {
     }
   };
 
+  // 리뷰 안된 예약 불러오기
+  getNoneBookedReviewService = async (userId, petsitterId) => {
+    const allPost =
+      await this.reviewsRepositories.getNoneBookedReviewServiceRepository(
+        petsitterId,
+        userId,
+      );
+    if (allPost && !allPost[0]) {
+      return {
+        status: 200,
+        message: '리뷰이 없습니다. 첫 작성자가 되어 주세요.',
+        allPost: null,
+      };
+      // 내용물이 있다면, 성공 메시지.
+    } else if (allPost) {
+      return { status: 200, message: '리뷰 조회에 성공하였습니다.', allPost };
+      // 아니면 실패 메시지
+    } else {
+      return {
+        status: 400,
+        message: '리뷰 조회에 실패하였습니다.',
+        allPost: null,
+      };
+    }
+  };
+
   reviewUpdateService = async (
     content,
     userId,
