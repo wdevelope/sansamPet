@@ -1,5 +1,5 @@
 //./js/reviews.js
-
+listOfReviews(petsitterId);
 function logo() {
   location.href = 'http://localhost:3000';
 }

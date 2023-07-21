@@ -61,12 +61,6 @@ main > .card:hover {
   }
 }
 
-#reservationBtn,
-#adminBtn,
-#logoutBtn {
-  display: none;
-}
-
 .card-img-container img {
   width: 100%;
   height: auto;

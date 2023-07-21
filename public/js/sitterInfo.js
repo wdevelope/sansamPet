@@ -1,7 +1,7 @@
 let petsitterId = Number(localStorage.getItem('clickedPetsitter'));
 
 simani();
-listOfReviews(petsitterId);
+sitterReservation();
 
 function logo() {
   location.href = 'http://localhost:3000';
@@ -17,6 +17,11 @@ function noticeNotification(notice, date) {
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>`;
   const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" id="noticeAlert" role="alert">${messageHtml}</div>`;
   document.querySelector('#navbar').insertAdjacentHTML('afterend', htmlTemp);
+}
+
+// 예약 조회 클릭
+function clickReservation() {
+  location.href = 'http://localhost:3000/reservation.html';
 }
 
 async function makeReservation() {
@@ -57,7 +62,7 @@ async function simani() {
     },
   );
   const result = await response.json();
-  console.log(result.message);
+  console.log(result);
   const simani = result.petsitter;
   let star_repeat = '⭐️'.repeat(simani.star);
   const simanidata = ` <div class="container mt-4">
@@ -171,7 +176,6 @@ async function simani() {
 }
 
 async function sitterReservation() {
-  const petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   const response = await fetch(
     `http://localhost:3000/api/reservations/petsitters/${petsitterId}`,
     {
@@ -274,8 +278,3 @@ async function sitterReservation() {
     }
   }
 }
-
-//페이지 로딩시 함수 자동호출
-document.addEventListener('DOMContentLoaded', function () {
-  sitterReservation();
-});

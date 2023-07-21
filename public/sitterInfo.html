@@ -17,11 +17,17 @@
       <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()">
         산삼 pet</i>
     </div>
+
     <button class="navbar-toggler" data-toggle="collapse" data-target="#expandme">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="expandme">
-      <div class="navbar-nav"></div>
+      <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="reservationBtn"
+        onclick="clickReservation()">
+        예약 현황
+      </button>
+      <div class="navbar-nav">
+      </div>
     </div>
   </nav>
   <!-- 본문 예약현황 세션 -->
@@ -36,7 +42,7 @@
             <div class="card-body">
               <h5 class="card-title">심마니</h5>
               <p class="card-text">
-                산삼 육성에 인생을 바쳤습니다. 산테크로 내집마련 가즈아~!
+
               </p>
               <div class="d-flex justify-content-between">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#reservationModal">
@@ -118,8 +124,8 @@
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="./js/reviews.js"></script>
   <script src="./js/sitterInfo.js"></script>
+  <script src="./js/reviews.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
