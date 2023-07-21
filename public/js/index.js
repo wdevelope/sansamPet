@@ -91,15 +91,13 @@ function adminapage() {
 function buttons() {
   if (sessionStorage.getItem('Authorization')) {
     const reservationBtn = document.querySelector('#reservationBtn');
-    const loginBtn = document.querySelector('#loginBtn');
-    const signupBtn = document.querySelector('#signupBtn');
+    const loginBtn = document.querySelector('#authBtn');
     const logoutBtn = document.querySelector('#logoutBtn');
     const loginGoogle = document.querySelector('.google-login');
 
     reservationBtn.style.display = 'block';
     logoutBtn.style.display = 'block';
     loginBtn.style.display = 'none';
-    signupBtn.style.display = 'none';
     loginGoogle.style.display = 'block';
   }
   if (sessionStorage.getItem('loginId') == 'ADMIN') {

@@ -53,20 +53,11 @@
           <button
             class="btn btn-outline-light my-2 my-sm-0 mr-2"
             type="button"
-            id="loginBtn"
+            id="authBtn"
             data-toggle="modal"
             data-target="#loginModal"
           >
-            로그인
-          </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0"
-            type="button"
-            id="signupBtn"
-            data-toggle="modal"
-            data-target="#registerModal"
-          >
-            회원가입
+            로그인/회원가입
           </button>
           <button
             class="btn btn-outline-light my-2 my-sm-0 mr-2"
@@ -140,9 +131,8 @@
               </div>
             </form>
           </div>
+
           <div class="modal-footer">
-            <button type="button" id="btn" onclick="login()">로그인</button>
-            <!-- 구글 로그인 버튼 추가 -->
             <button class="google-login" type="button" id="btn">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
@@ -150,6 +140,23 @@
                 class="google-icon"
               />
               Google login
+            </button>
+            <button
+              type="button"
+              class="btn btn-dark"
+              id="btn"
+              onclick="login()"
+            >
+              로그인
+            </button>
+            <button
+              type="button"
+              class="btn btn-dark"
+              data-dismiss="modal"
+              data-toggle="modal"
+              data-target="#registerModal"
+            >
+              회원가입
             </button>
           </div>
         </div>
@@ -210,7 +217,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" id="btn" onclick=" signup()">회원가입</button>
+            <button type="button" id="btn" onclick="signup()">회원가입</button>
           </div>
         </div>
       </div>
