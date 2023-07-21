@@ -1,11 +1,11 @@
 //./js/reviews.js
+petsitterId = Number(localStorage.getItem('clickedPetsitter'));
 listOfReviews(petsitterId);
 function logo() {
   location.href = 'http://localhost:3000';
 }
 // 붙여넣기
 async function listOfReviews(petsitterId) {
-  petsitterId = Number(localStorage.getItem('clickedPetsitter'));
   const response = await fetch(
     `http://localhost:3000/api/petsitters/${petsitterId}/reviews`,
     {
@@ -17,6 +17,7 @@ async function listOfReviews(petsitterId) {
     },
   );
   const result = await response.json();
+  console.log(result.message);
   const reviews = result.allPost
     .map(review => {
       let star_repeat = '⭐️'.repeat(review.star);

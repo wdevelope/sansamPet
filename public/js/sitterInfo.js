@@ -62,7 +62,6 @@ async function simani() {
     },
   );
   const result = await response.json();
-  console.log(result);
   const simani = result.petsitter;
   let star_repeat = '⭐️'.repeat(simani.star);
   const simanidata = ` <div class="container mt-4">
@@ -189,7 +188,6 @@ async function sitterReservation() {
   console.log(result.message);
   setTimeout(() => {
     const date = new Date();
-    console.log('date :', date, typeof date);
 
     const currentYear = new Date(date).getFullYear();
     const currentMonth = new Date(date).getMonth() + 1;
@@ -201,20 +199,14 @@ async function sitterReservation() {
     // 오늘의 요일을 0(일)~6(토) 으로 반환
     const today = date.getDay();
     let firstDate = today;
-    console.log('첫날 :', firstDate);
     // if (firstDate === 0) {
     //   firstDate = 6;
     // } else {
     //   firstDate = firstDate - 1;
     // }
-    console.log('전날 :', firstDate);
 
     const firstDay = day;
     const finalDay = firstDay + 30;
-    console.log('firstDay', firstDay, typeof firstDay);
-    console.log('finalDay', finalDay, typeof finalDay);
-
-    console.log('ddd', currentYear, currentMonth);
 
     const limitDay = date + finalDay;
     const nextDay = Math.ceil(limitDay / 7) * 7;
@@ -253,7 +245,6 @@ async function sitterReservation() {
         const reservationAt = new Date(reservation.reservationAt);
         const day = reservationAt.getDate();
         const month = reservationAt.getMonth() + 1;
-        console.log('day :', typeof day, day);
 
         // document.getElementById(day.toString());
         // 인덱스를 센다.
@@ -261,12 +252,6 @@ async function sitterReservation() {
         const targetElement = document.querySelector(
           `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,
         );
-        console.log(
-          'targetElement.textContent :',
-          typeof targetElement.textContent,
-          targetElement.textContent,
-        );
-        console.log(day);
         targetElement.className = 'shadedBoxCalendarBooked';
 
         // const parentElement = targetElement.parentElement;
