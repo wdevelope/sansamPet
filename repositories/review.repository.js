@@ -126,7 +126,7 @@ class ReviewsRepositories {
             attributes: ['name'],
           },
         ],
-        where: { petsitterId, deletedAt: null },
+        where: { petsitterId },
         order: [['createdAt', 'DESC']],
       });
       console.log('리뷰 목록 불러오기 성공');
