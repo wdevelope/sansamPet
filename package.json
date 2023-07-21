@@ -19,5 +19,14 @@
     "nodemon": "^2.0.22",
     "prettier": "^3.0.0",
     "sequelize-cli": "^6.6.1"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "sansampet",
+  "description": "다투지 않기  \r 건강 유의하기  \r 효율적으로 질문하고 친절하게 대답해주기  \r 시간 약속 잘 지키기",
+  "version": "1.0.0",
+  "main": ".prettierrc.js",
+  "author": "",
+  "license": "ISC"
 }

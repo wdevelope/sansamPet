@@ -63,25 +63,37 @@ class ReviewsService {
     }
   };
 
-  getAllReviewServiceAll = async petsitterId => {
-    const allPost = await this.reviewsRepositories.getAllReviewRepositoryAll(
-      petsitterId,
-    );
-    if (allPost && !allPost[0]) {
-      return {
-        status: 200,
-        message: '리뷰이 없습니다. 첫 작성자가 되어 주세요.',
-        allPost: null,
-      };
-      // 내용물이 있다면, 성공 메시지.
-    } else if (allPost) {
-      return { status: 200, message: '리뷰 조회에 성공하였습니다.', allPost };
-      // 아니면 실패 메시지
-    } else {
+  getAllReviewServiceAll = async userId => {
+    try {
+      if ((userId = 1)) {
+        const allPost =
+          await this.reviewsRepositories.getAllReviewRepositoryAll();
+        if (allPost && !allPost[0]) {
+          return {
+            status: 200,
+            message: '리뷰이 없습니다. 첫 작성자가 되어 주세요.',
+            allPost: null,
+          };
+          // 내용물이 있다면, 성공 메시지.
+        } else if (allPost) {
+          return {
+            status: 200,
+            message: '리뷰 조회에 성공하였습니다.',
+            allPost,
+          };
+          // 아니면 실패 메시지
+        } else {
+          return {
+            status: 400,
+            message: '리뷰 조회에 실패하였습니다.',
+            allPost: null,
+          };
+        }
+      }
+    } catch (err) {
       return {
         status: 400,
-        message: '리뷰 조회에 실패하였습니다.',
-        allPost: null,
+        message: '조회에 실패했습니다.',
       };
     }
   };
@@ -142,15 +154,15 @@ class ReviewsService {
 
   reviewDeleteService = async (reviewId, userId) => {
     try {
-      const target = await Reviews.findOne({ where: { reviewId, userId } });
-      if (!target) {
-        return { status: 400, message: '리뷰 삭제에 실패하였습니다.' };
-      }
-      const post = await this.reviewsRepositories.reviewDeleteRepository(
-        reviewId,
-      );
-      if (post) {
-        return { status: 200, message: ' 삭제에 성공하였습니다.' };
+      if ((userId = 1)) {
+        const post = await this.reviewsRepositories.reviewDeleteRepository(
+          reviewId,
+        );
+        if (post) {
+          return { status: 200, message: ' 삭제에 성공하였습니다.' };
+        } else {
+          return { status: 400, message: '리뷰 삭제에 실패했습니다.' };
+        }
       } else {
         return { status: 400, message: '리뷰 삭제에 실패했습니다.' };
       }

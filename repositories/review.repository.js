@@ -103,19 +103,10 @@ class ReviewsRepositories {
     }
   };
 
-  getAllReviewRepositoryAll = async petsitterId => {
+  getAllReviewRepositoryAll = async () => {
     console.log('불러오기 시작');
     try {
       const reviews = await Reviews.findAll({
-        attributes: [
-          'content',
-          'userId',
-          'createdAt',
-          'updatedAt',
-          'star',
-          'reservationId',
-          'reviewId',
-        ],
         include: [
           {
             model: Users,
@@ -126,35 +117,10 @@ class ReviewsRepositories {
             attributes: ['name'],
           },
         ],
-        where: { petsitterId },
         order: [['createdAt', 'DESC']],
       });
       console.log('리뷰 목록 불러오기 성공');
 
-      const notReviewedList = await Reviews.findAll({
-        attributes: [
-          'content',
-          'userId',
-          'createdAt',
-          'updatedAt',
-          'star',
-          'reservationId',
-          'reviewId',
-        ],
-        include: [
-          {
-            model: Users,
-            attributes: ['nickname'],
-          },
-          {
-            model: Petsitters,
-            attributes: ['name'],
-          },
-        ],
-        where: { petsitterId },
-        order: [['createdAt', 'DESC']],
-      });
-      console.log('리뷰 목록 불러오기 성공');
       return reviews;
     } catch (error) {
       console.error('불러오기 실패:', error.message);
