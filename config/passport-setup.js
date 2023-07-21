@@ -55,7 +55,6 @@ passport.use(
             expiresIn: process.env.JWT_EXPIRE_TIME,
           },
         );
-        console.log('Google 로그인 성공:', profile.displayName);
 
         return done(null, { user: newUser, token });
       } catch (error) {

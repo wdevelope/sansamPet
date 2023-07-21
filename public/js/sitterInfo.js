@@ -185,96 +185,97 @@ async function sitterReservation() {
       },
     },
   );
-
   const result = await response.json();
   console.log(result.message);
+  setTimeout(() => {
+    const date = new Date();
+    console.log('date :', date, typeof date);
 
-  const date = new Date();
-  console.log('date :', date, typeof date);
+    const currentYear = new Date(date).getFullYear();
+    const currentMonth = new Date(date).getMonth() + 1;
+    const day = date.getDate();
+    const lastDay = new Date(currentYear, currentMonth, 0).getDate();
 
-  const currentYear = new Date(date).getFullYear();
-  const currentMonth = new Date(date).getMonth() + 1;
-  const day = date.getDate();
-  const lastDay = new Date(currentYear, currentMonth, 0).getDate();
+    // const firstDay = new Date(date.setDate(1)).getDay();
+    // const lastDay = new Date(currentYear, currentMonth, 0).getDate();
+    // 오늘의 요일을 0(일)~6(토) 으로 반환
+    const today = date.getDay();
+    let firstDate = today;
+    console.log('첫날 :', firstDate);
+    // if (firstDate === 0) {
+    //   firstDate = 6;
+    // } else {
+    //   firstDate = firstDate - 1;
+    // }
+    console.log('전날 :', firstDate);
 
-  // const firstDay = new Date(date.setDate(1)).getDay();
-  // const lastDay = new Date(currentYear, currentMonth, 0).getDate();
-  // 오늘의 요일을 0(일)~6(토) 으로 반환
-  const today = date.getDay();
-  let firstDate = today;
-  console.log('첫날 :', firstDate);
-  // if (firstDate === 0) {
-  //   firstDate = 6;
-  // } else {
-  //   firstDate = firstDate - 1;
-  // }
-  console.log('전날 :', firstDate);
+    const firstDay = day;
+    const finalDay = firstDay + 30;
+    console.log('firstDay', firstDay, typeof firstDay);
+    console.log('finalDay', finalDay, typeof finalDay);
 
-  const firstDay = day;
-  const finalDay = firstDay + 30;
-  console.log('firstDay', firstDay, typeof firstDay);
-  console.log('finalDay', finalDay, typeof finalDay);
+    console.log('ddd', currentYear, currentMonth);
 
-  console.log('ddd', currentYear, currentMonth);
+    const limitDay = date + finalDay;
+    const nextDay = Math.ceil(limitDay / 7) * 7;
 
-  const limitDay = date + finalDay;
-  const nextDay = Math.ceil(limitDay / 7) * 7;
+    let htmlDummy = '';
 
-  let htmlDummy = '';
+    // 현재 날짜 정보 표시하기
+    // document.querySelector(
+    //   `.dateTitle`,
+    // ).innerText = `${currentYear}년 ${currentMonth}월`;
 
-  // 현재 날짜 정보 표시하기
-  // document.querySelector(
-  //   `.dateTitle`,
-  // ).innerText = `${currentYear}년 ${currentMonth}월`;
-
-  for (let i = 0; i < firstDate; i++) {
-    htmlDummy += `<div class="noColor"></div>`;
-  }
-
-  for (let i = firstDay; i <= finalDay; i++) {
-    let i2 = i;
-    let month = currentMonth;
-    if (i > lastDay) {
-      i2 = i - lastDay;
-      month = month + 1;
+    for (let i = 0; i < firstDate; i++) {
+      htmlDummy += `<div class="noColor"></div>`;
     }
-    htmlDummy += `
+
+    for (let i = firstDay; i <= finalDay; i++) {
+      let i2 = i;
+      let month = currentMonth;
+      if (i > lastDay) {
+        i2 = i - lastDay;
+        month = month + 1;
+      }
+      htmlDummy += `
     <div class="shadedBoxCalendar" id='${i2}'>${month}/${i2}</div>
     `;
-  }
-
-  document.querySelector('#sitterReservation').innerHTML = htmlDummy;
-
-  const sitterReservationElement = document.querySelector('#sitterReservation');
-
-  if (response.status === 200) {
-    const reservations = result.reservations;
-    for (const reservation of reservations) {
-      const reservationAt = new Date(reservation.reservationAt);
-      const day = reservationAt.getDate();
-      const month = reservationAt.getMonth() + 1;
-      console.log('day :', typeof day, day);
-
-      // document.getElementById(day.toString());
-      // 인덱스를 센다.
-      // .shadedBoxCalendar:nth-child
-      const targetElement = document.querySelector(
-        `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,
-      );
-      console.log(
-        'targetElement.textContent :',
-        typeof targetElement.textContent,
-        targetElement.textContent,
-      );
-      console.log(day);
-      targetElement.className = 'shadedBoxCalendarBooked';
-
-      // const parentElement = targetElement.parentElement;
-
-      // targetElement.classList.add('shadedBoxCalendarBooked');
-
-      // const parentElement = targetElement.parentElement;
-      // parentElement.className = 'shadedBoxCalendarBooked';
     }
-  }
+
+    document.querySelector('#sitterReservation').innerHTML = htmlDummy;
+
+    const sitterReservationElement =
+      document.querySelector('#sitterReservation');
+
+    if (response.status === 200) {
+      const reservations = result.reservations;
+      for (const reservation of reservations) {
+        const reservationAt = new Date(reservation.reservationAt);
+        const day = reservationAt.getDate();
+        const month = reservationAt.getMonth() + 1;
+        console.log('day :', typeof day, day);
+
+        // document.getElementById(day.toString());
+        // 인덱스를 센다.
+        // .shadedBoxCalendar:nth-child
+        const targetElement = document.querySelector(
+          `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,
+        );
+        console.log(
+          'targetElement.textContent :',
+          typeof targetElement.textContent,
+          targetElement.textContent,
+        );
+        console.log(day);
+        targetElement.className = 'shadedBoxCalendarBooked';
+
+        // const parentElement = targetElement.parentElement;
+
+        // targetElement.classList.add('shadedBoxCalendarBooked');
+
+        // const parentElement = targetElement.parentElement;
+        // parentElement.className = 'shadedBoxCalendarBooked';
+      }
+    }
+  }, 50);
 }

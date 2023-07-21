@@ -1,20 +1,3 @@
-// 구글
-window.onload = function () {
-  if (
-    document.cookie.split(';').some(item => item.trim().startsWith('user='))
-  ) {
-    const userCookie = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('user='))
-      .split('=')[1];
-    const user = JSON.parse(decodeURIComponent(userCookie));
-    sessionStorage.setItem('Authorization', 'Bearer ' + user.token); // 'Bearer' added
-    sessionStorage.setItem('loginId', user.user.nickname);
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  }
-  buttons();
-};
-
 // 시작하자 실행 될 함수들
 listsimanis();
 enter();
@@ -33,6 +16,28 @@ function noticeNotification(notice, date) {
   const htmlTemp = `<div class="alert alert-warning alert-dismissible fade show" id="noticeAlert" role="alert">${messageHtml}</div></br>`;
   document.querySelector('#navbar').insertAdjacentHTML('afterend', htmlTemp);
 }
+
+// 구글
+window.onload = function () {
+  if (
+    document.cookie.split(';').some(item => item.trim().startsWith('user='))
+  ) {
+    const userCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('user='))
+      .split('=')[1];
+    const user = JSON.parse(decodeURIComponent(userCookie));
+    console.log('Google 로그인 성공:', user.user.nickname);
+    socket.emit('LOGIN', {
+      nickname: user.user.nickname,
+    });
+    sessionStorage.setItem('Authorization', 'Bearer ' + user.token); // 'Bearer' added
+    sessionStorage.setItem('loginId', user.user.nickname);
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+  buttons();
+};
+
 //로고 홈으로
 function logo() {
   location.href = 'http://localhost:3000';
