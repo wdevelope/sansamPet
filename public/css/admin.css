@@ -75,3 +75,14 @@ main {
   border: none;
   padding: 8px 10px 8px 10px;
 }
+
+#adminbox {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+}

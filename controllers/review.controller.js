@@ -29,9 +29,9 @@ class ReviewsController {
 
   // 리뷰 불러오기전체
   getAllReviewControllerAll = async (req, res) => {
-    const { petsitterId } = req.params;
+    const { userId } = res.locals;
     const { status, message, allPost } =
-      await this.reviewsService.getAllReviewServiceAll(petsitterId);
+      await this.reviewsService.getAllReviewServiceAll(userId);
     return res.status(status).json({ message, allPost });
   };
 
@@ -65,7 +65,7 @@ class ReviewsController {
   // 리뷰 진짜로 삭제
   reviewDeleteController = async (req, res) => {
     const { userId } = res.locals;
-    const { reviewId, petsitterId } = req.params;
+    const { reviewId } = req.params;
     const { status, message } = await this.reviewsService.reviewDeleteService(
       reviewId,
       userId,

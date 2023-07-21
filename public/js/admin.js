@@ -13,6 +13,7 @@ function notice() {
 }
 
 listReservations();
+listReviews();
 
 //로고 홈으로
 function logo() {
@@ -157,5 +158,55 @@ async function superDeleteResv(reservationId) {
   const result = await response.json();
   console.log(result.message);
   listReservations();
+  return alert(result.message);
+}
+
+async function listReviews() {
+  const response = await fetch(
+    `http://localhost:3000/api/petsitters/:petsitterId/reviewsAll`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+
+  const reservlistw = result.allPost
+    .map(resrelist => {
+      return `
+      <div id = "reservation">
+      <p id="resvtitle">예약 번호: ${resrelist.reservationId}</p>
+      <p>작성 날짜: ${resrelist.createdAt}</p>
+      <p>산삼 시터: ${resrelist.Petsitter.name}</p>
+      <p>고객 성함: ${resrelist.User.nickname}</p>
+      <p>삭제 날짜: ${resrelist.deletedAt}</p>
+      <button type="button" class="btn btn-outline-light my-2 my-sm-0" onclick="deletesol(${resrelist.reviewId})">삭제</button>
+      </div>
+       `;
+    })
+    .join('');
+
+  document.querySelector('#reviewlist').innerHTML = reservlistw;
+  return;
+}
+
+async function deletesol(reviewId) {
+  const response = await fetch(
+    `http://localhost:3000/api/admin/reviews/${reviewId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
   return alert(result.message);
 }

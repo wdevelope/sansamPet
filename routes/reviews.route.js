@@ -16,12 +16,13 @@ router.post(
 // 심마니의 안가려진 리뷰 조회
 router.get(
   '/petsitters/:petsitterId/reviews',
+  authmiddleware,
   reviewsController.getAllReviewController,
 );
 
 // 심마니의 전체 리뷰 조회
 router.get(
-  '/petsitters/:petsitterId/reviews',
+  '/petsitters/:petsitterId/reviewsAll',
   reviewsController.getAllReviewControllerAll,
 );
 
@@ -41,7 +42,7 @@ router.patch(
 
 // 리뷰 진짜로 삭제
 router.delete(
-  '/petsitters/:petsitterId/review/:reviewId',
+  '/admin/reviews/:reviewId',
   authmiddleware,
   reviewsController.reviewDeleteController,
 );
