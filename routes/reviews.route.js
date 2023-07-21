@@ -13,10 +13,16 @@ router.post(
   reviewsController.reviewPostController,
 );
 
-// 심마니의 리뷰 조회
+// 심마니의 안가려진 리뷰 조회
 router.get(
   '/petsitters/:petsitterId/reviews',
   reviewsController.getAllReviewController,
+);
+
+// 심마니의 전체 리뷰 조회
+router.get(
+  '/petsitters/:petsitterId/reviews',
+  reviewsController.getAllReviewControllerAll,
 );
 
 // 리뷰 수정

@@ -1,6 +1,7 @@
 const { Reviews, Users, Petsitters } = require('../models');
 const { sequelize } = require('../models');
 const { QueryTypes } = require('sequelize');
+const { Op } = require('sequelize');
 
 class ReviewsRepositories {
   reviewPostRepository = async (
@@ -17,6 +18,7 @@ class ReviewsRepositories {
         userId: userId,
         petsitterId: petsitterId,
         reservationId: reservationId,
+        deletedAt: null,
       },
     });
 
@@ -68,7 +70,91 @@ class ReviewsRepositories {
         where: { petsitterId, deletedAt: null },
         order: [['createdAt', 'DESC']],
       });
-      console.log('불러오기 성공');
+      console.log('리뷰 목록 불러오기 성공');
+
+      const notReviewedList = await Reviews.findAll({
+        attributes: [
+          'content',
+          'userId',
+          'createdAt',
+          'updatedAt',
+          'star',
+          'reservationId',
+          'reviewId',
+        ],
+        include: [
+          {
+            model: Users,
+            attributes: ['nickname'],
+          },
+          {
+            model: Petsitters,
+            attributes: ['name'],
+          },
+        ],
+        where: { petsitterId, deletedAt: null },
+        order: [['createdAt', 'DESC']],
+      });
+      console.log('리뷰 목록 불러오기 성공');
+      return reviews;
+    } catch (error) {
+      console.error('불러오기 실패:', error.message);
+      throw error;
+    }
+  };
+
+  getAllReviewRepositoryAll = async petsitterId => {
+    console.log('불러오기 시작');
+    try {
+      const reviews = await Reviews.findAll({
+        attributes: [
+          'content',
+          'userId',
+          'createdAt',
+          'updatedAt',
+          'star',
+          'reservationId',
+          'reviewId',
+        ],
+        include: [
+          {
+            model: Users,
+            attributes: ['nickname'],
+          },
+          {
+            model: Petsitters,
+            attributes: ['name'],
+          },
+        ],
+        where: { petsitterId, deletedAt: null },
+        order: [['createdAt', 'DESC']],
+      });
+      console.log('리뷰 목록 불러오기 성공');
+
+      const notReviewedList = await Reviews.findAll({
+        attributes: [
+          'content',
+          'userId',
+          'createdAt',
+          'updatedAt',
+          'star',
+          'reservationId',
+          'reviewId',
+        ],
+        include: [
+          {
+            model: Users,
+            attributes: ['nickname'],
+          },
+          {
+            model: Petsitters,
+            attributes: ['name'],
+          },
+        ],
+        where: { petsitterId },
+        order: [['createdAt', 'DESC']],
+      });
+      console.log('리뷰 목록 불러오기 성공');
       return reviews;
     } catch (error) {
       console.error('불러오기 실패:', error.message);

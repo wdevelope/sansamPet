@@ -27,6 +27,14 @@ class ReviewsController {
     return res.status(status).json({ message, allPost });
   };
 
+  // 리뷰 불러오기전체
+  getAllReviewControllerAll = async (req, res) => {
+    const { petsitterId } = req.params;
+    const { status, message, allPost } =
+      await this.reviewsService.getAllReviewServiceAll(petsitterId);
+    return res.status(status).json({ message, allPost });
+  };
+
   // 리뷰 업데이트
   reviewUpdateController = async (req, res) => {
     const { userId } = res.locals;
