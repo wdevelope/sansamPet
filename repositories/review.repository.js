@@ -32,6 +32,7 @@ class ReviewsRepositories {
         reservationId,
         petsitterId,
         star,
+        deletedAt: null,
       });
       console.log('게시성공');
       return post;
@@ -141,10 +142,10 @@ class ReviewsRepositories {
     console.log('예약된 것 부터 불러오기 시작', petsitterId, userId);
     try {
       const filteredReivews = await sequelize.query(
-        `SELECT r.reservationId
+        `SELECT DISTINCT r.reservationId, COUNT(v.reviewId) AS "reviewData", COUNT(v.deletedAt) AS "reviewDeleted"
         FROM Reservations AS r
         LEFT JOIN Reviews as v on r.reservationId = v.reservationId 
-            WHERE r.petsitterId = :petsitterId AND r.userId = :userId AND r.deletedAt IS NULL AND (v.deletedAt IS NOT NULL OR v.reviewId IS NULL)
+            WHERE r.petsitterId = :petsitterId AND r.userId = :userId AND r.deletedAt IS NULL 
             GROUP BY r.reservationId
             ORDER BY r.reservationId`,
         {
@@ -153,11 +154,7 @@ class ReviewsRepositories {
         },
       );
 
-      const reservationIds = filteredReivews.map(
-        review => review.reservationId,
-      );
-
-      return reservationIds;
+      return filteredReivews;
     } catch (error) {
       console.error('불러오기 실패:', error);
       throw error;

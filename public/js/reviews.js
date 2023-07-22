@@ -185,8 +185,8 @@ async function getNonReviewedreservationId() {
     );
 
     const result = await response.json();
-    const reviews = result.allPost;
-    const resultContents = result.allPost
+    console.log(result.allPost);
+    let resultContents = result.allPost
       .map(item => `<option value="${item}">${item}</option>`)
       .join('');
     document.querySelector('#reservationId').innerHTML = resultContents;
