@@ -1,252 +1,150 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link rel="stylesheet" href="./css/index.css" />
-    <title>samsam pet</title>
-  </head>
 
-  <body>
-    <!-- nav 바 -->
-    <nav id="navbar" class="navbar navbar-expand-sm navbar-dark sticky-top">
-      <div class="navbar-brand">
-        <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()">
-          산삼 pet</i
-        >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+  <title>samsam pet</title>
+</head>
+
+<body>
+  <!-- nav 바 -->
+  <nav id="navbar" class="navbar navbar-expand-sm navbar-dark sticky-top">
+    <div class="navbar-brand">
+      <i id="logo" class="fas fa-leaf fa-2x mr-2" onclick="logo()">
+        산삼 pet</i>
+    </div>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#expandme">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="expandme">
+      <div class="navbar-nav">
+        <!-- 검색창 -->
+
       </div>
-      <button
-        class="navbar-toggler"
-        data-toggle="collapse"
-        data-target="#expandme"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="expandme">
-        <div class="navbar-nav">
-          <!-- 검색창 -->
-          <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="검색"
-            aria-label="Search"
-            id="search"
-          />
-          <button
-            class="btn btn-outline-light my-2 my-sm-0"
-            type="button"
-            onclick="search()"
-            id="searchBtn"
-          >
-            검색
+
+      <form class="form-inline ml-auto">
+        <a href="about.html" class="nav-item nav-link white-link">about</a>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="authBtn" data-toggle="modal"
+          data-target="#loginModal">
+          로그인/회원가입
+        </button>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="reservationBtn"
+          onclick="clickReservation()">
+          예약 현황
+        </button>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="logoutBtn" onclick="logout()">
+          로그아웃
+        </button>
+        <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="button" id="adminBtn" onclick="adminapage()">
+          관리자
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="nickname">닉네임</label>
+              <input type="text" class="form-control" id="nickname" placeholder="닉네임을 입력하세요." />
+            </div>
+            <div class="form-group">
+              <label for="password">비밀번호</label>
+              <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요." />
+            </div>
+          </form>
+        </div>
 
-        <form class="form-inline ml-auto">
-          <a href="about.html" class="nav-item nav-link white-link">about</a>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="authBtn"
-            data-toggle="modal"
-            data-target="#loginModal"
-          >
-            로그인/회원가입
+        <div class="modal-footer">
+          <button class="google-login" type="button" id="btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G"
+              class="google-icon" />
+            Google login
           </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="reservationBtn"
-            onclick="clickReservation()"
-          >
-            예약 현황
+          <button type="button" class="btn btn-dark" id="btn" onclick="login()">
+            로그인
           </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="logoutBtn"
-            onclick="logout()"
-          >
-            로그아웃
+          <button type="button" class="btn btn-dark" data-dismiss="modal" data-toggle="modal"
+            data-target="#registerModal">
+            회원가입
           </button>
-          <button
-            class="btn btn-outline-light my-2 my-sm-0 mr-2"
-            type="button"
-            id="adminBtn"
-            onclick="adminapage()"
-          >
-            관리자
-          </button>
-        </form>
-      </div>
-    </nav>
-
-    <!-- Login Modal -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="nickname">닉네임</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="nickname"
-                  placeholder="닉네임을 입력하세요."
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="비밀번호를 입력하세요."
-                />
-              </div>
-            </form>
-          </div>
-
-          <div class="modal-footer">
-            <button class="google-login" type="button" id="btn">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                alt="G"
-                class="google-icon"
-              />
-              Google login
-            </button>
-            <button
-              type="button"
-              class="btn btn-dark"
-              id="btn"
-              onclick="login()"
-            >
-              로그인
-            </button>
-            <button
-              type="button"
-              class="btn btn-dark"
-              data-dismiss="modal"
-              data-toggle="modal"
-              data-target="#registerModal"
-            >
-              회원가입
-            </button>
-          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Register Modal -->
-    <div
-      class="modal fade"
-      id="registerModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">회원가입</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="registerNickname">닉네임</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="registerNickname"
-                  placeholder="닉네임을 입력하세요."
-                />
-              </div>
-              <div class="form-group">
-                <label for="registerPassword">비밀번호</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="registerPassword"
-                  placeholder="비밀번호를 입력하세요."
-                />
-              </div>
-              <div class="form-group">
-                <label for="confirmPassword">비밀번호 확인</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="confirmPassword"
-                  placeholder="비밀번호를 다시 입력하세요."
-                />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="btn" onclick="signup()">회원가입</button>
-          </div>
+  <!-- Register Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">회원가입</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="registerNickname">닉네임</label>
+              <input type="text" class="form-control" id="registerNickname" placeholder="닉네임을 입력하세요." />
+            </div>
+            <div class="form-group">
+              <label for="registerPassword">비밀번호</label>
+              <input type="password" class="form-control" id="registerPassword" placeholder="비밀번호를 입력하세요." />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">비밀번호 확인</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호를 다시 입력하세요." />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn" onclick="signup()">회원가입</button>
         </div>
       </div>
     </div>
-    <header>
-      <p id="simanistitle">전문 산삼시터를 만나보세요!</p>
-    </header>
-    <main>
-      <div class="card" style="width: 18rem"></div>
-    </main>
+  </div>
+  <header>
+    <p id="simanistitle">전문 산삼시터를 만나보세요!</p>
+  </header>
+  <main>
+    <div class="card" style="width: 18rem"></div>
+  </main>
 
-    <footer>
-      <div class="footer-content">
-        <p class="company-info">
-          (주)산삼<br />
-          team : 다영 민준 한솔 성원
-        </p>
-        <p class="contact-info">
-          사업자 등록번호: 123-45-6789<br />
-          개인정보관리책임자: 심봤다<br />
-          고객문의 및 연락처: sansam@sansam.com
-        </p>
-      </div>
-    </footer>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/index.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  </body>
+  <footer>
+    <div class="footer-content">
+      <p class="company-info">
+        (주)산삼<br />
+        team : 다영 민준 한솔 성원
+      </p>
+      <p class="contact-info">
+        사업자 등록번호: 123-45-6789<br />
+        개인정보관리책임자: 심봤다<br />
+        고객문의 및 연락처: sansam@sansam.com
+      </p>
+    </div>
+  </footer>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
 </html>
