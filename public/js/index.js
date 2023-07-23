@@ -119,6 +119,7 @@ async function signup() {
   });
   const result = await response.json();
   console.log(result.message);
+  window.location.reload();
   return alert(result.message);
 }
 

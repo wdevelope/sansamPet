@@ -104,7 +104,7 @@ class ReservationRepository {
     const now = new Date();
     const reservation = await Reservations.update(
       {
-        deletedAt: now,
+        deletedAt: Date.now(),
       },
       { where: { reservationId, userId } },
     );

@@ -204,7 +204,6 @@ async function sitterReservation() {
     const finalDay = firstDay + 30;
 
     const limitDay = date + finalDay;
-    const nextDay = Math.ceil(limitDay / 7) * 7;
 
     let htmlDummy = '';
 
@@ -226,15 +225,11 @@ async function sitterReservation() {
 
     document.querySelector('#sitterReservation').innerHTML = htmlDummy;
 
-    const sitterReservationElement =
-      document.querySelector('#sitterReservation');
-
     if (response.status === 200) {
       const reservations = result.reservations;
       for (const reservation of reservations) {
         const reservationAt = new Date(reservation.reservationAt);
         const day = reservationAt.getDate();
-        const month = reservationAt.getMonth() + 1;
 
         const targetElement = document.querySelector(
           `.shadedBoxCalendar[id='${day}'],.shadedBoxCalendarBooked[id='${day}']`,

@@ -161,6 +161,7 @@ async function superDeleteResv(reservationId) {
   return alert(result.message);
 }
 
+// 리뷰 리스트
 async function listReviews() {
   const response = await fetch(
     `http://localhost:3000/api/petsitters/:petsitterId/reviewsAll`,
@@ -195,6 +196,7 @@ async function listReviews() {
   return;
 }
 
+// 진짜로 삭제
 async function deletesol(reviewId) {
   const response = await fetch(
     `http://localhost:3000/api/admin/reviews/${reviewId}`,

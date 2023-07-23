@@ -128,18 +128,8 @@ class ReviewsRepositories {
     }
   };
 
-  // // 쿼리 문법을 직접 입력해서 가져온다.
-  // const post = await sequelize.query(
-  //   `SELECT * FROM sansam.Reviews LIMIT 30;`,
-  //   { type: QueryTypes.SELECT },
-  // );
-  // // 내보낸다.
-  // return post;
-
-  // 리뷰 안된 예약 불러오기
-
+  // 리뷰 안 된 예약 불러오기
   getNoneBookedReviewServiceRepository = async (petsitterId, userId) => {
-    console.log('예약된 것 부터 불러오기 시작', petsitterId, userId);
     try {
       const filteredReivews = await sequelize.query(
         `SELECT DISTINCT r.reservationId, COUNT(v.reviewId) AS "reviewData", COUNT(v.deletedAt) AS "reviewDeleted"
@@ -147,7 +137,7 @@ class ReviewsRepositories {
         LEFT JOIN Reviews as v on r.reservationId = v.reservationId 
             WHERE r.petsitterId = :petsitterId AND r.userId = :userId AND r.deletedAt IS NULL 
             GROUP BY r.reservationId
-            ORDER BY r.reservationId`,
+            ORDER BY r.reservationId DESC`,
         {
           replacements: { petsitterId: petsitterId, userId: userId },
           type: QueryTypes.SELECT,
@@ -180,7 +170,7 @@ class ReviewsRepositories {
       {
         deletedAt: Date.now(),
       },
-      { where: { reviewId } },
+      { where: { reviewId, userId } },
     );
     // 내보낸다.
     return post;

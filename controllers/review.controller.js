@@ -7,7 +7,6 @@ class ReviewsController {
   reviewPostController = async (req, res) => {
     const { content, star } = req.body;
     const { petsitterId, reservationId } = req.params;
-    // 로그인 기능 완성되면 로컬에서 가져오기, 예약번호는 파람으로 가져와도 될 듯하다.
     const { userId } = res.locals;
     const { status, message } = await this.reviewsService.reviewPostService(
       content,
