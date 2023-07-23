@@ -101,7 +101,6 @@ class ReservationRepository {
   };
 
   deleteOneReservation = async (userId, reservationId) => {
-    const now = new Date();
     const reservation = await Reservations.update(
       {
         deletedAt: Date.now(),
