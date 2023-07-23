@@ -184,6 +184,7 @@ async function listReviews() {
       <p>산삼 시터: ${resrelist.Petsitter.name}</p>
       <p>고객 성함: ${resrelist.User.nickname}</p>
       <p>삭제 날짜: ${resrelist.deletedAt}</p>
+      <p>작성 내용: ${resrelist.content}</p>
       <button type="button" class="btn btn-outline-light my-2 my-sm-0" onclick="deletesol(${resrelist.reviewId})">삭제</button>
       </div>
        `;
