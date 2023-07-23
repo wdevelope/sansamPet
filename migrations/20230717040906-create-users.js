@@ -32,6 +32,9 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE,
       },
+      googleId: {
+        type: Sequelize.STRING,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
