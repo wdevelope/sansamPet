@@ -127,11 +127,10 @@ async function listReservations() {
                       <label>심마니 선택</label></br>
                       <select class="form-select" id="simanichoice">
                         <option selected>-- 나의 원픽 --</option>
-                        <option value="1">이다영</option>
+                        <option value="1">김민준</option>
                         <option value="2">우성원</option>
                         <option value="3">엄한솔</option>
-                        <option value="4">김민준</option>
-                        <option value="5">원장님</option>
+                        <option value="4">이다영</option>
                       </select>
                     </form>
                   </div>
